@@ -33,6 +33,14 @@ const RPC_URL =
     ? process.env.SOLANA_RPC_URL
     : clusterApiUrl("mainnet-beta");
 
+/**
+ * CAIP-2 network identifier for Solana mainnet, per the x402 v2 spec
+ * (specs/x402-specification-v2.md, section 11.1). We advertise this in the
+ * v2-shaped challenge while still accepting the legacy "solana" value on
+ * inbound proofs for backward compatibility.
+ */
+const SOLANA_MAINNET_CAIP2 = "solana:5eykt4UsFv8P8NJdTREpY1vzqKqZKvdp";
+
 type DonationProof = {
   x402Version: number;
   scheme: string;
@@ -74,28 +82,50 @@ function json(data: unknown, status = 200, headers?: Record<string, string>) {
   });
 }
 
+/**
+ * Build the 402 challenge in the x402 v2 shape (specs/x402-specification-v2.md):
+ * top-level `resource` ResourceInfo object, per-requirement `amount`, CAIP-2
+ * `network`, and `extensions`. We keep the custom `onchain-sol` scheme because
+ * this is a self-settled native-SOL donation, not the standard facilitator
+ * `exact` flow — so a standards-only client will (correctly) decline to auto-pay,
+ * while any client can still implement the documented flow in `extra.how`.
+ *
+ * Backward compatibility: we also mirror the legacy v1 fields
+ * (`maxAmountRequired`, per-item `resource`/`description`) inside the accepts
+ * entry, so older v1-aware readers keep working. The inbound proof handler
+ * accepts both the legacy "solana" network id and the CAIP-2 form.
+ */
 function buildRequirements() {
   return {
-    x402Version: 1,
+    x402Version: 2,
     error: "Payment required — this endpoint accepts real SOL donations",
+    resource: {
+      url: DONATION_RESOURCE_PATH,
+      description:
+        "Support Ship x402. Send SOL on mainnet, then retry with proof.",
+      mimeType: "application/json",
+    },
     accepts: [
       {
         scheme: "onchain-sol",
-        network: "solana",
+        network: SOLANA_MAINNET_CAIP2,
+        amount: String(DONATION_MIN_LAMPORTS),
+        asset: "SOL",
+        payTo: DONATION_ADDRESS,
+        maxTimeoutSeconds: DONATION_MAX_AGE_SECONDS,
+        // --- legacy v1 mirror (harmless for v2 readers, keeps v1 clients working) ---
         maxAmountRequired: String(DONATION_MIN_LAMPORTS),
         resource: DONATION_RESOURCE_PATH,
         description:
           "Support Ship x402. Send SOL on mainnet, then retry with proof.",
         mimeType: "application/json",
-        payTo: DONATION_ADDRESS,
-        maxTimeoutSeconds: DONATION_MAX_AGE_SECONDS,
-        asset: "SOL",
         extra: {
-          how: `Transfer >= ${DONATION_MIN_SOL} SOL to payTo on Solana mainnet, then retry this URL with header X-PAYMENT: base64 of {"x402Version":1,"scheme":"onchain-sol","network":"solana","payload":{"signature":"<tx signature>","payer":"<your pubkey>"}}`,
-          note: "Settlement is the transfer itself — the server verifies your transaction on-chain. Amounts above the minimum are welcome.",
+          how: `Transfer >= ${DONATION_MIN_SOL} SOL to payTo on Solana mainnet, then retry this URL with header X-PAYMENT: base64 of {"x402Version":2,"scheme":"onchain-sol","network":"${SOLANA_MAINNET_CAIP2}","payload":{"signature":"<tx signature>","payer":"<your pubkey>"}}`,
+          note: "Settlement is the transfer itself — the server verifies your transaction on-chain. Amounts above the minimum are welcome. Custom scheme (not the standard 'exact' facilitator flow); legacy network id 'solana' and x402Version 1 are also accepted on the proof for compatibility.",
         },
       },
     ],
+    extensions: {},
     why: "Donations keep this tutorial free. Same 402 loop you learned in the lab — but this one settles real value.",
   };
 }
@@ -206,7 +236,11 @@ export const Route = createFileRoute("/api/x402/donate")({
           return json({ error: "Malformed X-PAYMENT header" }, 400);
         }
 
-        if (proof.scheme !== "onchain-sol" || proof.network !== "solana") {
+        // Accept the custom scheme, and either the legacy "solana" network id
+        // or the CAIP-2 form advertised in the v2 challenge.
+        const networkOk =
+          proof.network === "solana" || proof.network === SOLANA_MAINNET_CAIP2;
+        if (proof.scheme !== "onchain-sol" || !networkOk) {
           return json(
             {
               error: "Payment verification failed",
