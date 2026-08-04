@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630">
+  <rect width="1200" height="630" fill="#0c0a09"/>
+  <rect x="48" y="48" width="1104" height="534" rx="28" fill="#161311" stroke="#2dd4bf" stroke-width="2"/>
+  <text x="100" y="200" font-family="ui-sans-serif,system-ui,sans-serif" font-size="28" fill="#2dd4bf" letter-spacing="6">SHIPX402.COM</text>
+  <text x="100" y="290" font-family="ui-sans-serif,system-ui,sans-serif" font-size="72" font-weight="700" fill="#f5f0e8">Ship </text>
+  <text x="310" y="290" font-family="ui-sans-serif,system-ui,sans-serif" font-size="72" font-weight="700" fill="#2dd4bf">x402</text>
+  <text x="100" y="360" font-family="ui-sans-serif,system-ui,sans-serif" font-size="28" fill="#b5a99a">Solana wallets & x402 payments ready to ship</text>
+  <text x="100" y="480" font-family="ui-monospace,monospace" font-size="20" fill="#7a7168">learn · wallet · agents · llms.txt</text>
+</svg>

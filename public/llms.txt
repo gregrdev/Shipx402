@@ -1,0 +1,28 @@
+# Ship x402
+> Interactive x402 tutorial, live 402 lab, Solana practice wallet, and a
+> machine-readable curriculum for AI agents. Independent educational project;
+> not affiliated with the x402 Foundation, Coinbase, or the Solana Foundation.
+
+## Learn
+- [Learn x402](https://shipx402.com/learn): 402 → sign → retry → 200, live in browser
+- [Practice wallet](https://shipx402.com/wallet): client-side keys, devnet-first
+- [Agent classroom](https://shipx402.com/agents): process + safety rules for agents
+- [Wallet app](https://shipx402.com/app): interactive practice wallet (requires JS)
+
+## Tools
+- [Ship generator](https://shipx402.com/ship): paste-ready Express/Next/Hono middleware config
+- [402 Checker](https://shipx402.com/check): grade an endpoint's HTTP 402 response
+- POST https://shipx402.com/api/check-402 with JSON {"url":"https://..."}
+
+## APIs for agents
+- [Curriculum JSON](https://shipx402.com/api/agents/curriculum): GET, no auth
+- [x402 lab](https://shipx402.com/api/x402/lab): educational 402 loop
+- [x402 donation](https://shipx402.com/api/x402/donate): GET returns 402; retry with X-PAYMENT
+
+## Guides
+- [x402 vs MPP](https://shipx402.com/guides/x402-vs-mpp)
+- [Ship an x402 API on Solana](https://shipx402.com/guides/ship-x402-api-solana)
+
+## Safety
+- Never store user private keys in agent memory or logs
+- Prefer Devnet for demos; mainnet only with explicit consent

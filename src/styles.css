@@ -1,0 +1,175 @@
+@import "tailwindcss";
+@import "tw-animate-css";
+
+@theme {
+  /* Cyber-hearth: deep charcoal with warm ember undertones + cool teal signal */
+  --color-bg: #0c0a09;
+  --color-surface: #161311;
+  --color-surface-2: #1f1a17;
+  --color-fg: #f5f0e8;
+  --color-muted: #b5a99a;
+  --color-subtle: #7a7168;
+  --color-border: #2e2823;
+  --color-border-strong: #4a4038;
+  --color-primary: #2dd4bf;
+  --color-primary-fg: #042f2e;
+  --color-primary-dim: #0f766e;
+  --color-ember: #e8a06a;
+  --color-ember-dim: #c47a45;
+  --color-danger: #f87171;
+  --color-danger-bg: #2a1215;
+  --color-warn: #f0b45a;
+  --color-warn-bg: #2a1c0c;
+  --color-success: #5ee9a0;
+  --color-success-bg: #0f2418;
+  --color-learn: #5ec8f0;
+  --color-learn-bg: #0c1820;
+  --color-real: #e8a06a;
+  --color-real-bg: #22160c;
+  /* Links on dark UI — warm cream, not teal-on-teal */
+  --color-link: #f0e6d8;
+  --color-link-hover: #ffffff;
+
+  --radius-sm: 0.5rem;
+  --radius-md: 0.75rem;
+  --radius-lg: 1rem;
+  --radius-xl: 1.25rem;
+  --radius-2xl: 1.5rem;
+
+  --font-sans: "DM Sans", "Segoe UI", system-ui, -apple-system, sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+  --font-display: "DM Sans", "Segoe UI", system-ui, sans-serif;
+
+  --text-xs: 0.8125rem;
+  --text-sm: 0.9375rem;
+  --text-base: 1.0625rem;
+  --text-lg: 1.1875rem;
+  --text-xl: 1.375rem;
+  --text-2xl: 1.75rem;
+  --text-3xl: 2.125rem;
+  --text-4xl: 2.5rem;
+}
+
+@layer base {
+  * {
+    border-color: var(--color-border);
+  }
+
+  html {
+    color-scheme: dark;
+    font-size: 17px;
+  }
+
+  body {
+    margin: 0;
+    min-height: 100dvh;
+    background-color: var(--color-bg);
+    background-image:
+      radial-gradient(ellipse 90% 55% at 50% -10%, rgba(45, 212, 191, 0.09), transparent 55%),
+      radial-gradient(ellipse 60% 40% at 100% 100%, rgba(232, 160, 106, 0.07), transparent 50%),
+      radial-gradient(ellipse 50% 35% at 0% 80%, rgba(15, 118, 110, 0.06), transparent 45%),
+      linear-gradient(180deg, #0e0c0a 0%, #0c0a09 40%, #100d0b 100%);
+    color: var(--color-fg);
+    font-family: var(--font-sans);
+    font-size: 1.0625rem;
+    line-height: 1.55;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  button:not(:disabled),
+  [role="button"]:not(:disabled) {
+    cursor: pointer;
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--color-primary);
+    outline-offset: 2px;
+  }
+}
+
+@layer utilities {
+  .font-mono {
+    font-family: var(--font-mono);
+  }
+
+  .text-balance {
+    text-wrap: balance;
+  }
+
+  /**
+   * Readable links on charcoal / teal-tinted panels.
+   * Cream text + teal underline — never solid teal-on-teal.
+   */
+  .link-readable {
+    color: var(--color-link);
+    text-decoration-line: underline;
+    text-decoration-color: color-mix(in oklab, var(--color-primary) 75%, transparent);
+    text-decoration-thickness: 1.5px;
+    text-underline-offset: 3px;
+  }
+  .link-readable:hover {
+    color: var(--color-link-hover);
+    text-decoration-color: var(--color-primary);
+  }
+
+  .hearth-glow {
+    box-shadow:
+      0 0 0 1px color-mix(in oklab, var(--color-primary) 22%, transparent),
+      0 0 28px -8px color-mix(in oklab, var(--color-primary) 35%, transparent),
+      0 12px 40px -20px rgba(0, 0, 0, 0.55);
+  }
+
+  .hearth-panel {
+    background:
+      linear-gradient(
+        160deg,
+        color-mix(in oklab, var(--color-surface) 92%, var(--color-primary) 8%) 0%,
+        var(--color-surface) 45%,
+        color-mix(in oklab, var(--color-surface) 94%, var(--color-ember) 6%) 100%
+      );
+  }
+
+  .scan-grid {
+    background-image:
+      linear-gradient(color-mix(in oklab, var(--color-primary) 6%, transparent) 1px, transparent 1px),
+      linear-gradient(90deg, color-mix(in oklab, var(--color-ember) 5%, transparent) 1px, transparent 1px);
+    background-size: 28px 28px;
+    mask-image: linear-gradient(180deg, rgba(0, 0, 0, 0.55), transparent 90%);
+  }
+
+  .animate-fade-up {
+    animation: fade-up 0.45s ease-out both;
+  }
+
+  .animate-pulse-glow {
+    animation: pulse-glow 2.4s ease-in-out infinite;
+  }
+}
+
+@keyframes fade-up {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes pulse-glow {
+  0%,
+  100% {
+    opacity: 0.45;
+  }
+  50% {
+    opacity: 1;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .animate-fade-up,
+  .animate-pulse-glow {
+    animation: none;
+  }
+}

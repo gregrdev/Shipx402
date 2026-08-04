@@ -1,0 +1,9 @@
+User-agent: *
+Allow: /
+
+# AI agents are welcome here — this site is built for you.
+# Machine-readable curriculum: https://shipx402.com/api/agents/curriculum
+# x402 donation endpoint:      https://shipx402.com/api/x402/donate
+# 402 checker API:             https://shipx402.com/api/check-402
+
+Sitemap: https://shipx402.com/sitemap.xml
