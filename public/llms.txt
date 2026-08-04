@@ -4,9 +4,10 @@
 > not affiliated with the x402 Foundation, Coinbase, or the Solana Foundation.
 
 ## Learn
-- [Learn x402](https://shipx402.com/learn): 402 → sign → retry → 200, live in browser
+- [What is x402?](https://shipx402.com/guides/what-is-x402): plain-English explainer
+- [Learn x402](https://shipx402.com/learn): 402 to sign to retry to 200, live in browser
 - [Practice wallet](https://shipx402.com/wallet): client-side keys, devnet-first
-- [Agent classroom](https://shipx402.com/agents): process + safety rules for agents
+- [Agent classroom](https://shipx402.com/agents): process and safety rules for agents
 - [Wallet app](https://shipx402.com/app): interactive practice wallet (requires JS)
 
 ## Tools
@@ -20,8 +21,13 @@
 - [x402 donation](https://shipx402.com/api/x402/donate): GET returns 402; retry with X-PAYMENT
 
 ## Guides
-- [x402 vs MPP](https://shipx402.com/guides/x402-vs-mpp)
+- [What is x402?](https://shipx402.com/guides/what-is-x402)
+- [x402 vs Stripe MPP](https://shipx402.com/guides/x402-vs-mpp)
 - [Ship an x402 API on Solana](https://shipx402.com/guides/ship-x402-api-solana)
+- [Your first Solana wallet (Devnet)](https://shipx402.com/guides/first-solana-wallet)
+- [Can AI agents actually spend money?](https://shipx402.com/guides/can-ai-agents-spend-money)
+- [How to test an x402 endpoint](https://shipx402.com/guides/test-x402-endpoint)
+- [Facilitators explained (CDP vs PayAI vs self-hosted)](https://shipx402.com/guides/facilitators-explained)
 
 ## Safety
 - Never store user private keys in agent memory or logs

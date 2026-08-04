@@ -19,7 +19,12 @@ import { Route as LearnRouteImport } from './routes/learn'
 import { Route as ShipRouteImport } from './routes/ship'
 import { Route as WalletRouteImport } from './routes/wallet'
 import { Route as ApiCheck402RouteImport } from './routes/api/check-402'
+import { Route as GuidesCanAiAgentsSpendMoneyRouteImport } from './routes/guides/can-ai-agents-spend-money'
+import { Route as GuidesFacilitatorsExplainedRouteImport } from './routes/guides/facilitators-explained'
+import { Route as GuidesFirstSolanaWalletRouteImport } from './routes/guides/first-solana-wallet'
 import { Route as GuidesShipX402ApiSolanaRouteImport } from './routes/guides/ship-x402-api-solana'
+import { Route as GuidesTestX402EndpointRouteImport } from './routes/guides/test-x402-endpoint'
+import { Route as GuidesWhatIsX402RouteImport } from './routes/guides/what-is-x402'
 import { Route as GuidesX402VsMppRouteImport } from './routes/guides/x402-vs-mpp'
 import { Route as ApiAgentsCurriculumRouteImport } from './routes/api/agents/curriculum'
 import { Route as ApiX402DonateRouteImport } from './routes/api/x402/donate'
@@ -75,9 +80,36 @@ const ApiCheck402Route = ApiCheck402RouteImport.update({
   path: '/api/check-402',
   getParentRoute: () => rootRouteImport,
 } as any)
+const GuidesCanAiAgentsSpendMoneyRoute =
+  GuidesCanAiAgentsSpendMoneyRouteImport.update({
+    id: '/guides/can-ai-agents-spend-money',
+    path: '/guides/can-ai-agents-spend-money',
+    getParentRoute: () => rootRouteImport,
+  } as any)
+const GuidesFacilitatorsExplainedRoute =
+  GuidesFacilitatorsExplainedRouteImport.update({
+    id: '/guides/facilitators-explained',
+    path: '/guides/facilitators-explained',
+    getParentRoute: () => rootRouteImport,
+  } as any)
+const GuidesFirstSolanaWalletRoute = GuidesFirstSolanaWalletRouteImport.update({
+  id: '/guides/first-solana-wallet',
+  path: '/guides/first-solana-wallet',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const GuidesShipX402ApiSolanaRoute = GuidesShipX402ApiSolanaRouteImport.update({
   id: '/guides/ship-x402-api-solana',
   path: '/guides/ship-x402-api-solana',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const GuidesTestX402EndpointRoute = GuidesTestX402EndpointRouteImport.update({
+  id: '/guides/test-x402-endpoint',
+  path: '/guides/test-x402-endpoint',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const GuidesWhatIsX402Route = GuidesWhatIsX402RouteImport.update({
+  id: '/guides/what-is-x402',
+  path: '/guides/what-is-x402',
   getParentRoute: () => rootRouteImport,
 } as any)
 const GuidesX402VsMppRoute = GuidesX402VsMppRouteImport.update({
@@ -112,7 +144,12 @@ export interface FileRoutesByFullPath {
   '/ship': typeof ShipRoute
   '/wallet': typeof WalletRoute
   '/api/check-402': typeof ApiCheck402Route
+  '/guides/can-ai-agents-spend-money': typeof GuidesCanAiAgentsSpendMoneyRoute
+  '/guides/facilitators-explained': typeof GuidesFacilitatorsExplainedRoute
+  '/guides/first-solana-wallet': typeof GuidesFirstSolanaWalletRoute
   '/guides/ship-x402-api-solana': typeof GuidesShipX402ApiSolanaRoute
+  '/guides/test-x402-endpoint': typeof GuidesTestX402EndpointRoute
+  '/guides/what-is-x402': typeof GuidesWhatIsX402Route
   '/guides/x402-vs-mpp': typeof GuidesX402VsMppRoute
   '/api/agents/curriculum': typeof ApiAgentsCurriculumRoute
   '/api/x402/donate': typeof ApiX402DonateRoute
@@ -129,7 +166,12 @@ export interface FileRoutesByTo {
   '/ship': typeof ShipRoute
   '/wallet': typeof WalletRoute
   '/api/check-402': typeof ApiCheck402Route
+  '/guides/can-ai-agents-spend-money': typeof GuidesCanAiAgentsSpendMoneyRoute
+  '/guides/facilitators-explained': typeof GuidesFacilitatorsExplainedRoute
+  '/guides/first-solana-wallet': typeof GuidesFirstSolanaWalletRoute
   '/guides/ship-x402-api-solana': typeof GuidesShipX402ApiSolanaRoute
+  '/guides/test-x402-endpoint': typeof GuidesTestX402EndpointRoute
+  '/guides/what-is-x402': typeof GuidesWhatIsX402Route
   '/guides/x402-vs-mpp': typeof GuidesX402VsMppRoute
   '/api/agents/curriculum': typeof ApiAgentsCurriculumRoute
   '/api/x402/donate': typeof ApiX402DonateRoute
@@ -147,7 +189,12 @@ export interface FileRoutesById {
   '/ship': typeof ShipRoute
   '/wallet': typeof WalletRoute
   '/api/check-402': typeof ApiCheck402Route
+  '/guides/can-ai-agents-spend-money': typeof GuidesCanAiAgentsSpendMoneyRoute
+  '/guides/facilitators-explained': typeof GuidesFacilitatorsExplainedRoute
+  '/guides/first-solana-wallet': typeof GuidesFirstSolanaWalletRoute
   '/guides/ship-x402-api-solana': typeof GuidesShipX402ApiSolanaRoute
+  '/guides/test-x402-endpoint': typeof GuidesTestX402EndpointRoute
+  '/guides/what-is-x402': typeof GuidesWhatIsX402Route
   '/guides/x402-vs-mpp': typeof GuidesX402VsMppRoute
   '/api/agents/curriculum': typeof ApiAgentsCurriculumRoute
   '/api/x402/donate': typeof ApiX402DonateRoute
@@ -166,7 +213,12 @@ export interface FileRouteTypes {
     | '/ship'
     | '/wallet'
     | '/api/check-402'
+    | '/guides/can-ai-agents-spend-money'
+    | '/guides/facilitators-explained'
+    | '/guides/first-solana-wallet'
     | '/guides/ship-x402-api-solana'
+    | '/guides/test-x402-endpoint'
+    | '/guides/what-is-x402'
     | '/guides/x402-vs-mpp'
     | '/api/agents/curriculum'
     | '/api/x402/donate'
@@ -183,7 +235,12 @@ export interface FileRouteTypes {
     | '/ship'
     | '/wallet'
     | '/api/check-402'
+    | '/guides/can-ai-agents-spend-money'
+    | '/guides/facilitators-explained'
+    | '/guides/first-solana-wallet'
     | '/guides/ship-x402-api-solana'
+    | '/guides/test-x402-endpoint'
+    | '/guides/what-is-x402'
     | '/guides/x402-vs-mpp'
     | '/api/agents/curriculum'
     | '/api/x402/donate'
@@ -200,7 +257,12 @@ export interface FileRouteTypes {
     | '/ship'
     | '/wallet'
     | '/api/check-402'
+    | '/guides/can-ai-agents-spend-money'
+    | '/guides/facilitators-explained'
+    | '/guides/first-solana-wallet'
     | '/guides/ship-x402-api-solana'
+    | '/guides/test-x402-endpoint'
+    | '/guides/what-is-x402'
     | '/guides/x402-vs-mpp'
     | '/api/agents/curriculum'
     | '/api/x402/donate'
@@ -218,7 +280,12 @@ export interface RootRouteChildren {
   ShipRoute: typeof ShipRoute
   WalletRoute: typeof WalletRoute
   ApiCheck402Route: typeof ApiCheck402Route
+  GuidesCanAiAgentsSpendMoneyRoute: typeof GuidesCanAiAgentsSpendMoneyRoute
+  GuidesFacilitatorsExplainedRoute: typeof GuidesFacilitatorsExplainedRoute
+  GuidesFirstSolanaWalletRoute: typeof GuidesFirstSolanaWalletRoute
   GuidesShipX402ApiSolanaRoute: typeof GuidesShipX402ApiSolanaRoute
+  GuidesTestX402EndpointRoute: typeof GuidesTestX402EndpointRoute
+  GuidesWhatIsX402Route: typeof GuidesWhatIsX402Route
   GuidesX402VsMppRoute: typeof GuidesX402VsMppRoute
   ApiAgentsCurriculumRoute: typeof ApiAgentsCurriculumRoute
   ApiX402DonateRoute: typeof ApiX402DonateRoute
@@ -297,11 +364,46 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ApiCheck402RouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/guides/can-ai-agents-spend-money': {
+      id: '/guides/can-ai-agents-spend-money'
+      path: '/guides/can-ai-agents-spend-money'
+      fullPath: '/guides/can-ai-agents-spend-money'
+      preLoaderRoute: typeof GuidesCanAiAgentsSpendMoneyRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/guides/facilitators-explained': {
+      id: '/guides/facilitators-explained'
+      path: '/guides/facilitators-explained'
+      fullPath: '/guides/facilitators-explained'
+      preLoaderRoute: typeof GuidesFacilitatorsExplainedRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/guides/first-solana-wallet': {
+      id: '/guides/first-solana-wallet'
+      path: '/guides/first-solana-wallet'
+      fullPath: '/guides/first-solana-wallet'
+      preLoaderRoute: typeof GuidesFirstSolanaWalletRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/guides/ship-x402-api-solana': {
       id: '/guides/ship-x402-api-solana'
       path: '/guides/ship-x402-api-solana'
       fullPath: '/guides/ship-x402-api-solana'
       preLoaderRoute: typeof GuidesShipX402ApiSolanaRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/guides/test-x402-endpoint': {
+      id: '/guides/test-x402-endpoint'
+      path: '/guides/test-x402-endpoint'
+      fullPath: '/guides/test-x402-endpoint'
+      preLoaderRoute: typeof GuidesTestX402EndpointRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/guides/what-is-x402': {
+      id: '/guides/what-is-x402'
+      path: '/guides/what-is-x402'
+      fullPath: '/guides/what-is-x402'
+      preLoaderRoute: typeof GuidesWhatIsX402RouteImport
       parentRoute: typeof rootRouteImport
     }
     '/guides/x402-vs-mpp': {
@@ -346,7 +448,12 @@ const rootRouteChildren: RootRouteChildren = {
   ShipRoute: ShipRoute,
   WalletRoute: WalletRoute,
   ApiCheck402Route: ApiCheck402Route,
+  GuidesCanAiAgentsSpendMoneyRoute: GuidesCanAiAgentsSpendMoneyRoute,
+  GuidesFacilitatorsExplainedRoute: GuidesFacilitatorsExplainedRoute,
+  GuidesFirstSolanaWalletRoute: GuidesFirstSolanaWalletRoute,
   GuidesShipX402ApiSolanaRoute: GuidesShipX402ApiSolanaRoute,
+  GuidesTestX402EndpointRoute: GuidesTestX402EndpointRoute,
+  GuidesWhatIsX402Route: GuidesWhatIsX402Route,
   GuidesX402VsMppRoute: GuidesX402VsMppRoute,
   ApiAgentsCurriculumRoute: ApiAgentsCurriculumRoute,
   ApiX402DonateRoute: ApiX402DonateRoute,

@@ -35,7 +35,6 @@ function LearnPage() {
   return (
     <SiteChrome activePath="/learn">
       <div className="space-y-12 animate-fade-up">
-        {/* Page hero */}
         <header className="max-w-2xl space-y-3">
           <p className="font-mono text-xs uppercase tracking-[0.14em] text-primary">
             Learn
@@ -44,21 +43,70 @@ function LearnPage() {
             {SEO_PAGES.learn.h1}
           </h1>
           <p className="text-lg leading-relaxed text-muted">
-            Short, crawlable lessons. No account required. Jump to{" "}
-            <a href="#learn-x402" className="link-readable font-medium">
-              Learn x402
-            </a>{" "}
-            if you already have a wallet.
+            x402 lets an API charge a small payment before it returns data. No account
+            required. Read the loop below, then practice in the app.
           </p>
+          <p className="text-base text-muted">
+            Prefer a longer explainer?{" "}
+            <Link to="/guides/what-is-x402" className="link-readable font-medium">
+              What is x402?
+            </Link>
+          </p>
+
+          <div className="not-prose mt-6 rounded-[var(--radius-lg)] border border-border bg-surface p-5">
+            <p className="mb-3 text-xs font-semibold uppercase tracking-wider text-subtle">
+              New here? Start in this order
+            </p>
+            <ol className="space-y-1.5 text-sm text-muted">
+              <li>
+                1.{" "}
+                <Link to="/guides/what-is-x402" className="link-readable font-medium">
+                  What is x402?
+                </Link>{" "}
+                — the plain-English idea
+              </li>
+              <li>
+                2.{" "}
+                <Link
+                  to="/guides/first-solana-wallet"
+                  className="link-readable font-medium"
+                >
+                  Your first Solana wallet
+                </Link>{" "}
+                — practice safely on Devnet
+              </li>
+              <li>3. The payment loop below — see it step by step</li>
+              <li>
+                4.{" "}
+                <Link to="/app" className="link-readable font-medium">
+                  Try the live lab
+                </Link>{" "}
+                — watch a payment happen
+              </li>
+              <li>
+                5.{" "}
+                <Link
+                  to="/guides/ship-x402-api-solana"
+                  className="link-readable font-medium"
+                >
+                  Ship an API
+                </Link>{" "}
+                or{" "}
+                <Link
+                  to="/guides/test-x402-endpoint"
+                  className="link-readable font-medium"
+                >
+                  test a 402
+                </Link>{" "}
+                — build when ready
+              </li>
+            </ol>
+          </div>
         </header>
 
-        {/* Jump chips */}
-        <nav
-          className="flex flex-wrap gap-2"
-          aria-label="On this page"
-        >
+        <nav className="flex flex-wrap gap-2" aria-label="On this page">
           {[
-            { href: "#learn-x402", label: "Learn x402" },
+            { href: "#payment-loop", label: "The payment loop" },
             { href: "#wallets", label: "Wallets" },
             { href: "#networks", label: "Devnet vs mainnet" },
             { href: "#next", label: "What next" },
@@ -73,9 +121,8 @@ function LearnPage() {
           ))}
         </nav>
 
-        {/* ===== LEARN X402 — featured section ===== */}
         <section
-          id="learn-x402"
+          id="payment-loop"
           className="scroll-mt-28 overflow-hidden rounded-[var(--radius-2xl)] border border-primary/30 hearth-panel hearth-glow"
         >
           <div className="border-b border-border/60 bg-primary/5 px-5 py-5 sm:px-8 sm:py-6">
@@ -83,10 +130,10 @@ function LearnPage() {
               <div className="space-y-2">
                 <div className="inline-flex items-center gap-2 rounded-full border border-primary/30 bg-bg/50 px-2.5 py-0.5 text-xs font-medium text-primary">
                   <FlaskConical className="size-3.5" />
-                  Featured
+                  Core idea
                 </div>
                 <h2 className="text-2xl font-semibold tracking-tight text-fg sm:text-3xl">
-                  Learn x402
+                  The payment loop
                 </h2>
                 <p className="max-w-xl text-base leading-relaxed text-muted">
                   x402 makes HTTP <strong className="text-fg">402 Payment Required</strong>{" "}
@@ -133,21 +180,35 @@ function LearnPage() {
 
           <div className="flex flex-wrap gap-3 border-t border-border/60 bg-bg/40 px-5 py-4 sm:px-8">
             <Button asChild variant="secondary" size="sm">
+              <Link to="/guides/what-is-x402">What is x402?</Link>
+            </Button>
+            <Button asChild variant="secondary" size="sm">
               <Link to="/guides/x402-vs-mpp">x402 vs MPP</Link>
             </Button>
             <Button asChild variant="secondary" size="sm">
               <Link to="/guides/ship-x402-api-solana">Ship an API on Solana</Link>
             </Button>
+            <Button asChild variant="secondary" size="sm">
+              <Link to="/guides/first-solana-wallet">First Solana wallet</Link>
+            </Button>
+            <Button asChild variant="secondary" size="sm">
+              <Link to="/guides/can-ai-agents-spend-money">Can agents spend money?</Link>
+            </Button>
+            <Button asChild variant="secondary" size="sm">
+              <Link to="/guides/test-x402-endpoint">Test a 402 endpoint</Link>
+            </Button>
+            <Button asChild variant="secondary" size="sm">
+              <Link to="/guides/facilitators-explained">Facilitators explained</Link>
+            </Button>
             <a
               href="/api/x402/lab"
               className="link-readable inline-flex h-9 items-center rounded-[var(--radius-md)] px-3 text-sm font-medium"
             >
-              Live lab endpoint →
+              Live lab endpoint
             </a>
           </div>
         </section>
 
-        {/* Wallets — compact */}
         <section id="wallets" className="scroll-mt-28 grid gap-4 lg:grid-cols-2">
           <div className="rounded-[var(--radius-xl)] border border-border bg-surface p-6">
             <div className="mb-3 flex size-10 items-center justify-center rounded-[var(--radius-md)] bg-primary/10 text-primary">
@@ -159,13 +220,25 @@ function LearnPage() {
               install. Public address = share to receive. Private key = never share; it is
               spending power. Ship x402 creates keys only in your browser.
             </p>
-            <Link
-              to="/wallet"
-              className="link-readable mt-4 inline-flex items-center gap-1 text-sm font-medium"
-            >
-              How the wallet works
-              <ArrowRight className="size-3.5" />
-            </Link>
+            <p className="mt-2 text-sm text-subtle">
+              Read the overview, then open the practice wallet in the app.
+            </p>
+            <div className="mt-4 flex flex-wrap gap-3">
+              <Link
+                to="/wallet"
+                className="link-readable inline-flex items-center gap-1 text-sm font-medium"
+              >
+                How the wallet works
+                <ArrowRight className="size-3.5" />
+              </Link>
+              <Link
+                to="/app"
+                className="link-readable inline-flex items-center gap-1 text-sm font-medium"
+              >
+                Open practice wallet
+                <ArrowRight className="size-3.5" />
+              </Link>
+            </div>
           </div>
 
           <div
@@ -178,22 +251,21 @@ function LearnPage() {
             <h2 className="text-xl font-semibold text-fg">Devnet vs mainnet</h2>
             <ul className="mt-3 space-y-2 text-base text-muted">
               <li>
-                <strong className="text-fg">Learn / Devnet</strong> — free practice SOL,
+                <strong className="text-fg">Learn / Devnet:</strong> free practice SOL,
                 airdrops, break things safely.
               </li>
               <li>
-                <strong className="text-fg">Real / Mainnet</strong> — real value. Small
+                <strong className="text-fg">Real / Mainnet:</strong> real value. Small
                 amounts in-browser; hardware wallet for savings.
               </li>
             </ul>
             <p className="mt-3 text-sm text-subtle">
-              Solana Pay turns your address into a QR / <code className="text-fg">solana:</code>{" "}
+              Solana Pay turns your address into a QR or <code className="text-fg">solana:</code>{" "}
               link phones can scan.
             </p>
           </div>
         </section>
 
-        {/* Next */}
         <section
           id="next"
           className="scroll-mt-28 rounded-[var(--radius-xl)] border border-border bg-surface-2/30 p-6 sm:p-8"
@@ -206,28 +278,39 @@ function LearnPage() {
             <li>
               Open the{" "}
               <Link to="/app" className="link-readable font-medium">
-                wallet app
+                practice wallet
               </Link>{" "}
               and create a Devnet wallet (write down keys).
             </li>
-            <li>Run the x402 Lab tab — same five steps as above.</li>
+            <li>Run the x402 Lab tab. Same five steps as above.</li>
             <li>
-              If you build agents, read the{" "}
+              Ready to build? Use the{" "}
+              <Link to="/ship" className="link-readable font-medium">
+                Ship generator
+              </Link>
+              , then{" "}
+              <Link to="/check" className="link-readable font-medium">
+                check your 402
+              </Link>
+              .
+            </li>
+            <li>
+              Building for agents? See the{" "}
               <Link to="/agents" className="link-readable font-medium">
                 agent classroom
               </Link>{" "}
-              and <a href="/api/agents/curriculum">curriculum JSON</a>.
+              and <a href="/api/agents/curriculum" className="link-readable">curriculum JSON</a>.
             </li>
           </ol>
           <div className="mt-6 flex flex-wrap gap-3">
             <Button asChild size="lg">
               <Link to="/app">
-                Open app
+                Open practice wallet
                 <ArrowRight className="size-4" />
               </Link>
             </Button>
             <Button asChild variant="secondary" size="lg">
-              <Link to="/agents">Agents</Link>
+              <Link to="/ship">Ship an API</Link>
             </Button>
           </div>
         </section>

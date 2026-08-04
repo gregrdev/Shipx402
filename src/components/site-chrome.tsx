@@ -108,6 +108,11 @@ export function SiteChrome({
             </div>
             <ul className="space-y-1.5 text-sm">
               <li>
+                <Link to="/guides/what-is-x402" className="text-muted hover:text-fg">
+                  What is x402?
+                </Link>
+              </li>
+              <li>
                 <Link
                   to="/guides/ship-x402-api-solana"
                   className="text-muted hover:text-fg"
@@ -118,6 +123,11 @@ export function SiteChrome({
               <li>
                 <Link to="/guides/x402-vs-mpp" className="text-muted hover:text-fg">
                   x402 vs MPP
+                </Link>
+              </li>
+              <li>
+                <Link to="/learn" className="text-muted hover:text-fg">
+                  All guides
                 </Link>
               </li>
               <li>

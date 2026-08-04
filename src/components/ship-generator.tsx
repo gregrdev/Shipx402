@@ -51,29 +51,40 @@ export function ShipGenerator() {
   const payErr = validatePayTo(form.network, form.payTo);
   const valid = !payErr && form.payTo.trim().length > 0;
 
+  const sampleForm: ShipForm = useMemo(
+    () => ({
+      ...form,
+      payTo:
+        form.network.startsWith("solana")
+          ? "So1anaExamp1eAddress1111111111111111111111"
+          : "0x0000000000000000000000000000000000000001",
+    }),
+    [form],
+  );
+
   const panels = useMemo(() => {
-    if (!valid) return null;
+    const f = valid ? form : sampleForm;
     return {
-      install: installLine(form.framework),
-      code: codeSnippet(form, false),
-      env: envSnippet(form, false),
-      test: testCurl(form),
+      install: installLine(f.framework),
+      code: codeSnippet(f, false),
+      env: envSnippet(f, false),
+      test: testCurl(f),
       prod: [
-        codeSnippet(form, true),
+        codeSnippet(f, true),
         "",
         "// --- production notes ---",
         "// Facilitator options:",
-        "// 1) Coinbase CDP facilitator — free tier, needs CDP account (docs.cdp.coinbase.com/x402)",
-        "// 2) PayAI public facilitator — https://facilitator.payai.network",
+        "// 1) Coinbase CDP facilitator: free tier, needs CDP account (docs.cdp.coinbase.com/x402)",
+        "// 2) PayAI public facilitator: https://facilitator.payai.network",
         "// Verify package APIs against https://docs.x402.org before shipping.",
         "",
-        envSnippet(form, true),
+        envSnippet(f, true),
       ].join("\n"),
-      prompt: agentPrompt(form),
+      prompt: agentPrompt(f),
     };
-  }, [form, valid]);
+  }, [form, valid, sampleForm]);
 
-  const activeText = panels ? panels[tab === "prod" ? "prod" : tab] : "";
+  const activeText = panels[tab === "prod" ? "prod" : tab];
 
   return (
     <div className="grid gap-6 lg:grid-cols-2">
@@ -211,10 +222,9 @@ export function ShipGenerator() {
             <button
               key={id}
               type="button"
-              disabled={!valid}
               onClick={() => setTab(id)}
               className={cn(
-                "rounded-full px-3 py-1.5 text-sm font-medium disabled:opacity-40",
+                "rounded-full px-3 py-1.5 text-sm font-medium",
                 tab === id
                   ? "bg-primary/15 text-primary"
                   : "text-muted hover:text-fg",
@@ -225,37 +235,35 @@ export function ShipGenerator() {
           ))}
         </div>
 
-        {!valid ? (
-          <div className="flex gap-2 rounded-[var(--radius-md)] border border-border bg-bg p-4 text-sm text-muted">
+        {!valid && (
+          <div className="flex gap-2 rounded-[var(--radius-md)] border border-border bg-bg p-3 text-sm text-muted">
             <AlertTriangle className="mt-0.5 size-4 shrink-0 text-warn" />
-            Enter a valid payTo address for the selected network to generate snippets.
+            Showing a sample snippet. Enter your real payTo address to personalize it.
           </div>
-        ) : (
-          <>
-            <pre className="max-h-[28rem] overflow-auto rounded-[var(--radius-md)] border border-border bg-bg p-4 font-mono text-[11px] leading-relaxed text-muted">
-              {activeText}
-            </pre>
-            <div className="flex flex-wrap gap-2">
-              <Button
-                variant="secondary"
-                onClick={async () => {
-                  await copyText(activeText);
-                  toast.success("Copied");
-                }}
-              >
-                <Copy className="size-4" />
-                Copy
-              </Button>
-              <Button asChild variant="outline">
-                <Link to="/check">Validate with 402 Checker →</Link>
-              </Button>
-            </div>
-            <p className="text-xs text-subtle">
-              Templates use @x402/* v2 (routes + x402ResourceServer, CAIP-2 networks). Packages: @x402/express, @x402/next,
-              @x402/hono) — verify signatures against the live docs before production.
-            </p>
-          </>
         )}
+        <pre className="max-h-[28rem] overflow-auto rounded-[var(--radius-md)] border border-border bg-bg p-4 font-mono text-[11px] leading-relaxed text-muted">
+          {activeText}
+        </pre>
+        <div className="flex flex-wrap gap-2">
+          <Button
+            variant="secondary"
+            onClick={async () => {
+              await copyText(activeText);
+              toast.success("Copied");
+            }}
+          >
+            <Copy className="size-4" />
+            Copy
+          </Button>
+          <Button asChild variant="outline">
+            <Link to="/check">Validate with 402 Checker</Link>
+          </Button>
+        </div>
+        <p className="text-xs text-subtle">
+          Templates use @x402/* v2 (routes + x402ResourceServer, CAIP-2 networks). Packages:
+          @x402/express, @x402/next, @x402/hono. Verify signatures against docs.x402.org before
+          production.
+        </p>
       </div>
     </div>
   );

@@ -3,9 +3,9 @@ import {
   ArrowRight,
   Bot,
   CheckCircle2,
+  BookOpen,
   Rocket,
   Shield,
-  Sparkles,
   Wrench,
 } from "lucide-react";
 import { SiteChrome } from "@/components/site-chrome";
@@ -42,24 +42,27 @@ function HomePage() {
               {SEO_PAGES.home.h1}
             </h1>
             <p className="max-w-2xl text-lg leading-relaxed text-muted">
-              {BRAND.tagline} Interactive lab, practice wallet, agent curriculum, and free
-              tools to generate and validate 402s.
+              x402 lets an API charge a small payment before it returns data. Learn the
+              loop, practice a Solana wallet on Devnet, then ship and validate real 402s.
             </p>
             <div className="flex flex-wrap gap-3">
               <Button asChild size="lg">
-                <Link to="/ship">
-                  Ship an x402 API
-                  <Rocket className="size-4" />
+                <Link to="/learn">
+                  New here? Start learning
+                  <BookOpen className="size-4" />
                 </Link>
               </Button>
               <Button asChild size="lg" variant="secondary">
-                <Link to="/check">
-                  Check my 402
-                  <Wrench className="size-4" />
+                <Link to="/ship">
+                  Ready to build
+                  <Rocket className="size-4" />
                 </Link>
               </Button>
               <Button asChild size="lg" variant="outline">
-                <Link to="/learn">Learn x402</Link>
+                <Link to="/check">
+                  Check a 402
+                  <Wrench className="size-4" />
+                </Link>
               </Button>
               <Button asChild size="lg" variant="outline">
                 <Link to="/app">
@@ -74,19 +77,61 @@ function HomePage() {
         <section className="grid gap-4 sm:grid-cols-3">
           {[
             {
-              icon: Shield,
-              title: "Practice wallet",
-              body: "Client-side keys, write-downs, encrypted backups — never cloud custody.",
+              icon: BookOpen,
+              title: "New here",
+              body: "Plain-English lessons on what x402 is and how the payment loop works.",
+              to: "/learn" as const,
+              cta: "Learn x402",
             },
             {
-              icon: Sparkles,
+              icon: Rocket,
+              title: "Ready to build",
+              body: "Generate paste-ready middleware for Express, Next.js, or Hono.",
+              to: "/ship" as const,
+              cta: "Ship generator",
+            },
+            {
+              icon: Wrench,
+              title: "Already have an API",
+              body: "Paste a URL and grade the 402 response for agent readiness.",
+              to: "/check" as const,
+              cta: "402 Checker",
+            },
+          ].map((item) => (
+            <div
+              key={item.title}
+              className="flex flex-col rounded-[var(--radius-xl)] border border-border bg-surface p-5"
+            >
+              <item.icon className="mb-3 size-5 text-primary" />
+              <h2 className="text-lg font-semibold text-fg">{item.title}</h2>
+              <p className="mt-2 flex-1 text-sm leading-relaxed text-muted">{item.body}</p>
+              <Link
+                to={item.to}
+                className="link-readable mt-4 inline-flex items-center gap-1 text-sm font-medium"
+              >
+                {item.cta}
+                <ArrowRight className="size-3.5" />
+              </Link>
+            </div>
+          ))}
+        </section>
+
+        <section className="grid gap-4 sm:grid-cols-3">
+          {[
+            {
+              icon: Shield,
+              title: "Practice wallet",
+              body: "Client-side keys, write-downs, encrypted backups. Never cloud custody.",
+            },
+            {
+              icon: CheckCircle2,
               title: "Live 402 lab",
               body: "Sign a payment intent, retry, unlock. Replay protection included.",
             },
             {
               icon: Bot,
-              title: "Agent-readable",
-              body: "SSR pages, llms.txt, curriculum JSON, donate x402 endpoint.",
+              title: "Readable by people and AI",
+              body: "Clear pages, llms.txt, curriculum JSON, and a live donate endpoint.",
             },
           ].map((item) => (
             <div
