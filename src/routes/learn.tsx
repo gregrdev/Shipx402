@@ -4,13 +4,21 @@ import {
   BookOpen,
   FlaskConical,
   GraduationCap,
+  Layers,
+  Rocket,
   Wallet,
 } from "lucide-react";
 import { SiteChrome } from "@/components/site-chrome";
 import { SEO_PAGES } from "@/lib/brand";
 import { pageHead, breadcrumbJsonLd, learningResourceJsonLd } from "@/lib/seo";
 import { Button } from "@/components/ui/button";
+import { Badge } from "@/components/ui/badge";
 import { X402_TUTORIAL_STEPS } from "@/lib/x402";
+import {
+  LEARNING_PATH,
+  LEVEL_META,
+  type GuideLevel,
+} from "@/lib/learning-path";
 import { cn } from "@/lib/utils";
 
 export const Route = createFileRoute("/learn")({
@@ -21,7 +29,7 @@ export const Route = createFileRoute("/learn")({
       jsonLd: [
         learningResourceJsonLd(
           SEO_PAGES.learn,
-          "x402 protocol, HTTP 402 payment flow, Solana micropayments",
+          "x402 protocol, HTTP 402 payment flow, Solana micropayments, agent wallets",
         ),
         breadcrumbJsonLd([
           { name: "Home", path: "/" },
@@ -30,6 +38,8 @@ export const Route = createFileRoute("/learn")({
       ],
     }),
 });
+
+const LEVELS: GuideLevel[] = ["beginner", "intermediate", "advanced"];
 
 function LearnPage() {
   return (
@@ -43,83 +53,135 @@ function LearnPage() {
             {SEO_PAGES.learn.h1}
           </h1>
           <p className="text-lg leading-relaxed text-muted">
-            x402 lets an API charge a small payment before it returns data. No account
-            required. Read the loop below, then practice in the app.
+            One path from first concepts to agent-safe production. Guides are ordered
+            beginner → intermediate → advanced. Tools sit at the end of each stage.
           </p>
-          <p className="text-base text-muted">
-            Prefer a longer explainer?{" "}
-            <Link to="/guides/what-is-x402" className="link-readable font-medium">
-              What is x402?
-            </Link>
-          </p>
-
-          <div className="not-prose mt-6 rounded-[var(--radius-lg)] border border-border bg-surface p-5">
-            <p className="mb-3 text-xs font-semibold uppercase tracking-wider text-subtle">
-              New here? Start in this order
-            </p>
-            <ol className="space-y-1.5 text-sm text-muted">
-              <li>
-                1.{" "}
-                <Link to="/guides/what-is-x402" className="link-readable font-medium">
-                  What is x402?
-                </Link>{" "}
-                — the plain-English idea
-              </li>
-              <li>
-                2.{" "}
-                <Link
-                  to="/guides/first-solana-wallet"
-                  className="link-readable font-medium"
-                >
-                  Your first Solana wallet
-                </Link>{" "}
-                — practice safely on Devnet
-              </li>
-              <li>3. The payment loop below — see it step by step</li>
-              <li>
-                4.{" "}
-                <Link to="/app" className="link-readable font-medium">
-                  Try the live lab
-                </Link>{" "}
-                — watch a payment happen
-              </li>
-              <li>
-                5.{" "}
-                <Link
-                  to="/guides/ship-x402-api-solana"
-                  className="link-readable font-medium"
-                >
-                  Ship an API
-                </Link>{" "}
-                or{" "}
-                <Link
-                  to="/guides/test-x402-endpoint"
-                  className="link-readable font-medium"
-                >
-                  test a 402
-                </Link>{" "}
-                — build when ready
-              </li>
-            </ol>
-          </div>
         </header>
 
-        <nav className="flex flex-wrap gap-2" aria-label="On this page">
+        <nav
+          className="flex flex-wrap gap-2"
+          aria-label="Jump to section"
+        >
           {[
-            { href: "#payment-loop", label: "The payment loop" },
+            { href: "#path", label: "Full path" },
+            { href: "#payment-loop", label: "Payment loop" },
             { href: "#wallets", label: "Wallets" },
-            { href: "#networks", label: "Devnet vs mainnet" },
-            { href: "#next", label: "What next" },
+            { href: "#tools", label: "Tools" },
           ].map((j) => (
             <a
               key={j.href}
               href={j.href}
-              className="rounded-full border border-border bg-surface px-3.5 py-1.5 text-sm font-medium text-muted no-underline hover:border-primary/40 hover:text-fg"
+              className="rounded-full border border-border bg-surface px-3.5 py-2 text-sm font-medium text-muted no-underline transition-colors hover:border-primary/40 hover:text-fg"
             >
               {j.label}
             </a>
           ))}
         </nav>
+
+        <section id="path" className="scroll-mt-28 space-y-8">
+          <div className="flex flex-wrap items-end justify-between gap-3">
+            <div>
+              <h2 className="text-2xl font-semibold tracking-tight text-fg">
+                Full learning path
+              </h2>
+              <p className="mt-1 text-base text-muted">
+                Follow the order within each tier. Skip ahead only if you already know
+                the earlier material.
+              </p>
+            </div>
+            <Badge variant="learn">Updated Aug 2026</Badge>
+          </div>
+
+          {LEVELS.map((level) => {
+            const meta = LEVEL_META[level];
+            const items = LEARNING_PATH.filter((i) => i.level === level);
+            return (
+              <div
+                key={level}
+                id={level}
+                className="scroll-mt-28 overflow-hidden rounded-[var(--radius-xl)] border border-border bg-surface"
+              >
+                <div className="flex flex-wrap items-center gap-3 border-b border-border/60 bg-bg/40 px-5 py-4 sm:px-6">
+                  <span
+                    className={cn(
+                      "inline-flex items-center gap-2 rounded-full border px-3 py-1 text-xs font-semibold uppercase tracking-wide",
+                      level === "beginner" &&
+                        "border-learn/30 bg-learn-bg text-learn",
+                      level === "intermediate" &&
+                        "border-primary/30 bg-primary/10 text-primary",
+                      level === "advanced" &&
+                        "border-ember/30 bg-real-bg text-ember",
+                    )}
+                  >
+                    {level === "beginner" && <GraduationCap className="size-3.5" />}
+                    {level === "intermediate" && <Layers className="size-3.5" />}
+                    {level === "advanced" && <Rocket className="size-3.5" />}
+                    {meta.label}
+                  </span>
+                  <p className="text-sm text-muted">{meta.description}</p>
+                </div>
+                <ol className="divide-y divide-border/50">
+                  {items.map((item, idx) => (
+                    <li key={item.path + item.title}>
+                      {item.path.startsWith("/guides/") ||
+                      item.path === "/learn#payment-loop" ? (
+                        item.path.startsWith("/guides/") ? (
+                          <Link
+                            to={item.path}
+                            className="flex gap-4 px-5 py-4 no-underline transition-colors hover:bg-bg/50 sm:px-6"
+                          >
+                            <span className="flex size-8 shrink-0 items-center justify-center rounded-full bg-surface-2 font-mono text-xs font-semibold text-primary">
+                              {idx + 1}
+                            </span>
+                            <span className="min-w-0 flex-1">
+                              <span className="font-semibold text-fg">
+                                {item.title}
+                              </span>
+                              <span className="mt-0.5 block text-sm text-muted">
+                                {item.blurb}
+                              </span>
+                            </span>
+                            <ArrowRight className="mt-1 size-4 shrink-0 text-subtle" />
+                          </Link>
+                        ) : (
+                          <a
+                            href={item.path}
+                            className="flex gap-4 px-5 py-4 no-underline transition-colors hover:bg-bg/50 sm:px-6"
+                          >
+                            <span className="flex size-8 shrink-0 items-center justify-center rounded-full bg-surface-2 font-mono text-xs font-semibold text-primary">
+                              {idx + 1}
+                            </span>
+                            <span className="min-w-0 flex-1">
+                              <span className="font-semibold text-fg">
+                                {item.title}
+                              </span>
+                              <span className="mt-0.5 block text-sm text-muted">
+                                {item.blurb}
+                              </span>
+                            </span>
+                            <ArrowRight className="mt-1 size-4 shrink-0 text-subtle" />
+                          </a>
+                        )
+                      ) : (
+                        <div className="flex gap-4 px-5 py-4 sm:px-6">
+                          <span className="flex size-8 shrink-0 items-center justify-center rounded-full bg-surface-2 font-mono text-xs font-semibold text-primary">
+                            {idx + 1}
+                          </span>
+                          <span>
+                            <span className="font-semibold text-fg">{item.title}</span>
+                            <span className="mt-0.5 block text-sm text-muted">
+                              {item.blurb}
+                            </span>
+                          </span>
+                        </div>
+                      )}
+                    </li>
+                  ))}
+                </ol>
+              </div>
+            );
+          })}
+        </section>
 
         <section
           id="payment-loop"
@@ -130,15 +192,15 @@ function LearnPage() {
               <div className="space-y-2">
                 <div className="inline-flex items-center gap-2 rounded-full border border-primary/30 bg-bg/50 px-2.5 py-0.5 text-xs font-medium text-primary">
                   <FlaskConical className="size-3.5" />
-                  Core idea
+                  Core idea · v2 lab
                 </div>
                 <h2 className="text-2xl font-semibold tracking-tight text-fg sm:text-3xl">
                   The payment loop
                 </h2>
                 <p className="max-w-xl text-base leading-relaxed text-muted">
-                  x402 makes HTTP <strong className="text-fg">402 Payment Required</strong>{" "}
-                  useful: the server returns a machine-readable price; you (or an agent)
-                  pay; you retry with proof; the resource unlocks. Five steps.
+                  x402 makes HTTP{" "}
+                  <strong className="text-fg">402 Payment Required</strong> useful:
+                  machine-readable price, pay, retry with proof, unlock. Five steps.
                 </p>
               </div>
               <Button asChild>
@@ -150,7 +212,7 @@ function LearnPage() {
             </div>
           </div>
 
-          <ol className="grid gap-0 sm:grid-cols-1">
+          <ol className="grid gap-0">
             {X402_TUTORIAL_STEPS.map((step, i) => (
               <li
                 key={step.id}
@@ -177,51 +239,20 @@ function LearnPage() {
               </li>
             ))}
           </ol>
-
-          <div className="flex flex-wrap gap-3 border-t border-border/60 bg-bg/40 px-5 py-4 sm:px-8">
-            <Button asChild variant="secondary" size="sm">
-              <Link to="/guides/what-is-x402">What is x402?</Link>
-            </Button>
-            <Button asChild variant="secondary" size="sm">
-              <Link to="/guides/x402-vs-mpp">x402 vs MPP</Link>
-            </Button>
-            <Button asChild variant="secondary" size="sm">
-              <Link to="/guides/ship-x402-api-solana">Ship an API on Solana</Link>
-            </Button>
-            <Button asChild variant="secondary" size="sm">
-              <Link to="/guides/first-solana-wallet">First Solana wallet</Link>
-            </Button>
-            <Button asChild variant="secondary" size="sm">
-              <Link to="/guides/can-ai-agents-spend-money">Can agents spend money?</Link>
-            </Button>
-            <Button asChild variant="secondary" size="sm">
-              <Link to="/guides/test-x402-endpoint">Test a 402 endpoint</Link>
-            </Button>
-            <Button asChild variant="secondary" size="sm">
-              <Link to="/guides/facilitators-explained">Facilitators explained</Link>
-            </Button>
-            <a
-              href="/api/x402/lab"
-              className="link-readable inline-flex h-9 items-center rounded-[var(--radius-md)] px-3 text-sm font-medium"
-            >
-              Live lab endpoint
-            </a>
-          </div>
         </section>
 
         <section id="wallets" className="scroll-mt-28 grid gap-4 lg:grid-cols-2">
-          <div className="rounded-[var(--radius-xl)] border border-border bg-surface p-6">
+          <div className="rounded-[var(--radius-xl)] border border-border bg-surface p-6 cyber-edge">
             <div className="mb-3 flex size-10 items-center justify-center rounded-[var(--radius-md)] bg-primary/10 text-primary">
               <Wallet className="size-5" />
             </div>
-            <h2 className="text-xl font-semibold text-fg">Solana wallets in plain English</h2>
+            <h2 className="text-xl font-semibold text-fg">
+              Solana wallets in plain English
+            </h2>
             <p className="mt-2 text-base leading-relaxed text-muted">
-              A wallet is a <strong className="text-fg">key pair</strong>, not an app-store
-              install. Public address = share to receive. Private key = never share; it is
-              spending power. Ship x402 creates keys only in your browser.
-            </p>
-            <p className="mt-2 text-sm text-subtle">
-              Read the overview, then open the practice wallet in the app.
+              A wallet is a <strong className="text-fg">key pair</strong>. Public =
+              share to receive. Private = never share. Ship x402 creates keys only in
+              your browser.
             </p>
             <div className="mt-4 flex flex-wrap gap-3">
               <Link
@@ -241,10 +272,7 @@ function LearnPage() {
             </div>
           </div>
 
-          <div
-            id="networks"
-            className="scroll-mt-28 rounded-[var(--radius-xl)] border border-border bg-surface p-6"
-          >
+          <div className="scroll-mt-28 rounded-[var(--radius-xl)] border border-border bg-surface p-6">
             <div className="mb-3 flex size-10 items-center justify-center rounded-[var(--radius-md)] bg-learn/15 text-learn">
               <GraduationCap className="size-5" />
             </div>
@@ -252,56 +280,57 @@ function LearnPage() {
             <ul className="mt-3 space-y-2 text-base text-muted">
               <li>
                 <strong className="text-fg">Learn / Devnet:</strong> free practice SOL,
-                airdrops, break things safely.
+                break things safely.
               </li>
               <li>
                 <strong className="text-fg">Real / Mainnet:</strong> real value. Small
-                amounts in-browser; hardware wallet for savings.
+                amounts in-browser; hardware for savings.
               </li>
             </ul>
-            <p className="mt-3 text-sm text-subtle">
-              Solana Pay turns your address into a QR or <code className="text-fg">solana:</code>{" "}
-              link phones can scan.
-            </p>
           </div>
         </section>
 
         <section
-          id="next"
+          id="tools"
           className="scroll-mt-28 rounded-[var(--radius-xl)] border border-border bg-surface-2/30 p-6 sm:p-8"
         >
           <div className="flex flex-wrap items-center gap-2 text-primary">
             <BookOpen className="size-5" />
-            <h2 className="text-xl font-semibold text-fg">What to do next</h2>
+            <h2 className="text-xl font-semibold text-fg">Tools when you are ready</h2>
           </div>
-          <ol className="mt-4 list-decimal space-y-2 pl-5 text-base text-muted">
-            <li>
-              Open the{" "}
-              <Link to="/app" className="link-readable font-medium">
-                practice wallet
-              </Link>{" "}
-              and create a Devnet wallet (write down keys).
-            </li>
-            <li>Run the x402 Lab tab. Same five steps as above.</li>
-            <li>
-              Ready to build? Use the{" "}
-              <Link to="/ship" className="link-readable font-medium">
-                Ship generator
+          <div className="mt-4 grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
+            {[
+              {
+                to: "/ship" as const,
+                title: "Ship generator",
+                body: "Paste-ready Express / Next / Hono v2 middleware.",
+              },
+              {
+                to: "/check" as const,
+                title: "402 Checker",
+                body: "Grade a public endpoint’s 402 body.",
+              },
+              {
+                to: "/explorer" as const,
+                title: "Balance explorer",
+                body: "Look up any wallet’s SOL balance and recent txs.",
+              },
+              {
+                to: "/agents" as const,
+                title: "Agent classroom",
+                body: "Curriculum + safety rules machines can fetch.",
+              },
+            ].map((t) => (
+              <Link
+                key={t.to}
+                to={t.to}
+                className="rounded-[var(--radius-lg)] border border-border bg-surface p-4 no-underline transition-colors hover:border-primary/40"
+              >
+                <div className="font-semibold text-fg">{t.title}</div>
+                <p className="mt-1 text-sm text-muted">{t.body}</p>
               </Link>
-              , then{" "}
-              <Link to="/check" className="link-readable font-medium">
-                check your 402
-              </Link>
-              .
-            </li>
-            <li>
-              Building for agents? See the{" "}
-              <Link to="/agents" className="link-readable font-medium">
-                agent classroom
-              </Link>{" "}
-              and <a href="/api/agents/curriculum" className="link-readable">curriculum JSON</a>.
-            </li>
-          </ol>
+            ))}
+          </div>
           <div className="mt-6 flex flex-wrap gap-3">
             <Button asChild size="lg">
               <Link to="/app">
@@ -310,7 +339,7 @@ function LearnPage() {
               </Link>
             </Button>
             <Button asChild variant="secondary" size="lg">
-              <Link to="/ship">Ship an API</Link>
+              <Link to="/guides/what-is-x402">Start: What is x402?</Link>
             </Button>
           </div>
         </section>

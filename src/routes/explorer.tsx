@@ -1,56 +1,49 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { SiteChrome } from "@/components/site-chrome";
-import { SupportNudge } from "@/components/support-nudge";
-import { Check402Panel } from "@/components/check-402-panel";
+import { WalletLookupPanel } from "@/components/wallet-lookup-panel";
 import { SEO_PAGES } from "@/lib/brand";
 import { pageHead, breadcrumbJsonLd } from "@/lib/seo";
 import { Button } from "@/components/ui/button";
 
-export const Route = createFileRoute("/check")({
-  component: CheckPage,
+export const Route = createFileRoute("/explorer")({
+  component: ExplorerPage,
   ssr: true,
   head: () =>
-    pageHead(SEO_PAGES.check, {
+    pageHead(SEO_PAGES.explorer, {
       jsonLd: [
         breadcrumbJsonLd([
           { name: "Home", path: "/" },
-          { name: "402 Checker", path: "/check" },
+          { name: "Balance explorer", path: "/explorer" },
         ]),
       ],
     }),
 });
 
-function CheckPage() {
+function ExplorerPage() {
   return (
-    <SiteChrome activePath="/check">
+    <SiteChrome activePath="/explorer">
       <div className="space-y-8 animate-fade-up">
         <header className="max-w-2xl space-y-3">
           <p className="font-mono text-xs uppercase tracking-[0.14em] text-primary">
-            Tools · free grade
+            Tools
           </p>
           <h1 className="text-3xl font-semibold tracking-tight text-fg sm:text-4xl">
-            {SEO_PAGES.check.h1}
+            {SEO_PAGES.explorer.h1}
           </h1>
           <p className="text-lg text-muted">
-            Paste an API URL. We fetch once over HTTPS (with SSRF protection) and grade the
-            402 body for agent readiness. Free, no accounts — screenshot an A.
-          </p>
-          <p className="text-sm text-subtle">
-            Tip: try this site's live tip endpoint{" "}
-            <code className="text-fg">/api/x402/donate</code>. Expect a real 402 with a
-            Solana payTo address.
+            Paste a Solana wallet address to see live SOL balance, a rough USD value,
+            and recent transactions. Read-only — no keys, no login.
           </p>
           <div className="flex flex-wrap gap-2">
             <Button asChild variant="secondary" size="sm">
-              <Link to="/ship">Need middleware? Open Ship generator</Link>
+              <Link to="/guides/reading-solana-tx">How to read a transaction</Link>
             </Button>
             <Button asChild variant="outline" size="sm">
-              <Link to="/loop">Walk the payment loop</Link>
+              <Link to="/app">Open practice wallet</Link>
             </Button>
           </div>
         </header>
-        <Check402Panel />
-        <SupportNudge className="mt-10" />
+        <WalletLookupPanel />
       </div>
     </SiteChrome>
   );

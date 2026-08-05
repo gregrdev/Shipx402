@@ -191,9 +191,12 @@ function json(data: unknown, status = 200) {
   });
 }
 
+import { rejectMethods } from "@/lib/http";
+
 export const Route = createFileRoute("/api/check-402")({
   server: {
     handlers: {
+      ...rejectMethods(["POST"], ["GET","PUT","PATCH","DELETE","OPTIONS"]),
       POST: async ({ request }) => {
         const ip = clientIp(request);
         if (!rateLimit(ip)) {

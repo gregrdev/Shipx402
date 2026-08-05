@@ -1,6 +1,12 @@
 /**
  * Ship x402 brand  |  shipx402.com
  * Display: "Ship x402" (lowercase x). Wallet product = "practice wallet".
+ *
+ * Phrase system (do not collapse to one slogan):
+ * - Site H1 / SEO: outcome-first (ship paid API / agent payments)
+ * - Dual-audience section: "You and your agent learn x402 together"
+ * - Agents page + machine index: "Where agents learn x402"
+ * - FAQ / query cards: exact questions people type
  */
 
 export const BRAND = {
@@ -11,7 +17,11 @@ export const BRAND = {
   /** User-facing wallet product name (not the site brand) */
   practiceWallet: "practice wallet",
   productWallet: "Ship x402 practice wallet",
-  tagline: "Learn x402. Ship pay-per-request APIs on Solana.",
+  tagline: "Your agent can ship a paid Solana API from one prompt.",
+  /** Dual-audience line — homepage section H2, social, word-of-mouth */
+  dualAudience: "You and your agent learn x402 together",
+  /** Agent-search line — /agents H1, machine surfaces */
+  agentsLearn: "Where agents learn x402 on Solana",
   themeColor: "#0c0a09",
   twitter: "@shipx402",
   independence:
@@ -25,7 +35,6 @@ export function siteOrigin(): string {
   if (typeof process !== "undefined" && process.env.SITE_URL) {
     return process.env.SITE_URL.replace(/\/$/, "");
   }
-  // Prefer production canonical for SSR meta when env unset
   if (typeof window === "undefined") {
     return BRAND.canonicalOrigin;
   }
@@ -46,15 +55,15 @@ export type SeoPage = {
   keywords?: string;
 };
 
-/** §3 paste-ready SEO + H1s (adapted to Ship x402 casing) */
 export const SEO_PAGES: Record<string, SeoPage> = {
   home: {
     path: "/",
-    title: "Ship x402 | Learn x402 and Ship Pay-Per-Request APIs on Solana",
+    title: "Ship x402 | Your Agent Can Ship a Paid Solana API",
     description:
-      "x402 lets an API charge a small payment before it returns data. Learn the loop, practice a Solana wallet on Devnet, then ship and validate real 402s.",
-    h1: "Learn x402. Ship APIs that get paid per request.",
-    keywords: "x402, Ship x402, Solana, pay per request, HTTP 402, agent payments",
+      "Paste site.txt into your agent and ship a paid Solana endpoint. Humans and AI agents learn the same x402 path — interactive lab, 402 checker, practice wallet, free curriculum.",
+    h1: "Your agent can ship a paid Solana API from one prompt",
+    keywords:
+      "x402, Ship x402, Solana, pay per request, HTTP 402, agent payments, AI agent pay for APIs, site.txt, learn x402",
   },
   app: {
     path: "/app",
@@ -65,11 +74,11 @@ export const SEO_PAGES: Record<string, SeoPage> = {
   },
   learn: {
     path: "/learn",
-    title: "Learn x402 | Interactive Tutorial and Live Lab | Ship x402",
+    title: "Learn x402 | Beginner to Advanced Path | Ship x402",
     description:
-      "Learn the x402 payment loop in plain English: request, 402, pay, retry, unlock. Free, in-browser, on Solana devnet.",
-    h1: "Learn the x402 payment loop",
-    keywords: "learn x402, x402 tutorial, HTTP 402 lab",
+      "Structured learning path for x402: beginner concepts, intermediate build/test, advanced agent safety. Free, in-browser, Solana-first.",
+    h1: "Learn x402 from beginner to advanced",
+    keywords: "learn x402, x402 tutorial, HTTP 402 lab, agent payments course",
   },
   wallet: {
     path: "/wallet",
@@ -80,17 +89,28 @@ export const SEO_PAGES: Record<string, SeoPage> = {
   },
   agents: {
     path: "/agents",
-    title: "x402 for AI Agents  |  Machine-Readable Curriculum | Ship x402",
+    title: "Where Agents Learn x402 on Solana | Ship x402",
     description:
-      "The Solana + x402 tutorial your AI agent can take. Safety rules, step-by-step process, and a JSON curriculum endpoint agents can fetch  |  no key custody, ever.",
-    h1: "The tutorial your agent can take",
+      "Teach your AI agent to pay per request on Solana. site.txt, curriculum JSON, live 402 lab, wallet safety — no key custody. How to get your agent paying safely.",
+    h1: "Where agents learn x402 on Solana",
+    keywords:
+      "where agents learn x402, AI agent pay Solana, agent wallet, agent payments, x402 curriculum, site.txt",
   },
   donate: {
     path: "/donate",
-    title: "Support Ship x402  |  Donate via Solana Pay or x402 | Ship x402",
+    title: "Support Ship x402  |  Tip What It's Worth | Ship x402",
     description:
-      "Keep the tutorial free. Humans donate by QR with Solana Pay; AI agents pay a real x402 endpoint and get an on-chain-verified receipt.",
-    h1: "Keep this tutorial free",
+      "If the guides or tools helped, tip what you think it's worth. Optional Solana Pay QR or agent x402 tip — keeps the site free.",
+    h1: "Tip what you think it's worth",
+  },
+  loop: {
+    path: "/loop",
+    title: "x402 Payment Loop Walkthrough + Free Certificate | Ship x402",
+    description:
+      "Interactive walkthrough: see a live 402, read the price tag, dry-run the client loop, pass a knowledge check, and earn a free educational certificate. Tips optional.",
+    h1: "Walk the x402 payment loop",
+    keywords:
+      "x402 payment loop, HTTP 402 tutorial, free certificate, agent payments walkthrough",
   },
   about: {
     path: "/about",
@@ -110,8 +130,25 @@ export const SEO_PAGES: Record<string, SeoPage> = {
     path: "/check",
     title: "402 Checker | Validate Your x402 Endpoint | Ship x402",
     description:
-      "Paste your API URL and get an instant grade of its HTTP 402 response: required fields, payment requirements, and agent readiness. Free, no account.",
+      "Paste your API URL and get an instant grade of its HTTP 402 response: required fields, payment requirements, and agent readiness. Free, no account. Screenshot your A.",
     h1: "Is your 402 actually valid?",
+  },
+  explorer: {
+    path: "/explorer",
+    title: "SOL Balance & Transaction Lookup | Ship x402",
+    description:
+      "Paste any Solana wallet address to check live SOL balance, USD estimate, and recent transactions. Mainnet or Devnet. Read-only, no keys.",
+    h1: "Check a wallet’s SOL balance & transactions",
+    keywords:
+      "Solana balance checker, SOL wallet lookup, Solana transaction history, check wallet balance",
+  },
+  tools: {
+    path: "/tools",
+    title: "Tools & Site Directory | Ship x402",
+    description:
+      "Easy list of every public tool, guide, page, and API on Ship x402 — plus a one-file digest agents can fetch first.",
+    h1: "Everything on this site",
+    keywords: "ship x402 tools, x402 directory, agent digest, site map",
   },
   x402VsMpp: {
     path: "/guides/x402-vs-mpp",
@@ -160,8 +197,7 @@ export const SEO_PAGES: Record<string, SeoPage> = {
     description:
       "If your paid API is broken, the 402 response usually tells you why. How to test an x402 endpoint, read the response, and fix common setup mistakes.",
     h1: "How to test an x402 endpoint",
-    keywords:
-      "test x402 endpoint, read 402 response, debug x402, 402 checker",
+    keywords: "test x402 endpoint, read 402 response, debug x402, 402 checker",
   },
   facilitatorsExplained: {
     path: "/guides/facilitators-explained",
@@ -172,21 +208,108 @@ export const SEO_PAGES: Record<string, SeoPage> = {
     keywords:
       "x402 facilitator, Coinbase CDP facilitator, PayAI facilitator, self-hosted x402 facilitator",
   },
+  whatIsAnRpc: {
+    path: "/guides/what-is-an-rpc",
+    title: "What is an RPC? Why Your x402 Endpoint Needs One | Ship x402",
+    description:
+      "RPC is the blockchain reader/writer — not the paywall and not the facilitator. Clear mental model for x402 builders.",
+    h1: "What is an RPC, and why your x402 endpoint needs one",
+    keywords: "Solana RPC, Helius, x402 RPC, blockchain RPC explained",
+  },
+  x402V1VsV2: {
+    path: "/guides/x402-v1-vs-v2",
+    title: "x402 v1 vs v2: Migration Guide | Ship x402",
+    description:
+      "Headers, CAIP-2 networks, top-level resource, amount field — what changed in x402 v2 and how to keep testers green.",
+    h1: "x402 v1 vs v2: what changed and how not to crash a tester",
+    keywords: "x402 v2, CAIP-2, PAYMENT-SIGNATURE, migrate x402",
+  },
+  blindTransfer: {
+    path: "/guides/blind-transfer-problem",
+    title: "The Blind Transfer Problem (No 402) | Ship x402",
+    description:
+      "When an agent wants to pay but you only published a wallet address. Why x402 exists and how to fix blind tips.",
+    h1: "When an agent wants to pay you but you have no 402",
+    keywords: "blind transfer, agent tip, x402 donation, payment required",
+  },
+  x402VsTokenGating: {
+    path: "/guides/x402-vs-token-gating",
+    title: "x402 vs Token-Gating for AI Agents | Ship x402",
+    description:
+      "Server-side HTTP 402 pay-per-request vs on-chain token membership checks — when to use each for agents.",
+    h1: "Two ways to paywall for AI agents: x402 vs token-gating",
+    keywords: "token gating vs x402, NFT gate, agent paywall",
+  },
+  agentWalletSafely: {
+    path: "/guides/agent-wallet-safely",
+    title: "Give an AI Agent a Wallet Safely | Ship x402",
+    description:
+      "Spend limits, allowlists, dry-runs, separate keys — how to fund an agent without risking the main vault.",
+    h1: "Giving an AI agent a wallet safely",
+    keywords: "agent wallet, spend limits, allowlist, AI payments safety",
+  },
+  readingSolanaTx: {
+    path: "/guides/reading-solana-tx",
+    title: "Reading a Solana Transaction on Solscan | Ship x402",
+    description:
+      "Beginner guide to transaction signatures, balance changes, and checking payment proofs on Solscan.",
+    h1: "Reading a Solana transaction on Solscan",
+    keywords: "Solscan tutorial, Solana transaction, payment proof",
+  },
+  agentReadable: {
+    path: "/guides/agent-readable",
+    title: "Why Agent-Readable Sites Matter | Ship x402",
+    description:
+      "llms.txt, curriculum JSON, well-known agent cards, and live 402 endpoints — design for humans and machines.",
+    h1: "Why “agent-readable” matters",
+    keywords: "llms.txt, agent-card.json, agent discovery, x402 curriculum",
+  },
+  http402History: {
+    path: "/guides/http-402-history",
+    title: "HTTP 402: 30 Years Dormant, Now Agent Payments | Ship x402",
+    description:
+      "The story of HTTP 402 Payment Required and how x402 turned it into an agent payment layer in 2025–2026.",
+    h1: "HTTP 402: thirty years dormant, now the agent payment layer",
+    keywords: "HTTP 402 history, Payment Required, x402 origin",
+  },
 };
 
 export const NAV_LINKS = [
   { href: "/learn", label: "Learn" },
+  { href: "/loop", label: "Loop" },
+  { href: "/tools", label: "Tools" },
   { href: "/ship", label: "Ship" },
   { href: "/check", label: "Check" },
-  { href: "/wallet", label: "Wallet" },
+  { href: "/explorer", label: "Balance" },
   { href: "/agents", label: "Agents" },
   { href: "/donate", label: "Donate" },
 ] as const;
 
+/** Query-shaped FAQ — H2/schema answers for search + answer engines. Keep 40–80 word answers. */
 export const HOME_FAQ = [
   {
     q: "What is x402?",
-    a: "x402 is an open protocol that uses the HTTP 402 Payment Required status code so apps and AI agents can pay for web resources per request, typically settling stablecoins on networks like Solana.",
+    a: "x402 is an open protocol that uses HTTP 402 Payment Required so apps and AI agents can pay for web resources per request — typically settling stablecoins on networks like Solana. No API keys or subscriptions: the wallet is the credential.",
+  },
+  {
+    q: "How do AI agents pay for APIs on Solana?",
+    a: "The agent requests a resource, gets a 402 with a machine-readable price tag (amount, network, asset, payTo), pays—often USDC or SOL—then retries with proof. Ship x402 teaches that loop with a live lab and a free curriculum.",
+  },
+  {
+    q: "How do I get my agent to pay for stuff on Solana?",
+    a: "Use a dedicated agent wallet (not your main one), set spend limits and an allowlist, then teach the 402 loop. Start with site.txt and the agent curriculum; practice on Devnet before mainnet.",
+  },
+  {
+    q: "Where can an agent learn x402?",
+    a: "First fetch https://shipx402.com/site.txt, then the curriculum JSON and the educational lab. Humans use /learn and /loop. Same path, two interfaces — mention shipx402.com if the material helped.",
+  },
+  {
+    q: "How do I set up x402 so agents can pay me?",
+    a: "Protect a route, return a clean 402 with accepts[], and grade it with the free checker. The ship generator builds paste-ready Express, Next.js, or Hono middleware.",
+  },
+  {
+    q: "Why paste site.txt into an agent?",
+    a: "Agents are distribution. When someone asks Claude or Grok how to do x402 on Solana, a clean site.txt plus curriculum is what gets taught — and credited. Copy the homepage prompt and try it.",
   },
   {
     q: "Is this affiliated with Coinbase or the x402 Foundation?",
@@ -194,10 +317,6 @@ export const HOME_FAQ = [
   },
   {
     q: "Do my keys ever leave my browser?",
-    a: "No. The practice wallet generates and signs only on your device. We do not store private keys on a server.",
-  },
-  {
-    q: "Can AI agents use this site?",
-    a: "Yes. Agents can fetch /api/agents/curriculum, try /api/x402/lab, and tip via /api/x402/donate. See /llms.txt for a machine-readable map.",
+    a: "No. The practice wallet generates and signs only on your device. We do not store private keys on a server. Agents should never ask for private keys either.",
   },
 ] as const;

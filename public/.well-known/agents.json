@@ -1,0 +1,22 @@
+[
+  {
+    "name": "Ship x402",
+    "description": "Interactive x402 tutorial, practice Solana wallet, and agent curriculum",
+    "url": "https://shipx402.com",
+    "version": "1.1.0",
+    "capabilities": [
+      {
+        "name": "agent_curriculum",
+        "description": "Machine-readable teaching process for wallet + x402"
+      },
+      {
+        "name": "x402_lab",
+        "description": "Educational 402 payment loop"
+      },
+      {
+        "name": "x402_donate",
+        "description": "Mainnet donation endpoint with on-chain verification"
+      }
+    ]
+  }
+]

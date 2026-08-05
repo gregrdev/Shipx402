@@ -7,34 +7,59 @@
  *
  * This lab implements a simplified, fully working "exact-lab" scheme so you can
  * experience the 402 → pay → retry loop without needing mainnet USDC.
+ *
+ * 2026: challenge envelope is x402 v2-shaped (CAIP-2 network, top-level resource,
+ * amount field) with legacy v1 mirrors so older clients and the in-app lab still work.
  */
 
 import bs58 from "bs58";
 import nacl from "tweetnacl";
 import { keypairFromSecret } from "./solana";
 
-export const X402_VERSION = 1;
+/** Advertised protocol version on the 402 challenge (v2 envelope). */
+export const X402_VERSION = 2;
+/** Still accept signed proofs that use x402Version 1 for lab compat. */
+export const X402_VERSION_LEGACY = 1;
 export const X402_LAB_SCHEME = "exact-lab";
 export const X402_RESOURCE_PATH = "/api/x402/lab";
+
+/** Solana Devnet CAIP-2 (x402 v2 / docs.x402.org). */
+export const SOLANA_DEVNET_CAIP2 = "solana:EtWTRABZaYq6iMfeYKouRu166VU2xqa1";
+/** Legacy network string still accepted on inbound lab proofs. */
+export const SOLANA_DEVNET_LEGACY = "solana-devnet";
 
 export const X402_LAB_PRICE_LABEL = "0.001 USDC-equivalent (lab units)";
 export const X402_LAB_AMOUNT = "1000";
 
+export type X402ResourceInfo = {
+  url: string;
+  description: string;
+  mimeType: string;
+};
+
+export type X402AcceptRequirement = {
+  scheme: string;
+  network: string;
+  /** v2: amount in atomic units as digit string */
+  amount: string;
+  asset: string;
+  payTo: string;
+  maxTimeoutSeconds: number;
+  // --- legacy v1 mirrors (kept for lab UI + older readers) ---
+  maxAmountRequired: string;
+  resource: string;
+  description: string;
+  mimeType: string;
+  extra?: Record<string, string>;
+};
+
 export type X402PaymentRequirements = {
   x402Version: number;
   error: string;
-  accepts: Array<{
-    scheme: string;
-    network: string;
-    maxAmountRequired: string;
-    resource: string;
-    description: string;
-    mimeType: string;
-    payTo: string;
-    maxTimeoutSeconds: number;
-    asset: string;
-    extra?: Record<string, string>;
-  }>;
+  /** v2 top-level ResourceInfo */
+  resource: X402ResourceInfo;
+  accepts: X402AcceptRequirement[];
+  extensions?: Record<string, unknown>;
   why: string;
 };
 
@@ -72,27 +97,39 @@ export function buildLabMessage(parts: {
 }
 
 export function createPaymentRequirements(payTo: string): X402PaymentRequirements {
+  const description = "Premium Solana fact of the day (Ship x402 lab)";
+  const mimeType = "application/json";
   return {
     x402Version: X402_VERSION,
     error: "Payment required to access this resource",
+    resource: {
+      url: X402_RESOURCE_PATH,
+      description,
+      mimeType,
+    },
     accepts: [
       {
         scheme: X402_LAB_SCHEME,
-        network: "solana-devnet",
-        maxAmountRequired: X402_LAB_AMOUNT,
-        resource: X402_RESOURCE_PATH,
-        description: "Premium Solana fact of the day (Ship x402 x402 lab)",
-        mimeType: "application/json",
+        network: SOLANA_DEVNET_CAIP2,
+        amount: X402_LAB_AMOUNT,
+        asset: "lab-usdc",
         payTo,
         maxTimeoutSeconds: 120,
-        asset: "lab-usdc",
+        // legacy v1 mirrors
+        maxAmountRequired: X402_LAB_AMOUNT,
+        resource: X402_RESOURCE_PATH,
+        description,
+        mimeType,
         extra: {
           note: "Lab scheme: sign a payment intent with your wallet. Production often settles USDC via a facilitator (Coinbase CDP, PayAI, etc.).",
           humanPrice: X402_LAB_PRICE_LABEL,
-          caip2Hint: "Production network IDs often use CAIP-2 (e.g. solana:…).",
+          caip2: SOLANA_DEVNET_CAIP2,
+          legacyNetwork: SOLANA_DEVNET_LEGACY,
+          mode: "lab-signature — no on-chain settlement",
         },
       },
     ],
+    extensions: {},
     why: "The server is paid per request instead of using accounts, API keys, or subscriptions. HTTP 402 is the built-in signal that means 'pay, then retry'.",
   };
 }
@@ -135,7 +172,7 @@ export function signLabPayment(params: {
   return {
     x402Version: X402_VERSION,
     scheme: X402_LAB_SCHEME,
-    network: params.network ?? "solana-devnet",
+    network: params.network ?? SOLANA_DEVNET_CAIP2,
     payload: {
       payer,
       resource: params.resource,
@@ -151,11 +188,23 @@ export function verifyLabPayment(
   proof: X402PaymentProof,
   expected: { resource: string; amount: string },
 ): { ok: true } | { ok: false; reason: string } {
-  if (proof.x402Version !== X402_VERSION) {
+  if (
+    proof.x402Version !== X402_VERSION &&
+    proof.x402Version !== X402_VERSION_LEGACY
+  ) {
     return { ok: false, reason: "Unsupported x402 version" };
   }
   if (proof.scheme !== X402_LAB_SCHEME) {
     return { ok: false, reason: "Unsupported scheme for this lab" };
+  }
+  const networkOk =
+    proof.network === SOLANA_DEVNET_CAIP2 ||
+    proof.network === SOLANA_DEVNET_LEGACY;
+  if (!networkOk) {
+    return {
+      ok: false,
+      reason: `Unsupported network (expected ${SOLANA_DEVNET_CAIP2} or ${SOLANA_DEVNET_LEGACY})`,
+    };
   }
   const { payload } = proof;
   if (payload.resource !== expected.resource) {
@@ -205,7 +254,8 @@ export const X402_TUTORIAL_STEPS = [
     title: "Server answers 402 Payment Required",
     plain: "Instead of 200 OK or 401 Login, you get 402: 'Pay this amount, on this network, to this address, for this resource.'",
     why: "HTTP already reserved 402 for payments. x402 finally defines the machine-readable details so software can pay without humans filling forms.",
-    technical: "Status 402 + JSON requirements (price, asset, network, payTo, scheme).",
+    technical:
+      "Status 402 + v2 JSON (x402Version 2, top-level resource, accepts[] with CAIP-2 network + amount) and PAYMENT-REQUIRED header.",
   },
   {
     id: 3,
@@ -220,7 +270,8 @@ export const X402_TUTORIAL_STEPS = [
     title: "Retry the same request with proof",
     plain: "You call the same URL again, this time attaching the payment proof in a header.",
     why: "One protocol for humans, bots, and agents: request → price → pay → unlock. No account signup required.",
-    technical: "Header X-PAYMENT (or PAYMENT-SIGNATURE in CDP-style stacks) carries base64 payment payload.",
+    technical:
+      "Header X-PAYMENT or PAYMENT-SIGNATURE carries base64 payment payload (v2).",
   },
   {
     id: 5,
@@ -237,5 +288,5 @@ export const PREMIUM_FACTS = [
   "A facilitator is an optional helper that verifies and settles payments so every API shop doesn't have to run full chain infrastructure themselves.",
   "On Solana, production x402 often moves USDC (SPL). The client authorizes a transfer; settlement can be gas-abstracted so the user may not need SOL for fees.",
   "Agents love x402 because they can discover a price, pay, and continue — no OAuth dance, no 'create an account' wall mid-task.",
-  "In 2026, x402 is governed under the Linux Foundation's x402 Foundation; network IDs in v2 often use CAIP-2 form.",
+  "In 2026, x402 is governed under the Linux Foundation's x402 Foundation; network IDs in v2 use CAIP-2 form (solana:… / eip155:…).",
 ];

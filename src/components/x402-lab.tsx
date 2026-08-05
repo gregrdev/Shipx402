@@ -1,4 +1,5 @@
 import { useMemo, useState } from "react";
+import { Link } from "@tanstack/react-router";
 import {
   ArrowRight,
   Bot,
@@ -36,6 +37,10 @@ type LabLog = {
   status?: number;
   body?: unknown;
 };
+
+function acceptAmount(a: { amount?: string; maxAmountRequired?: string }) {
+  return a.amount ?? a.maxAmountRequired ?? X402_LAB_AMOUNT;
+}
 
 export function X402Lab({
   publicKey,
@@ -92,11 +97,9 @@ export function X402Lab({
     setResult(null);
     setLiveStep(1);
 
-    const push = (entry: LabLog) =>
-      setLogs((prev) => [...prev, entry]);
+    const push = (entry: LabLog) => setLogs((prev) => [...prev, entry]);
 
     try {
-      // Step 1–2: request without payment
       push({
         step: 1,
         label: "Request protected resource",
@@ -111,331 +114,256 @@ export function X402Lab({
       push({
         step: 2,
         label: "Server returned Payment Required",
-        detail: "HTTP 402 with machine-readable accepts[] (price, network, payTo, scheme).",
+        detail:
+          "HTTP 402 with v2 envelope (top-level resource, CAIP-2 network, amount) + legacy mirrors.",
         status: unpaid.status,
         body: unpaidJson,
       });
       setLiveStep(2);
       await delay(450);
 
-      if (unpaid.status !== 402) {
-        toast.error(`Expected 402, got ${unpaid.status}`);
-        return;
-      }
-
       const accept = unpaidJson.accepts[0];
-      if (!accept) {
-        toast.error("No payment options in 402 body");
-        return;
-      }
+      if (!accept) throw new Error("No accepts[] in 402 body");
+      const amount = acceptAmount(accept);
 
-      // Step 3: sign payment with local wallet
-      setLiveStep(3);
       push({
         step: 3,
-        label: "Build & sign payment",
-        detail: `Wallet ${shortAddress(publicKey)} signs lab payment intent for ${accept.maxAmountRequired} units.`,
+        label: "Sign payment intent",
+        detail: `Wallet ${shortAddress(publicKey)} signs lab payment intent for ${amount} units on ${accept.network}.`,
       });
+      setLiveStep(3);
       await delay(400);
 
-      const paymentProof = signLabPayment({
+      const signed = signLabPayment({
         secretKeyBase58: secretKey,
-        resource: accept.resource,
-        amount: accept.maxAmountRequired,
+        resource: X402_RESOURCE_PATH,
+        amount,
         network: accept.network,
       });
-      setProof(paymentProof);
-      const header = encodeXPaymentHeader(paymentProof);
-      push({
-        step: 3,
-        label: "X-PAYMENT header ready",
-        detail: `Base64 payment proof (${header.slice(0, 28)}…), scheme=${paymentProof.scheme}`,
-        body: paymentProof,
-      });
-      await delay(400);
+      setProof(signed);
+      const paymentHeader = encodeXPaymentHeader(signed);
 
-      // Step 4–5: retry with proof
-      setLiveStep(4);
       push({
         step: 4,
-        label: "Retry with payment proof",
-        detail: `GET ${X402_RESOURCE_PATH} + header X-PAYMENT`,
+        label: "Retry with proof",
+        detail: "GET same URL with X-PAYMENT + PAYMENT-SIGNATURE headers (base64 proof).",
       });
+      setLiveStep(4);
       await delay(350);
 
       const paid = await fetch(X402_RESOURCE_PATH, {
         method: "GET",
         headers: {
-          "X-PAYMENT": header,
+          "X-PAYMENT": paymentHeader,
+          "PAYMENT-SIGNATURE": paymentHeader,
         },
       });
       const paidJson = (await paid.json()) as {
+        ok?: boolean;
         fact?: string;
         payment?: unknown;
         error?: string;
         reason?: string;
       };
 
-      setLiveStep(5);
-      if (!paid.ok) {
-        push({
-          step: 5,
-          label: "Verification failed",
-          detail: paidJson.reason ?? paidJson.error ?? "Unknown error",
-          status: paid.status,
-          body: paidJson,
-        });
-        toast.error("Payment not accepted");
-        return;
+      if (!paid.ok || !paidJson.ok) {
+        throw new Error(
+          paidJson.reason || paidJson.error || `Unlock failed (${paid.status})`,
+        );
       }
 
       setResult({
-        fact: paidJson.fact ?? "Unlocked!",
+        fact: paidJson.fact ?? "Unlocked.",
         payment: paidJson.payment,
       });
       push({
         step: 5,
-        label: "200 OK — resource delivered",
-        detail: "Server verified your signed intent and returned premium content.",
+        label: "Resource unlocked",
+        detail: "HTTP 200 + premium fact. Replay protection: reusing the same nonce fails.",
         status: paid.status,
         body: paidJson,
       });
-      toast.success("x402 lab payment succeeded");
-      setLiveStep(6);
+      setLiveStep(5);
+      toast.success("Lab complete — you paid, then unlocked");
     } catch (err) {
-      const msg = err instanceof Error ? err.message : "Lab run failed";
-      toast.error(msg);
-      push({ step: 0, label: "Error", detail: msg });
+      const message = err instanceof Error ? err.message : "Lab failed";
+      push({
+        step: liveStep || 1,
+        label: "Error",
+        detail: message,
+      });
+      toast.error(message);
     } finally {
       setRunning(false);
     }
   };
 
   return (
-    <div className="space-y-5 animate-fade-up">
-      <div className="flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
-        <div>
-          <div className="mb-2 flex flex-wrap items-center gap-2">
-            <h2 className="text-xl font-semibold tracking-tight">x402 Lab</h2>
-            <Badge variant="learn">Tutorial + live demo</Badge>
+    <div className="space-y-6">
+      <Card className="hearth-panel border-primary/25">
+        <CardHeader>
+          <div className="mb-2 flex size-11 items-center justify-center rounded-[var(--radius-md)] bg-primary/15 text-primary">
+            <FlaskConical className="size-5" />
           </div>
-          <p className="max-w-2xl text-sm text-muted">
-            x402 turns HTTP <strong className="text-fg">402 Payment Required</strong> into
-            a standard way for APIs (and AI agents) to charge per request with crypto —
-            usually stablecoins — without accounts or API keys.
-          </p>
-        </div>
-        <Button onClick={() => void runLab()} disabled={running}>
-          {running ? (
-            <Loader2 className="size-4 animate-spin" />
-          ) : result ? (
-            <RefreshCw className="size-4" />
-          ) : (
-            <Play className="size-4" />
-          )}
-          {running ? "Running flow…" : result ? "Run lab again" : "Run live x402 flow"}
-        </Button>
-      </div>
-
-      {/* Why it exists */}
-      <Card className="border-primary/20 bg-primary/5">
-        <CardHeader className="mb-0">
-          <CardTitle className="flex items-center gap-2 text-base">
-            <Zap className="size-4 text-primary" />
-            Why x402 exists (simple)
-          </CardTitle>
-          <CardDescription className="text-sm leading-relaxed text-muted">
-            The web is great at moving <em>information</em>, but bad at moving{" "}
-            <em>tiny amounts of money</em> without signups, cards, and monthly plans.
-            x402 says: when something costs money, reply with <strong>402</strong> and a
-            price tag machines understand. The client pays (often USDC on Solana or Base)
-            and retries. That unlocks pay-per-API-call and agent commerce without building
-            a whole billing product.
+          <div className="flex flex-wrap items-center gap-2">
+            <CardTitle className="text-xl">x402 Lab</CardTitle>
+            <Badge variant="learn">v2 envelope</Badge>
+          </div>
+          <CardDescription className="text-base leading-relaxed">
+            Run the full loop with your practice wallet: 402 challenge (CAIP-2 +
+            top-level resource), signed intent, retry, unlock. No real money moves.
           </CardDescription>
         </CardHeader>
-      </Card>
 
-      {/* Roles */}
-      <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
-        {roles.map((r) => (
-          <div
-            key={r.title}
-            className="rounded-[var(--radius-lg)] border border-border bg-surface p-4"
-          >
-            <r.icon className="mb-2 size-4 text-primary" />
-            <div className="text-sm font-medium text-fg">{r.title}</div>
-            <p className="mt-1 text-xs leading-relaxed text-muted">{r.body}</p>
-          </div>
-        ))}
-      </div>
-
-      {/* Step tutorial */}
-      <div className="grid gap-4 lg:grid-cols-[220px_1fr]">
-        <div className="space-y-1">
-          {X402_TUTORIAL_STEPS.map((s, i) => {
-            const done = liveStep > s.id || (liveStep === 6 && s.id <= 5);
-            const current = liveStep === s.id || (liveStep === 0 && i === activeLesson);
-            return (
-              <button
-                key={s.id}
-                type="button"
-                onClick={() => setActiveLesson(i)}
-                className={cn(
-                  "flex w-full items-start gap-2 rounded-[var(--radius-md)] border px-3 py-2.5 text-left transition-colors",
-                  activeLesson === i
-                    ? "border-primary/40 bg-surface-2"
-                    : "border-transparent hover:bg-surface",
-                )}
-              >
-                {done ? (
-                  <CheckCircle2 className="mt-0.5 size-4 shrink-0 text-success" />
-                ) : current && liveStep > 0 ? (
-                  <Loader2 className="mt-0.5 size-4 shrink-0 animate-spin text-primary" />
-                ) : (
-                  <Circle className="mt-0.5 size-4 shrink-0 text-subtle" />
-                )}
-                <span>
-                  <span className="block text-xs font-medium text-fg">
-                    Step {s.id}
-                  </span>
-                  <span className="block text-xs text-muted">{s.title}</span>
-                </span>
-              </button>
-            );
-          })}
+        <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
+          {roles.map((r) => (
+            <div
+              key={r.title}
+              className="rounded-[var(--radius-md)] border border-border bg-bg/50 p-3"
+            >
+              <r.icon className="mb-2 size-4 text-primary" />
+              <div className="text-sm font-medium text-fg">{r.title}</div>
+              <p className="mt-1 text-xs leading-relaxed text-muted">{r.body}</p>
+            </div>
+          ))}
         </div>
 
-        <Card>
-          <CardHeader>
-            <CardTitle className="text-base">
-              Step {lesson.id}: {lesson.title}
-            </CardTitle>
-            <CardDescription>{lesson.plain}</CardDescription>
-          </CardHeader>
-          <div className="space-y-3">
-            <div className="rounded-[var(--radius-md)] border border-border bg-bg p-3">
-              <div className="text-xs font-medium uppercase tracking-wide text-subtle">
-                Why this step
-              </div>
-              <p className="mt-1 text-sm text-muted">{lesson.why}</p>
-            </div>
-            <div className="rounded-[var(--radius-md)] border border-border bg-bg p-3">
-              <div className="text-xs font-medium uppercase tracking-wide text-subtle">
-                Technical note
-              </div>
-              <p className="mt-1 font-mono text-xs text-fg">{lesson.technical}</p>
-            </div>
-            <div className="flex flex-wrap gap-2">
-              <Button
-                variant="secondary"
-                size="sm"
-                disabled={activeLesson === 0}
-                onClick={() => setActiveLesson((v) => Math.max(0, v - 1))}
-              >
-                Previous
-              </Button>
-              <Button
-                variant="secondary"
-                size="sm"
-                disabled={activeLesson >= X402_TUTORIAL_STEPS.length - 1}
-                onClick={() =>
-                  setActiveLesson((v) =>
-                    Math.min(X402_TUTORIAL_STEPS.length - 1, v + 1),
-                  )
-                }
-              >
-                Next step
-                <ArrowRight className="size-3.5" />
-              </Button>
-            </div>
-          </div>
-        </Card>
-      </div>
+        <div className="mt-5 flex flex-wrap items-center gap-3">
+          <Button size="lg" onClick={runLab} disabled={running}>
+            {running ? (
+              <>
+                <Loader2 className="size-4 animate-spin" />
+                Running…
+              </>
+            ) : (
+              <>
+                <Play className="size-4" />
+                Run live lab
+              </>
+            )}
+          </Button>
+          <Button
+            variant="secondary"
+            size="lg"
+            disabled={running}
+            onClick={() => {
+              setLogs([]);
+              setRequirements(null);
+              setProof(null);
+              setResult(null);
+              setLiveStep(0);
+            }}
+          >
+            <RefreshCw className="size-4" />
+            Reset
+          </Button>
+          <span className="text-sm text-subtle">
+            Wallet {shortAddress(publicKey)} · lab units only
+          </span>
+        </div>
+      </Card>
 
-      {/* Live run output */}
       <div className="grid gap-4 lg:grid-cols-2">
         <Card>
           <CardHeader>
-            <CardTitle className="flex items-center gap-2 text-base">
-              <FlaskConical className="size-4 text-primary" />
-              Live protocol log
-            </CardTitle>
-            <CardDescription>
-              Hits the real lab endpoint in this app. Uses your wallet to sign the lab
-              payment intent (amount {X402_LAB_AMOUNT} units).
-            </CardDescription>
+            <CardTitle className="text-lg">Lesson cards</CardTitle>
+            <CardDescription>Tap a step. Run the lab to see it live.</CardDescription>
           </CardHeader>
-          <div className="max-h-80 space-y-2 overflow-y-auto">
+          <ol className="space-y-2">
+            {X402_TUTORIAL_STEPS.map((step, i) => {
+              const done = liveStep > step.id || (result && step.id <= 5);
+              const active = liveStep === step.id || activeLesson === i;
+              return (
+                <li key={step.id}>
+                  <button
+                    type="button"
+                    onClick={() => setActiveLesson(i)}
+                    className={cn(
+                      "flex w-full gap-3 rounded-[var(--radius-md)] border p-3 text-left transition-colors",
+                      active
+                        ? "border-primary/40 bg-primary/10"
+                        : "border-border bg-bg/40 hover:border-border-strong",
+                    )}
+                  >
+                    <span className="mt-0.5">
+                      {done ? (
+                        <CheckCircle2 className="size-5 text-success" />
+                      ) : active ? (
+                        <Zap className="size-5 text-primary" />
+                      ) : (
+                        <Circle className="size-5 text-subtle" />
+                      )}
+                    </span>
+                    <span>
+                      <span className="font-medium text-fg">
+                        {step.id}. {step.title}
+                      </span>
+                      <span className="mt-0.5 block text-sm text-muted">
+                        {step.plain}
+                      </span>
+                    </span>
+                  </button>
+                </li>
+              );
+            })}
+          </ol>
+          <div className="mt-4 rounded-[var(--radius-md)] border border-border bg-surface-2/40 p-4">
+            <div className="text-xs font-semibold uppercase tracking-wide text-subtle">
+              Why this step
+            </div>
+            <p className="mt-1 text-sm text-muted">{lesson.why}</p>
+            <p className="mt-2 font-mono text-xs text-subtle">{lesson.technical}</p>
+          </div>
+        </Card>
+
+        <Card>
+          <CardHeader>
+            <CardTitle className="text-lg">Live log</CardTitle>
+            <CardDescription>Request / response trail for this run.</CardDescription>
+          </CardHeader>
+          <div className="max-h-[28rem] space-y-2 overflow-y-auto font-mono text-xs">
             {logs.length === 0 && (
-              <p className="text-sm text-muted">
-                Press <strong className="text-fg">Run live x402 flow</strong> to watch
-                402 → sign → retry → 200.
+              <p className="text-sm text-subtle">
+                Press “Run live lab” to capture the 402 → pay → 200 trail.
               </p>
             )}
             {logs.map((log, i) => (
               <div
                 key={`${log.step}-${i}`}
-                className="rounded-[var(--radius-md)] border border-border bg-bg p-3"
+                className="rounded-[var(--radius-md)] border border-border bg-bg/60 p-3"
               >
-                <div className="flex items-center justify-between gap-2">
-                  <span className="text-xs font-medium text-fg">
-                    {log.step > 0 ? `Step ${log.step} · ` : ""}
-                    {log.label}
-                  </span>
-                  {log.status !== undefined && (
-                    <Badge
-                      variant={
-                        log.status === 200
-                          ? "success"
-                          : log.status === 402
-                            ? "warn"
-                            : "default"
-                      }
-                    >
-                      HTTP {log.status}
+                <div className="flex flex-wrap items-center gap-2 text-fg">
+                  <span className="text-primary">#{log.step}</span>
+                  <span className="font-medium">{log.label}</span>
+                  {log.status != null && (
+                    <Badge variant={log.status === 200 ? "default" : "learn"}>
+                      {log.status}
                     </Badge>
                   )}
                 </div>
-                <p className="mt-1 text-xs text-muted">{log.detail}</p>
+                <p className="mt-1 text-muted">{log.detail}</p>
               </div>
             ))}
           </div>
-        </Card>
-
-        <Card>
-          <CardHeader>
-            <CardTitle className="flex items-center gap-2 text-base">
-              <Sparkles className="size-4 text-primary" />
-              What you unlocked
-            </CardTitle>
-            <CardDescription>
-              After a valid payment proof, the server returns the paid resource.
-            </CardDescription>
-          </CardHeader>
-
-          {!result && !requirements && (
-            <p className="text-sm text-muted">
-              Run the lab to see the 402 challenge, your signed proof, and the premium
-              response.
-            </p>
-          )}
 
           {requirements && (
-            <div className="mb-3 space-y-2">
-              <div className="text-xs font-medium text-muted">402 requirements (excerpt)</div>
-              <pre className="max-h-40 overflow-auto rounded-[var(--radius-md)] border border-border bg-bg p-3 font-mono text-[10px] leading-relaxed text-muted">
+            <div className="mt-4 space-y-2">
+              <div className="text-xs font-semibold uppercase tracking-wide text-subtle">
+                402 accepts[0]
+              </div>
+              <pre className="overflow-x-auto rounded-[var(--radius-md)] border border-border bg-bg p-3 text-[11px] text-muted">
                 {JSON.stringify(
                   {
-                    error: requirements.error,
+                    x402Version: requirements.x402Version,
+                    resource: requirements.resource,
                     accepts: requirements.accepts.map((a) => ({
                       scheme: a.scheme,
                       network: a.network,
+                      amount: acceptAmount(a),
                       maxAmountRequired: a.maxAmountRequired,
                       payTo: a.payTo,
                       asset: a.asset,
-                      description: a.description,
                     })),
-                    why: requirements.why,
                   },
                   null,
                   2,
@@ -445,15 +373,21 @@ export function X402Lab({
           )}
 
           {proof && (
-            <div className="mb-3 space-y-2">
-              <div className="text-xs font-medium text-muted">Your payment proof</div>
-              <pre className="max-h-36 overflow-auto rounded-[var(--radius-md)] border border-border bg-bg p-3 font-mono text-[10px] leading-relaxed text-muted">
+            <div className="mt-3 space-y-2">
+              <div className="text-xs font-semibold uppercase tracking-wide text-subtle">
+                Signed proof (truncated)
+              </div>
+              <pre className="overflow-x-auto rounded-[var(--radius-md)] border border-border bg-bg p-3 text-[11px] text-muted">
                 {JSON.stringify(
                   {
-                    ...proof,
+                    x402Version: proof.x402Version,
+                    scheme: proof.scheme,
+                    network: proof.network,
                     payload: {
-                      ...proof.payload,
-                      signature: `${proof.payload.signature.slice(0, 20)}…`,
+                      payer: proof.payload.payer,
+                      amount: proof.payload.amount,
+                      nonce: proof.payload.nonce,
+                      signature: `${proof.payload.signature.slice(0, 16)}…`,
                     },
                   },
                   null,
@@ -464,96 +398,25 @@ export function X402Lab({
           )}
 
           {result && (
-            <div className="rounded-[var(--radius-lg)] border border-success/30 bg-success-bg p-4">
-              <div className="text-xs font-medium uppercase tracking-wide text-success">
-                Premium resource
+            <div className="mt-4 rounded-[var(--radius-lg)] border border-success/30 bg-success-bg/40 p-4">
+              <div className="flex items-center gap-2 text-success">
+                <Sparkles className="size-4" />
+                <span className="font-semibold">Unlocked</span>
               </div>
               <p className="mt-2 text-sm leading-relaxed text-fg">{result.fact}</p>
+              <div className="mt-3">
+                <Link
+                  to="/guides/x402-v1-vs-v2"
+                  className="link-readable inline-flex items-center gap-1 text-sm font-medium"
+                >
+                  Read v1 vs v2
+                  <ArrowRight className="size-3.5" />
+                </Link>
+              </div>
             </div>
           )}
         </Card>
       </div>
-
-      {/* Lab vs production */}
-      <Card>
-        <CardHeader>
-          <CardTitle className="text-base">Lab mode vs production x402</CardTitle>
-          <CardDescription>
-            Same request loop — different settlement backend.
-          </CardDescription>
-        </CardHeader>
-        <div className="overflow-x-auto">
-          <table className="w-full min-w-[520px] text-left text-sm">
-            <thead>
-              <tr className="border-b border-border text-xs text-muted">
-                <th className="py-2 pr-3 font-medium">Piece</th>
-                <th className="py-2 pr-3 font-medium">This lab</th>
-                <th className="py-2 font-medium">Production (typical)</th>
-              </tr>
-            </thead>
-            <tbody className="text-muted">
-              <tr className="border-b border-border/70">
-                <td className="py-2.5 pr-3 text-fg">Challenge</td>
-                <td className="py-2.5 pr-3">HTTP 402 + JSON accepts[]</td>
-                <td className="py-2.5">HTTP 402 + PAYMENT-REQUIRED / body</td>
-              </tr>
-              <tr className="border-b border-border/70">
-                <td className="py-2.5 pr-3 text-fg">Asset</td>
-                <td className="py-2.5 pr-3">Lab units (signed intent)</td>
-                <td className="py-2.5">USDC on Solana / Base / etc.</td>
-              </tr>
-              <tr className="border-b border-border/70">
-                <td className="py-2.5 pr-3 text-fg">Client proof</td>
-                <td className="py-2.5 pr-3">X-PAYMENT with ed25519 signature</td>
-                <td className="py-2.5">
-                  X-PAYMENT or PAYMENT-SIGNATURE (signed transfer / authorization)
-                </td>
-              </tr>
-              <tr className="border-b border-border/70">
-                <td className="py-2.5 pr-3 text-fg">Settlement</td>
-                <td className="py-2.5 pr-3">Server verifies signature only</td>
-                <td className="py-2.5">On-chain transfer + optional facilitator</td>
-              </tr>
-              <tr>
-                <td className="py-2.5 pr-3 text-fg">Your wallet role</td>
-                <td className="py-2.5 pr-3">Signer for the lab intent</td>
-                <td className="py-2.5">
-                  Same keys can power a real Solana x402 client later
-                </td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-        <p className="mt-4 text-xs text-subtle">
-          Spec & ecosystem:{" "}
-          <a
-            className="link-readable"
-            href="https://www.x402.org/"
-            target="_blank"
-            rel="noreferrer"
-          >
-            x402.org
-          </a>
-          {" · "}
-          <a
-            className="link-readable"
-            href="https://solana.com/docs/payments/agentic-payments/intro-to-x402"
-            target="_blank"
-            rel="noreferrer"
-          >
-            Solana x402 intro
-          </a>
-          {" · "}
-          <a
-            className="link-readable"
-            href="https://docs.cdp.coinbase.com/x402/welcome"
-            target="_blank"
-            rel="noreferrer"
-          >
-            Coinbase x402 docs
-          </a>
-        </p>
-      </Card>
     </div>
   );
 }

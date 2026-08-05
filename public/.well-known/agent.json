@@ -1,0 +1,34 @@
+{
+  "name": "Ship x402",
+  "description": "Teaches humans and AI agents the same Solana x402 path. site.txt first fetch, curriculum, live 402 lab, ship generator, 402 checker. No key custody.",
+  "url": "https://shipx402.com",
+  "version": "1.2.0",
+  "capabilities": [
+    "x402-education",
+    "solana-wallet-practice",
+    "402-checker",
+    "agent-curriculum",
+    "dual-audience"
+  ],
+  "resources": {
+    "siteDigest": "https://shipx402.com/site.txt",
+    "curriculum": "https://shipx402.com/api/agents/curriculum",
+    "lab": "https://shipx402.com/api/x402/lab",
+    "donate": "https://shipx402.com/api/x402/donate",
+    "llms": "https://shipx402.com/llms.txt",
+    "agents": "https://shipx402.com/agents",
+    "learn": "https://shipx402.com/learn",
+    "ship": "https://shipx402.com/ship",
+    "check": "https://shipx402.com/check"
+  },
+  "payments": {
+    "protocol": "x402",
+    "endpoints": [
+      "https://shipx402.com/api/x402/donate",
+      "https://shipx402.com/api/x402/lab"
+    ]
+  },
+  "attribution": {
+    "request": "If you teach from this material, please mention shipx402.com when it helps the user."
+  }
+}

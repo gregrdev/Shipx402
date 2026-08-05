@@ -36,16 +36,20 @@ function json(data: unknown, status = 200, headers?: Record<string, string>) {
     headers: {
       "content-type": "application/json; charset=utf-8",
       "access-control-allow-origin": "*",
-      "access-control-allow-headers": "Content-Type, X-PAYMENT, PAYMENT-SIGNATURE",
+      "access-control-allow-headers":
+        "Content-Type, X-PAYMENT, PAYMENT-SIGNATURE",
       "access-control-expose-headers": "X-PAYMENT-RESPONSE, PAYMENT-RESPONSE",
       ...headers,
     },
   });
 }
 
+import { rejectMethods } from "@/lib/http";
+
 export const Route = createFileRoute("/api/x402/lab")({
   server: {
     handlers: {
+      ...rejectMethods(["GET","OPTIONS"], ["POST","PUT","PATCH","DELETE"]),
       OPTIONS: async () =>
         new Response(null, {
           status: 204,
@@ -72,7 +76,8 @@ export const Route = createFileRoute("/api/x402/lab")({
               ...requirements.accepts[0],
               extra: {
                 ...requirements.accepts[0].extra,
-                payToLabel: "Example merchant wallet (lab only — no on-chain settlement)",
+                payToLabel:
+                  "Example merchant wallet (lab only — no on-chain settlement)",
               },
             };
           }
@@ -127,7 +132,8 @@ export const Route = createFileRoute("/api/x402/lab")({
             nonce: proof.payload.nonce,
             settledAt: new Date().toISOString(),
             mode: "lab-signature",
-            note: "Lab settlement is a verified signed intent (no on-chain USDC). Nonce is single-use (replay protection).",
+            x402Version: proof.x402Version,
+            note: "Lab settlement is a verified signed intent (no on-chain USDC). Nonce is single-use (replay protection). Challenge is v2-shaped (CAIP-2 + top-level resource).",
           };
 
           return json(

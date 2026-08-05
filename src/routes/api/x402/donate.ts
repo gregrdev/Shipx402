@@ -1,12 +1,17 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { Connection, LAMPORTS_PER_SOL, clusterApiUrl } from "@solana/web3.js";
 import bs58 from "bs58";
+import { rejectMethods } from "@/lib/http";
 import {
   DONATION_ADDRESS,
+  DONATION_CUSTOMARY_TIP_SOL,
+  DONATION_GENEROUS_THRESHOLD_SOL,
   DONATION_MAX_AGE_SECONDS,
   DONATION_MIN_LAMPORTS,
   DONATION_MIN_SOL,
   DONATION_RESOURCE_PATH,
+  DONATION_TIP_SUGGESTED_SOL,
+  donationThankYouCopy,
   isDonationAddressConfigured,
 } from "@/lib/donate";
 
@@ -75,8 +80,8 @@ function json(data: unknown, status = 200, headers?: Record<string, string>) {
     headers: {
       "content-type": "application/json; charset=utf-8",
       "access-control-allow-origin": "*",
-      "access-control-allow-headers": "Content-Type, X-PAYMENT",
-      "access-control-expose-headers": "X-PAYMENT-RESPONSE",
+      "access-control-allow-headers": "Content-Type, X-PAYMENT, PAYMENT-SIGNATURE",
+      "access-control-expose-headers": "X-PAYMENT-RESPONSE, PAYMENT-RESPONSE",
       ...headers,
     },
   });
@@ -120,8 +125,12 @@ function buildRequirements() {
           "Support Ship x402. Send SOL on mainnet, then retry with proof.",
         mimeType: "application/json",
         extra: {
+          required: false,
+          tipSuggestedSol: [...DONATION_TIP_SUGGESTED_SOL],
+          customaryTipSol: DONATION_CUSTOMARY_TIP_SOL,
+          generousAboveSol: DONATION_GENEROUS_THRESHOLD_SOL,
           how: `Transfer >= ${DONATION_MIN_SOL} SOL to payTo on Solana mainnet, then retry this URL with header X-PAYMENT: base64 of {"x402Version":2,"scheme":"onchain-sol","network":"${SOLANA_MAINNET_CAIP2}","payload":{"signature":"<tx signature>","payer":"<your pubkey>"}}`,
-          note: "Settlement is the transfer itself — the server verifies your transaction on-chain. Amounts above the minimum are welcome. Custom scheme (not the standard 'exact' facilitator flow); legacy network id 'solana' and x402Version 1 are also accepted on the proof for compatibility.",
+          note: "Settlement is the transfer itself — the server verifies your transaction on-chain. Tips are optional. Suggested range: 0.01–0.25 SOL; amounts above 0.25 SOL receive a special thank-you recognition. Custom scheme (not the standard 'exact' facilitator flow); legacy network id 'solana' and x402Version 1 are also accepted on the proof for compatibility.",
         },
       },
     ],
@@ -193,13 +202,15 @@ async function verifyOnChain(signature: string): Promise<
 export const Route = createFileRoute("/api/x402/donate")({
   server: {
     handlers: {
+      ...rejectMethods(["GET", "OPTIONS"], ["POST", "PUT", "PATCH", "DELETE"]),
       OPTIONS: async () =>
         new Response(null, {
           status: 204,
           headers: {
             "access-control-allow-origin": "*",
             "access-control-allow-methods": "GET, OPTIONS",
-            "access-control-allow-headers": "Content-Type, X-PAYMENT",
+            "access-control-allow-headers":
+              "Content-Type, X-PAYMENT, PAYMENT-SIGNATURE",
           },
         }),
 
@@ -207,7 +218,7 @@ export const Route = createFileRoute("/api/x402/donate")({
         if (!isDonationAddressConfigured()) {
           return json(
             {
-              error: "Donations not configured",
+              error: "Donation address not configured",
               hint: "Site owner: set DONATION_ADDRESS in src/lib/donate.ts to your mainnet public address.",
             },
             503,
@@ -215,13 +226,15 @@ export const Route = createFileRoute("/api/x402/donate")({
         }
 
         const paymentHeader =
-          request.headers.get("x-payment") ?? request.headers.get("X-PAYMENT");
+          request.headers.get("X-PAYMENT") ??
+          request.headers.get("payment-signature") ??
+          request.headers.get("PAYMENT-SIGNATURE") ??
+          request.headers.get("x-payment");
 
         if (!paymentHeader) {
-          const requirements = buildRequirements();
-          return json(requirements, 402, {
+          return json(buildRequirements(), 402, {
             "PAYMENT-REQUIRED": Buffer.from(
-              JSON.stringify(requirements),
+              JSON.stringify(buildRequirements()),
               "utf8",
             ).toString("base64"),
           });
@@ -229,11 +242,26 @@ export const Route = createFileRoute("/api/x402/donate")({
 
         let proof: DonationProof;
         try {
-          proof = JSON.parse(
-            Buffer.from(paymentHeader, "base64").toString("utf8"),
-          ) as DonationProof;
+          const raw =
+            typeof atob === "function"
+              ? atob(paymentHeader)
+              : Buffer.from(paymentHeader, "base64").toString("utf8");
+          proof = JSON.parse(raw) as DonationProof;
         } catch {
           return json({ error: "Malformed X-PAYMENT header" }, 400);
+        }
+
+        if (
+          proof.x402Version !== 2 &&
+          proof.x402Version !== 1
+        ) {
+          return json(
+            {
+              error: "Payment verification failed",
+              reason: "Unsupported x402Version",
+            },
+            402,
+          );
         }
 
         // Accept the custom scheme, and either the legacy "solana" network id
@@ -282,24 +310,28 @@ export const Route = createFileRoute("/api/x402/donate")({
           creditedSignatures.set(signature, Date.now());
           pruneCredited();
 
+          const amountSol = result.lamports / LAMPORTS_PER_SOL;
+          const thanks = donationThankYouCopy(amountSol);
+
           const receipt = {
             success: true,
             scheme: "onchain-sol",
             network: "solana",
             signature,
             payer: proof.payload.payer ?? result.payer,
-            amountSol: result.lamports / LAMPORTS_PER_SOL,
+            amountSol,
             settledAt: new Date().toISOString(),
             mode: "onchain-verified",
+            recognition: thanks.recognition,
           };
 
           return json(
             {
               ok: true,
               resource: DONATION_RESOURCE_PATH,
-              title: "Thank you for supporting Ship x402",
-              message:
-                "Your on-chain donation was verified. Real x402, real value — you just did in production what the lab taught.",
+              title: thanks.title,
+              message: thanks.message,
+              recognition: thanks.recognition,
               payment: receipt,
             },
             200,

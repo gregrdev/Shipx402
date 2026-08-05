@@ -1,5 +1,6 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { SiteChrome } from "@/components/site-chrome";
+import { SupportNudge } from "@/components/support-nudge";
 import { ShipGenerator } from "@/components/ship-generator";
 import { SEO_PAGES } from "@/lib/brand";
 import { pageHead, breadcrumbJsonLd } from "@/lib/seo";
@@ -41,6 +42,7 @@ function ShipPage() {
         </header>
         <ShipGenerator />
       </div>
+        <SupportNudge className="mt-10" />
     </SiteChrome>
   );
 }

@@ -106,43 +106,65 @@ export function grade402Response(params: {
       const required = [
         "scheme",
         "network",
-        "maxAmountRequired",
-        "resource",
         "payTo",
         "asset",
-        "mimeType",
         "maxTimeoutSeconds",
       ] as const;
 
       const first = accepts[0] as Record<string, unknown>;
       const missing = required.filter((k) => first[k] === undefined || first[k] === "");
-      if (missing.length === 0) {
+      const hasAmount =
+        (typeof first.amount === "string" && first.amount !== "") ||
+        (typeof first.maxAmountRequired === "string" && first.maxAmountRequired !== "");
+      const hasResource =
+        (typeof first.resource === "string" && first.resource !== "") ||
+        (typeof first.mimeType === "string" && first.mimeType !== "") ||
+        (o.resource !== undefined && typeof o.resource === "object");
+      if (missing.length === 0 && hasAmount && hasResource) {
         items.push({
           id: "fields",
           label: "First accepts[] entry has required fields",
           level: "pass",
-          hint: "scheme, network, maxAmountRequired, resource, payTo, asset, mimeType, maxTimeoutSeconds",
+          hint: "scheme, network, amount|maxAmountRequired, resource (item or top-level), payTo, asset, maxTimeoutSeconds",
         });
       } else {
+        const extra: string[] = [];
+        if (!hasAmount) extra.push("amount|maxAmountRequired");
+        if (!hasResource) extra.push("resource/mimeType or top-level resource");
         items.push({
           id: "fields",
           label: "First accepts[] entry has required fields",
           level: "fail",
-          hint: `Missing: ${missing.join(", ")}. Confirm against docs.x402.org.`,
+          hint: `Missing: ${[...missing, ...extra].join(", ")}. Confirm against docs.x402.org.`,
         });
       }
 
-      if (typeof first.maxAmountRequired === "string" && /^\d+$/.test(first.maxAmountRequired)) {
+      if (o.resource && typeof o.resource === "object") {
+        items.push({
+          id: "top-resource",
+          label: "Top-level resource object (v2)",
+          level: "pass",
+          hint: "v2 ResourceInfo present.",
+        });
+      }
+
+      const amountStr =
+        typeof first.amount === "string"
+          ? first.amount
+          : typeof first.maxAmountRequired === "string"
+            ? first.maxAmountRequired
+            : undefined;
+      if (typeof amountStr === "string" && /^\d+$/.test(amountStr)) {
         items.push({
           id: "amount",
-          label: "maxAmountRequired is a digit string",
+          label: "amount / maxAmountRequired is a digit string",
           level: "pass",
           hint: "Good.",
         });
-      } else if (first.maxAmountRequired !== undefined) {
+      } else if (amountStr !== undefined) {
         items.push({
           id: "amount",
-          label: "maxAmountRequired is a digit string",
+          label: "amount / maxAmountRequired is a digit string",
           level: "warn",
           hint: "Prefer atomic integer string (e.g. lamports / base units).",
         });

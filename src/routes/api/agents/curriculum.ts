@@ -5,9 +5,12 @@ import { buildAgentCurriculumPayload } from "@/lib/agent-curriculum";
  * Machine-readable curriculum for agents (and humans training agents).
  * Public, no secrets, safe to fetch without auth.
  */
+import { rejectMethods } from "@/lib/http";
+
 export const Route = createFileRoute("/api/agents/curriculum")({
   server: {
     handlers: {
+      ...rejectMethods(["GET","OPTIONS"], ["POST","PUT","PATCH","DELETE"]),
       GET: async () => {
         const body = buildAgentCurriculumPayload();
         return new Response(JSON.stringify(body, null, 2), {

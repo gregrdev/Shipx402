@@ -1,0 +1,10 @@
+{
+  "version": 1,
+  "resources": [
+    "https://shipx402.com/api/x402/donate",
+    "https://shipx402.com/api/x402/lab"
+  ],
+  "instructions": "Ship x402 educational site. Lab uses exact-lab signed intents (no on-chain). Donate verifies real mainnet SOL. Curriculum at /api/agents/curriculum. Full map: /llms.txt",
+  "documentation": "https://shipx402.com/learn",
+  "agentCard": "https://shipx402.com/.well-known/agent-card.json"
+}

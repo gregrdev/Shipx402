@@ -15,18 +15,32 @@ import { Route as AgentsRouteImport } from './routes/agents'
 import { Route as AppRouteImport } from './routes/app'
 import { Route as CheckRouteImport } from './routes/check'
 import { Route as DonateRouteImport } from './routes/donate'
+import { Route as ExplorerRouteImport } from './routes/explorer'
 import { Route as LearnRouteImport } from './routes/learn'
+import { Route as LoopRouteImport } from './routes/loop'
 import { Route as ShipRouteImport } from './routes/ship'
+import { Route as ToolsRouteImport } from './routes/tools'
 import { Route as WalletRouteImport } from './routes/wallet'
 import { Route as ApiCheck402RouteImport } from './routes/api/check-402'
+import { Route as GuidesAgentReadableRouteImport } from './routes/guides/agent-readable'
+import { Route as GuidesAgentWalletSafelyRouteImport } from './routes/guides/agent-wallet-safely'
+import { Route as GuidesBlindTransferProblemRouteImport } from './routes/guides/blind-transfer-problem'
 import { Route as GuidesCanAiAgentsSpendMoneyRouteImport } from './routes/guides/can-ai-agents-spend-money'
 import { Route as GuidesFacilitatorsExplainedRouteImport } from './routes/guides/facilitators-explained'
 import { Route as GuidesFirstSolanaWalletRouteImport } from './routes/guides/first-solana-wallet'
+import { Route as GuidesHttp402HistoryRouteImport } from './routes/guides/http-402-history'
+import { Route as GuidesReadingSolanaTxRouteImport } from './routes/guides/reading-solana-tx'
 import { Route as GuidesShipX402ApiSolanaRouteImport } from './routes/guides/ship-x402-api-solana'
 import { Route as GuidesTestX402EndpointRouteImport } from './routes/guides/test-x402-endpoint'
+import { Route as GuidesWhatIsAnRpcRouteImport } from './routes/guides/what-is-an-rpc'
 import { Route as GuidesWhatIsX402RouteImport } from './routes/guides/what-is-x402'
+import { Route as GuidesX402V1VsV2RouteImport } from './routes/guides/x402-v1-vs-v2'
 import { Route as GuidesX402VsMppRouteImport } from './routes/guides/x402-vs-mpp'
+import { Route as GuidesX402VsTokenGatingRouteImport } from './routes/guides/x402-vs-token-gating'
 import { Route as ApiAgentsCurriculumRouteImport } from './routes/api/agents/curriculum'
+import { Route as ApiAgentsDigestRouteImport } from './routes/api/agents/digest'
+import { Route as ApiAgentsSiteRouteImport } from './routes/api/agents/site'
+import { Route as ApiWalletLookupRouteImport } from './routes/api/wallet/lookup'
 import { Route as ApiX402DonateRouteImport } from './routes/api/x402/donate'
 import { Route as ApiX402LabRouteImport } from './routes/api/x402/lab'
 
@@ -60,14 +74,29 @@ const DonateRoute = DonateRouteImport.update({
   path: '/donate',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ExplorerRoute = ExplorerRouteImport.update({
+  id: '/explorer',
+  path: '/explorer',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const LearnRoute = LearnRouteImport.update({
   id: '/learn',
   path: '/learn',
   getParentRoute: () => rootRouteImport,
 } as any)
+const LoopRoute = LoopRouteImport.update({
+  id: '/loop',
+  path: '/loop',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ShipRoute = ShipRouteImport.update({
   id: '/ship',
   path: '/ship',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ToolsRoute = ToolsRouteImport.update({
+  id: '/tools',
+  path: '/tools',
   getParentRoute: () => rootRouteImport,
 } as any)
 const WalletRoute = WalletRouteImport.update({
@@ -80,6 +109,22 @@ const ApiCheck402Route = ApiCheck402RouteImport.update({
   path: '/api/check-402',
   getParentRoute: () => rootRouteImport,
 } as any)
+const GuidesAgentReadableRoute = GuidesAgentReadableRouteImport.update({
+  id: '/guides/agent-readable',
+  path: '/guides/agent-readable',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const GuidesAgentWalletSafelyRoute = GuidesAgentWalletSafelyRouteImport.update({
+  id: '/guides/agent-wallet-safely',
+  path: '/guides/agent-wallet-safely',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const GuidesBlindTransferProblemRoute =
+  GuidesBlindTransferProblemRouteImport.update({
+    id: '/guides/blind-transfer-problem',
+    path: '/guides/blind-transfer-problem',
+    getParentRoute: () => rootRouteImport,
+  } as any)
 const GuidesCanAiAgentsSpendMoneyRoute =
   GuidesCanAiAgentsSpendMoneyRouteImport.update({
     id: '/guides/can-ai-agents-spend-money',
@@ -97,6 +142,16 @@ const GuidesFirstSolanaWalletRoute = GuidesFirstSolanaWalletRouteImport.update({
   path: '/guides/first-solana-wallet',
   getParentRoute: () => rootRouteImport,
 } as any)
+const GuidesHttp402HistoryRoute = GuidesHttp402HistoryRouteImport.update({
+  id: '/guides/http-402-history',
+  path: '/guides/http-402-history',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const GuidesReadingSolanaTxRoute = GuidesReadingSolanaTxRouteImport.update({
+  id: '/guides/reading-solana-tx',
+  path: '/guides/reading-solana-tx',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const GuidesShipX402ApiSolanaRoute = GuidesShipX402ApiSolanaRouteImport.update({
   id: '/guides/ship-x402-api-solana',
   path: '/guides/ship-x402-api-solana',
@@ -107,9 +162,19 @@ const GuidesTestX402EndpointRoute = GuidesTestX402EndpointRouteImport.update({
   path: '/guides/test-x402-endpoint',
   getParentRoute: () => rootRouteImport,
 } as any)
+const GuidesWhatIsAnRpcRoute = GuidesWhatIsAnRpcRouteImport.update({
+  id: '/guides/what-is-an-rpc',
+  path: '/guides/what-is-an-rpc',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const GuidesWhatIsX402Route = GuidesWhatIsX402RouteImport.update({
   id: '/guides/what-is-x402',
   path: '/guides/what-is-x402',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const GuidesX402V1VsV2Route = GuidesX402V1VsV2RouteImport.update({
+  id: '/guides/x402-v1-vs-v2',
+  path: '/guides/x402-v1-vs-v2',
   getParentRoute: () => rootRouteImport,
 } as any)
 const GuidesX402VsMppRoute = GuidesX402VsMppRouteImport.update({
@@ -117,9 +182,29 @@ const GuidesX402VsMppRoute = GuidesX402VsMppRouteImport.update({
   path: '/guides/x402-vs-mpp',
   getParentRoute: () => rootRouteImport,
 } as any)
+const GuidesX402VsTokenGatingRoute = GuidesX402VsTokenGatingRouteImport.update({
+  id: '/guides/x402-vs-token-gating',
+  path: '/guides/x402-vs-token-gating',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ApiAgentsCurriculumRoute = ApiAgentsCurriculumRouteImport.update({
   id: '/api/agents/curriculum',
   path: '/api/agents/curriculum',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ApiAgentsDigestRoute = ApiAgentsDigestRouteImport.update({
+  id: '/api/agents/digest',
+  path: '/api/agents/digest',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ApiAgentsSiteRoute = ApiAgentsSiteRouteImport.update({
+  id: '/api/agents/site',
+  path: '/api/agents/site',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ApiWalletLookupRoute = ApiWalletLookupRouteImport.update({
+  id: '/api/wallet/lookup',
+  path: '/api/wallet/lookup',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ApiX402DonateRoute = ApiX402DonateRouteImport.update({
@@ -140,18 +225,32 @@ export interface FileRoutesByFullPath {
   '/app': typeof AppRoute
   '/check': typeof CheckRoute
   '/donate': typeof DonateRoute
+  '/explorer': typeof ExplorerRoute
   '/learn': typeof LearnRoute
+  '/loop': typeof LoopRoute
   '/ship': typeof ShipRoute
+  '/tools': typeof ToolsRoute
   '/wallet': typeof WalletRoute
   '/api/check-402': typeof ApiCheck402Route
+  '/guides/agent-readable': typeof GuidesAgentReadableRoute
+  '/guides/agent-wallet-safely': typeof GuidesAgentWalletSafelyRoute
+  '/guides/blind-transfer-problem': typeof GuidesBlindTransferProblemRoute
   '/guides/can-ai-agents-spend-money': typeof GuidesCanAiAgentsSpendMoneyRoute
   '/guides/facilitators-explained': typeof GuidesFacilitatorsExplainedRoute
   '/guides/first-solana-wallet': typeof GuidesFirstSolanaWalletRoute
+  '/guides/http-402-history': typeof GuidesHttp402HistoryRoute
+  '/guides/reading-solana-tx': typeof GuidesReadingSolanaTxRoute
   '/guides/ship-x402-api-solana': typeof GuidesShipX402ApiSolanaRoute
   '/guides/test-x402-endpoint': typeof GuidesTestX402EndpointRoute
+  '/guides/what-is-an-rpc': typeof GuidesWhatIsAnRpcRoute
   '/guides/what-is-x402': typeof GuidesWhatIsX402Route
+  '/guides/x402-v1-vs-v2': typeof GuidesX402V1VsV2Route
   '/guides/x402-vs-mpp': typeof GuidesX402VsMppRoute
+  '/guides/x402-vs-token-gating': typeof GuidesX402VsTokenGatingRoute
   '/api/agents/curriculum': typeof ApiAgentsCurriculumRoute
+  '/api/agents/digest': typeof ApiAgentsDigestRoute
+  '/api/agents/site': typeof ApiAgentsSiteRoute
+  '/api/wallet/lookup': typeof ApiWalletLookupRoute
   '/api/x402/donate': typeof ApiX402DonateRoute
   '/api/x402/lab': typeof ApiX402LabRoute
 }
@@ -162,18 +261,32 @@ export interface FileRoutesByTo {
   '/app': typeof AppRoute
   '/check': typeof CheckRoute
   '/donate': typeof DonateRoute
+  '/explorer': typeof ExplorerRoute
   '/learn': typeof LearnRoute
+  '/loop': typeof LoopRoute
   '/ship': typeof ShipRoute
+  '/tools': typeof ToolsRoute
   '/wallet': typeof WalletRoute
   '/api/check-402': typeof ApiCheck402Route
+  '/guides/agent-readable': typeof GuidesAgentReadableRoute
+  '/guides/agent-wallet-safely': typeof GuidesAgentWalletSafelyRoute
+  '/guides/blind-transfer-problem': typeof GuidesBlindTransferProblemRoute
   '/guides/can-ai-agents-spend-money': typeof GuidesCanAiAgentsSpendMoneyRoute
   '/guides/facilitators-explained': typeof GuidesFacilitatorsExplainedRoute
   '/guides/first-solana-wallet': typeof GuidesFirstSolanaWalletRoute
+  '/guides/http-402-history': typeof GuidesHttp402HistoryRoute
+  '/guides/reading-solana-tx': typeof GuidesReadingSolanaTxRoute
   '/guides/ship-x402-api-solana': typeof GuidesShipX402ApiSolanaRoute
   '/guides/test-x402-endpoint': typeof GuidesTestX402EndpointRoute
+  '/guides/what-is-an-rpc': typeof GuidesWhatIsAnRpcRoute
   '/guides/what-is-x402': typeof GuidesWhatIsX402Route
+  '/guides/x402-v1-vs-v2': typeof GuidesX402V1VsV2Route
   '/guides/x402-vs-mpp': typeof GuidesX402VsMppRoute
+  '/guides/x402-vs-token-gating': typeof GuidesX402VsTokenGatingRoute
   '/api/agents/curriculum': typeof ApiAgentsCurriculumRoute
+  '/api/agents/digest': typeof ApiAgentsDigestRoute
+  '/api/agents/site': typeof ApiAgentsSiteRoute
+  '/api/wallet/lookup': typeof ApiWalletLookupRoute
   '/api/x402/donate': typeof ApiX402DonateRoute
   '/api/x402/lab': typeof ApiX402LabRoute
 }
@@ -185,18 +298,32 @@ export interface FileRoutesById {
   '/app': typeof AppRoute
   '/check': typeof CheckRoute
   '/donate': typeof DonateRoute
+  '/explorer': typeof ExplorerRoute
   '/learn': typeof LearnRoute
+  '/loop': typeof LoopRoute
   '/ship': typeof ShipRoute
+  '/tools': typeof ToolsRoute
   '/wallet': typeof WalletRoute
   '/api/check-402': typeof ApiCheck402Route
+  '/guides/agent-readable': typeof GuidesAgentReadableRoute
+  '/guides/agent-wallet-safely': typeof GuidesAgentWalletSafelyRoute
+  '/guides/blind-transfer-problem': typeof GuidesBlindTransferProblemRoute
   '/guides/can-ai-agents-spend-money': typeof GuidesCanAiAgentsSpendMoneyRoute
   '/guides/facilitators-explained': typeof GuidesFacilitatorsExplainedRoute
   '/guides/first-solana-wallet': typeof GuidesFirstSolanaWalletRoute
+  '/guides/http-402-history': typeof GuidesHttp402HistoryRoute
+  '/guides/reading-solana-tx': typeof GuidesReadingSolanaTxRoute
   '/guides/ship-x402-api-solana': typeof GuidesShipX402ApiSolanaRoute
   '/guides/test-x402-endpoint': typeof GuidesTestX402EndpointRoute
+  '/guides/what-is-an-rpc': typeof GuidesWhatIsAnRpcRoute
   '/guides/what-is-x402': typeof GuidesWhatIsX402Route
+  '/guides/x402-v1-vs-v2': typeof GuidesX402V1VsV2Route
   '/guides/x402-vs-mpp': typeof GuidesX402VsMppRoute
+  '/guides/x402-vs-token-gating': typeof GuidesX402VsTokenGatingRoute
   '/api/agents/curriculum': typeof ApiAgentsCurriculumRoute
+  '/api/agents/digest': typeof ApiAgentsDigestRoute
+  '/api/agents/site': typeof ApiAgentsSiteRoute
+  '/api/wallet/lookup': typeof ApiWalletLookupRoute
   '/api/x402/donate': typeof ApiX402DonateRoute
   '/api/x402/lab': typeof ApiX402LabRoute
 }
@@ -209,18 +336,32 @@ export interface FileRouteTypes {
     | '/app'
     | '/check'
     | '/donate'
+    | '/explorer'
     | '/learn'
+    | '/loop'
     | '/ship'
+    | '/tools'
     | '/wallet'
     | '/api/check-402'
+    | '/guides/agent-readable'
+    | '/guides/agent-wallet-safely'
+    | '/guides/blind-transfer-problem'
     | '/guides/can-ai-agents-spend-money'
     | '/guides/facilitators-explained'
     | '/guides/first-solana-wallet'
+    | '/guides/http-402-history'
+    | '/guides/reading-solana-tx'
     | '/guides/ship-x402-api-solana'
     | '/guides/test-x402-endpoint'
+    | '/guides/what-is-an-rpc'
     | '/guides/what-is-x402'
+    | '/guides/x402-v1-vs-v2'
     | '/guides/x402-vs-mpp'
+    | '/guides/x402-vs-token-gating'
     | '/api/agents/curriculum'
+    | '/api/agents/digest'
+    | '/api/agents/site'
+    | '/api/wallet/lookup'
     | '/api/x402/donate'
     | '/api/x402/lab'
   fileRoutesByTo: FileRoutesByTo
@@ -231,18 +372,32 @@ export interface FileRouteTypes {
     | '/app'
     | '/check'
     | '/donate'
+    | '/explorer'
     | '/learn'
+    | '/loop'
     | '/ship'
+    | '/tools'
     | '/wallet'
     | '/api/check-402'
+    | '/guides/agent-readable'
+    | '/guides/agent-wallet-safely'
+    | '/guides/blind-transfer-problem'
     | '/guides/can-ai-agents-spend-money'
     | '/guides/facilitators-explained'
     | '/guides/first-solana-wallet'
+    | '/guides/http-402-history'
+    | '/guides/reading-solana-tx'
     | '/guides/ship-x402-api-solana'
     | '/guides/test-x402-endpoint'
+    | '/guides/what-is-an-rpc'
     | '/guides/what-is-x402'
+    | '/guides/x402-v1-vs-v2'
     | '/guides/x402-vs-mpp'
+    | '/guides/x402-vs-token-gating'
     | '/api/agents/curriculum'
+    | '/api/agents/digest'
+    | '/api/agents/site'
+    | '/api/wallet/lookup'
     | '/api/x402/donate'
     | '/api/x402/lab'
   id:
@@ -253,18 +408,32 @@ export interface FileRouteTypes {
     | '/app'
     | '/check'
     | '/donate'
+    | '/explorer'
     | '/learn'
+    | '/loop'
     | '/ship'
+    | '/tools'
     | '/wallet'
     | '/api/check-402'
+    | '/guides/agent-readable'
+    | '/guides/agent-wallet-safely'
+    | '/guides/blind-transfer-problem'
     | '/guides/can-ai-agents-spend-money'
     | '/guides/facilitators-explained'
     | '/guides/first-solana-wallet'
+    | '/guides/http-402-history'
+    | '/guides/reading-solana-tx'
     | '/guides/ship-x402-api-solana'
     | '/guides/test-x402-endpoint'
+    | '/guides/what-is-an-rpc'
     | '/guides/what-is-x402'
+    | '/guides/x402-v1-vs-v2'
     | '/guides/x402-vs-mpp'
+    | '/guides/x402-vs-token-gating'
     | '/api/agents/curriculum'
+    | '/api/agents/digest'
+    | '/api/agents/site'
+    | '/api/wallet/lookup'
     | '/api/x402/donate'
     | '/api/x402/lab'
   fileRoutesById: FileRoutesById
@@ -276,18 +445,32 @@ export interface RootRouteChildren {
   AppRoute: typeof AppRoute
   CheckRoute: typeof CheckRoute
   DonateRoute: typeof DonateRoute
+  ExplorerRoute: typeof ExplorerRoute
   LearnRoute: typeof LearnRoute
+  LoopRoute: typeof LoopRoute
   ShipRoute: typeof ShipRoute
+  ToolsRoute: typeof ToolsRoute
   WalletRoute: typeof WalletRoute
   ApiCheck402Route: typeof ApiCheck402Route
+  GuidesAgentReadableRoute: typeof GuidesAgentReadableRoute
+  GuidesAgentWalletSafelyRoute: typeof GuidesAgentWalletSafelyRoute
+  GuidesBlindTransferProblemRoute: typeof GuidesBlindTransferProblemRoute
   GuidesCanAiAgentsSpendMoneyRoute: typeof GuidesCanAiAgentsSpendMoneyRoute
   GuidesFacilitatorsExplainedRoute: typeof GuidesFacilitatorsExplainedRoute
   GuidesFirstSolanaWalletRoute: typeof GuidesFirstSolanaWalletRoute
+  GuidesHttp402HistoryRoute: typeof GuidesHttp402HistoryRoute
+  GuidesReadingSolanaTxRoute: typeof GuidesReadingSolanaTxRoute
   GuidesShipX402ApiSolanaRoute: typeof GuidesShipX402ApiSolanaRoute
   GuidesTestX402EndpointRoute: typeof GuidesTestX402EndpointRoute
+  GuidesWhatIsAnRpcRoute: typeof GuidesWhatIsAnRpcRoute
   GuidesWhatIsX402Route: typeof GuidesWhatIsX402Route
+  GuidesX402V1VsV2Route: typeof GuidesX402V1VsV2Route
   GuidesX402VsMppRoute: typeof GuidesX402VsMppRoute
+  GuidesX402VsTokenGatingRoute: typeof GuidesX402VsTokenGatingRoute
   ApiAgentsCurriculumRoute: typeof ApiAgentsCurriculumRoute
+  ApiAgentsDigestRoute: typeof ApiAgentsDigestRoute
+  ApiAgentsSiteRoute: typeof ApiAgentsSiteRoute
+  ApiWalletLookupRoute: typeof ApiWalletLookupRoute
   ApiX402DonateRoute: typeof ApiX402DonateRoute
   ApiX402LabRoute: typeof ApiX402LabRoute
 }
@@ -336,6 +519,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof DonateRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/explorer': {
+      id: '/explorer'
+      path: '/explorer'
+      fullPath: '/explorer'
+      preLoaderRoute: typeof ExplorerRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/learn': {
       id: '/learn'
       path: '/learn'
@@ -343,11 +533,25 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof LearnRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/loop': {
+      id: '/loop'
+      path: '/loop'
+      fullPath: '/loop'
+      preLoaderRoute: typeof LoopRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/ship': {
       id: '/ship'
       path: '/ship'
       fullPath: '/ship'
       preLoaderRoute: typeof ShipRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/tools': {
+      id: '/tools'
+      path: '/tools'
+      fullPath: '/tools'
+      preLoaderRoute: typeof ToolsRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/wallet': {
@@ -362,6 +566,27 @@ declare module '@tanstack/react-router' {
       path: '/api/check-402'
       fullPath: '/api/check-402'
       preLoaderRoute: typeof ApiCheck402RouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/guides/agent-readable': {
+      id: '/guides/agent-readable'
+      path: '/guides/agent-readable'
+      fullPath: '/guides/agent-readable'
+      preLoaderRoute: typeof GuidesAgentReadableRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/guides/agent-wallet-safely': {
+      id: '/guides/agent-wallet-safely'
+      path: '/guides/agent-wallet-safely'
+      fullPath: '/guides/agent-wallet-safely'
+      preLoaderRoute: typeof GuidesAgentWalletSafelyRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/guides/blind-transfer-problem': {
+      id: '/guides/blind-transfer-problem'
+      path: '/guides/blind-transfer-problem'
+      fullPath: '/guides/blind-transfer-problem'
+      preLoaderRoute: typeof GuidesBlindTransferProblemRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/guides/can-ai-agents-spend-money': {
@@ -385,6 +610,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof GuidesFirstSolanaWalletRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/guides/http-402-history': {
+      id: '/guides/http-402-history'
+      path: '/guides/http-402-history'
+      fullPath: '/guides/http-402-history'
+      preLoaderRoute: typeof GuidesHttp402HistoryRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/guides/reading-solana-tx': {
+      id: '/guides/reading-solana-tx'
+      path: '/guides/reading-solana-tx'
+      fullPath: '/guides/reading-solana-tx'
+      preLoaderRoute: typeof GuidesReadingSolanaTxRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/guides/ship-x402-api-solana': {
       id: '/guides/ship-x402-api-solana'
       path: '/guides/ship-x402-api-solana'
@@ -399,11 +638,25 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof GuidesTestX402EndpointRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/guides/what-is-an-rpc': {
+      id: '/guides/what-is-an-rpc'
+      path: '/guides/what-is-an-rpc'
+      fullPath: '/guides/what-is-an-rpc'
+      preLoaderRoute: typeof GuidesWhatIsAnRpcRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/guides/what-is-x402': {
       id: '/guides/what-is-x402'
       path: '/guides/what-is-x402'
       fullPath: '/guides/what-is-x402'
       preLoaderRoute: typeof GuidesWhatIsX402RouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/guides/x402-v1-vs-v2': {
+      id: '/guides/x402-v1-vs-v2'
+      path: '/guides/x402-v1-vs-v2'
+      fullPath: '/guides/x402-v1-vs-v2'
+      preLoaderRoute: typeof GuidesX402V1VsV2RouteImport
       parentRoute: typeof rootRouteImport
     }
     '/guides/x402-vs-mpp': {
@@ -413,11 +666,39 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof GuidesX402VsMppRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/guides/x402-vs-token-gating': {
+      id: '/guides/x402-vs-token-gating'
+      path: '/guides/x402-vs-token-gating'
+      fullPath: '/guides/x402-vs-token-gating'
+      preLoaderRoute: typeof GuidesX402VsTokenGatingRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/api/agents/curriculum': {
       id: '/api/agents/curriculum'
       path: '/api/agents/curriculum'
       fullPath: '/api/agents/curriculum'
       preLoaderRoute: typeof ApiAgentsCurriculumRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/api/agents/digest': {
+      id: '/api/agents/digest'
+      path: '/api/agents/digest'
+      fullPath: '/api/agents/digest'
+      preLoaderRoute: typeof ApiAgentsDigestRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/api/agents/site': {
+      id: '/api/agents/site'
+      path: '/api/agents/site'
+      fullPath: '/api/agents/site'
+      preLoaderRoute: typeof ApiAgentsSiteRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/api/wallet/lookup': {
+      id: '/api/wallet/lookup'
+      path: '/api/wallet/lookup'
+      fullPath: '/api/wallet/lookup'
+      preLoaderRoute: typeof ApiWalletLookupRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/api/x402/donate': {
@@ -444,18 +725,32 @@ const rootRouteChildren: RootRouteChildren = {
   AppRoute: AppRoute,
   CheckRoute: CheckRoute,
   DonateRoute: DonateRoute,
+  ExplorerRoute: ExplorerRoute,
   LearnRoute: LearnRoute,
+  LoopRoute: LoopRoute,
   ShipRoute: ShipRoute,
+  ToolsRoute: ToolsRoute,
   WalletRoute: WalletRoute,
   ApiCheck402Route: ApiCheck402Route,
+  GuidesAgentReadableRoute: GuidesAgentReadableRoute,
+  GuidesAgentWalletSafelyRoute: GuidesAgentWalletSafelyRoute,
+  GuidesBlindTransferProblemRoute: GuidesBlindTransferProblemRoute,
   GuidesCanAiAgentsSpendMoneyRoute: GuidesCanAiAgentsSpendMoneyRoute,
   GuidesFacilitatorsExplainedRoute: GuidesFacilitatorsExplainedRoute,
   GuidesFirstSolanaWalletRoute: GuidesFirstSolanaWalletRoute,
+  GuidesHttp402HistoryRoute: GuidesHttp402HistoryRoute,
+  GuidesReadingSolanaTxRoute: GuidesReadingSolanaTxRoute,
   GuidesShipX402ApiSolanaRoute: GuidesShipX402ApiSolanaRoute,
   GuidesTestX402EndpointRoute: GuidesTestX402EndpointRoute,
+  GuidesWhatIsAnRpcRoute: GuidesWhatIsAnRpcRoute,
   GuidesWhatIsX402Route: GuidesWhatIsX402Route,
+  GuidesX402V1VsV2Route: GuidesX402V1VsV2Route,
   GuidesX402VsMppRoute: GuidesX402VsMppRoute,
+  GuidesX402VsTokenGatingRoute: GuidesX402VsTokenGatingRoute,
   ApiAgentsCurriculumRoute: ApiAgentsCurriculumRoute,
+  ApiAgentsDigestRoute: ApiAgentsDigestRoute,
+  ApiAgentsSiteRoute: ApiAgentsSiteRoute,
+  ApiWalletLookupRoute: ApiWalletLookupRoute,
   ApiX402DonateRoute: ApiX402DonateRoute,
   ApiX402LabRoute: ApiX402LabRoute,
 }

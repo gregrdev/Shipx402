@@ -20,10 +20,12 @@ import {
 } from "@/lib/solana-pay";
 import {
   DONATION_ADDRESS,
+  DONATION_DEFAULT_SOL,
   DONATION_MIN_SOL,
-  DONATION_PRESETS_SOL,
+  DONATION_TIERS,
   DONATION_RESOURCE_PATH,
   isDonationAddressConfigured,
+  isGenerousDonation,
 } from "@/lib/donate";
 import { DonationQr } from "@/components/donation-qr";
 import { copyText, cn } from "@/lib/utils";
@@ -35,7 +37,7 @@ import { copyText, cn } from "@/lib/utils";
 export function DonatePanel() {
   const configured = isDonationAddressConfigured();
 
-  const [amount, setAmount] = useState<string>(String(DONATION_PRESETS_SOL[0]));
+  const [amount, setAmount] = useState<string>(String(DONATION_DEFAULT_SOL));
   const [token, setToken] = useState<PaymentToken>("SOL");
   const [checking402, setChecking402] = useState(false);
   const [preview402, setPreview402] = useState<string | null>(null);
@@ -60,19 +62,20 @@ export function DonatePanel() {
     });
   }, [configured, amount, token]);
 
-  const endpointUrl =
+  const endpointUrl = DONATION_RESOURCE_PATH;
+  const endpointUrlAbsolute =
     typeof window !== "undefined"
       ? `${window.location.origin}${DONATION_RESOURCE_PATH}`
       : DONATION_RESOURCE_PATH;
 
   const curlExample = `# 1. Discover the price tag (HTTP 402)
-curl -s ${endpointUrl}
+curl -s https://shipx402.com${DONATION_RESOURCE_PATH}
 
 # 2. Send SOL on mainnet to the payTo address from the 402 body
 #    (any wallet or SDK — you keep your keys)
 
 # 3. Retry with proof
-curl -s ${endpointUrl} -H "X-PAYMENT: <base64 proof with your tx signature>"`;
+curl -s https://shipx402.com${DONATION_RESOURCE_PATH} -H "X-PAYMENT: <base64 proof with your tx signature>"`;
 
   const show402 = async () => {
     setChecking402(true);
@@ -98,7 +101,7 @@ curl -s ${endpointUrl} -H "X-PAYMENT: <base64 proof with your tx signature>"`;
     setReceiptResult(null);
     try {
       const proof = {
-        x402Version: 1,
+        x402Version: 2,
         scheme: "onchain-sol",
         network: "solana",
         payload: { signature },
@@ -114,7 +117,18 @@ curl -s ${endpointUrl} -H "X-PAYMENT: <base64 proof with your tx signature>"`;
       const body: unknown = await res.json();
       setReceiptResult({ ok: res.ok, status: res.status, body });
       if (res.ok) {
-        toast.success("Donation verified — receipt ready");
+        const recognition =
+          typeof body === "object" &&
+          body !== null &&
+          "recognition" in body &&
+          (body as { recognition?: string }).recognition === "generous"
+            ? "generous"
+            : "standard";
+        toast.success(
+          recognition === "generous"
+            ? "Huge thank you — generous donation verified"
+            : "Donation verified — receipt ready",
+        );
       } else {
         const reason =
           typeof body === "object" &&
@@ -150,49 +164,30 @@ curl -s ${endpointUrl} -H "X-PAYMENT: <base64 proof with your tx signature>"`;
   }
 
   return (
-    <div className="grid gap-4 lg:grid-cols-2">
-      <Card className="flex flex-col items-center text-center">
-        <CardHeader className="w-full">
-          <div className="mb-1 flex flex-wrap items-center justify-center gap-2">
-            <CardTitle className="flex items-center gap-2">
-              <Heart className="size-5 text-primary" />
-              Support Ship x402
-            </CardTitle>
-            <Badge variant="real">Mainnet · Solana</Badge>
-          </div>
+    <div className="grid gap-6 lg:grid-cols-2">
+      <Card>
+        <CardHeader>
+          <CardTitle className="flex items-center gap-2">
+            <Heart className="size-5 text-primary" />
+            Tip what it's worth
+          </CardTitle>
           <CardDescription>
-            Scan a standard Solana Pay QR generated from the donation address below. Any amount of SOL works — funds go on-chain only, no middleman.
+            Optional Solana Pay QR. Suggested range 0.01–0.25 SOL. Anything above
+            0.25 gets a special thank-you on the receipt — still optional either way.
           </CardDescription>
         </CardHeader>
-
-        <div className="mb-2 w-full">
-          <DonationQr size={256} />
-        </div>
-
-        <div className="w-full space-y-3 text-left">
-          <div>
-            <Label>Donation address</Label>
-            <div className="flex gap-2">
-              <Input readOnly value={DONATION_ADDRESS} className="font-mono text-xs" />
-              <Button
-                variant="secondary"
-                size="icon"
-                aria-label="Copy donation address"
-                onClick={async () => {
-                  await copyText(DONATION_ADDRESS);
-                  toast.success("Donation address copied");
-                }}
-              >
-                <Copy className="size-4" />
-              </Button>
-            </div>
+        <div className="space-y-4 p-6 pt-0">
+          <div className="flex justify-center">
+            <DonationQr size={256} />
           </div>
 
-          <div className="grid grid-cols-2 gap-3">
+          <div className="grid gap-3 sm:grid-cols-2">
             <div>
-              <Label>Suggested amount (for Solana Pay link)</Label>
+              <Label>Amount (SOL)</Label>
               <Input
-                inputMode="decimal"
+                type="number"
+                min={0}
+                step="0.001"
                 value={amount}
                 onChange={(e) => setAmount(e.target.value)}
               />
@@ -219,23 +214,60 @@ curl -s ${endpointUrl} -H "X-PAYMENT: <base64 proof with your tx signature>"`;
             </div>
           </div>
 
-          <div className="flex flex-wrap gap-2">
-            {DONATION_PRESETS_SOL.map((p) => (
+          <div className="grid gap-2 sm:grid-cols-2">
+            {DONATION_TIERS.map((tier) => (
               <button
-                key={p}
+                key={tier.sol}
                 type="button"
-                onClick={() => setAmount(String(p))}
+                onClick={() => setAmount(String(tier.sol))}
                 className={cn(
-                  "rounded-full border px-3.5 py-1.5 text-sm font-medium transition-colors",
-                  amount === String(p)
-                    ? "border-primary/40 bg-primary/15 text-primary"
-                    : "border-border bg-surface text-muted hover:text-fg",
+                  "rounded-[var(--radius-md)] border px-3 py-2.5 text-left transition-colors",
+                  amount === String(tier.sol)
+                    ? "border-primary/40 bg-primary/15"
+                    : "border-border bg-surface hover:border-border-strong",
                 )}
               >
-                {p} {token}
+                <div className="flex items-center justify-between gap-2">
+                  <span className="text-sm font-semibold text-fg">{tier.label}</span>
+                  <span className="font-mono text-xs text-primary">
+                    {tier.sol} {token}
+                  </span>
+                </div>
+                <p className="mt-0.5 text-xs text-muted">{tier.blurb}</p>
+                {tier.recommended ? (
+                  <span className="mt-1 inline-block text-[10px] font-semibold uppercase tracking-wide text-primary">
+                    Suggested default
+                  </span>
+                ) : null}
               </button>
             ))}
+            <button
+              type="button"
+              onClick={() => setAmount("0.5")}
+              className={cn(
+                "rounded-[var(--radius-md)] border px-3 py-2.5 text-left transition-colors",
+                isGenerousDonation(Number(amount))
+                  ? "border-ember/50 bg-ember/15"
+                  : "border-border bg-surface hover:border-border-strong",
+              )}
+              title="Anything above 0.25 SOL gets a special thank-you on the receipt"
+            >
+              <div className="flex items-center justify-between gap-2">
+                <span className="text-sm font-semibold text-fg">0.26+ {token}</span>
+                <span className="font-mono text-xs text-ember">generous</span>
+              </div>
+              <p className="mt-0.5 text-xs text-muted">
+                Huge thank-you on the receipt. Edit the amount to any value you like.
+              </p>
+            </button>
           </div>
+
+          {isGenerousDonation(Number(amount)) && (
+            <p className="text-xs text-ember/90">
+              Above the suggested range — if you send this, the receipt comes with a huge
+              thank you. Still optional; every amount helps.
+            </p>
+          )}
 
           {payUrl && (
             <Button
@@ -287,17 +319,31 @@ curl -s ${endpointUrl} -H "X-PAYMENT: <base64 proof with your tx signature>"`;
               Verify & show receipt
             </Button>
             {receiptResult && (
-              <pre
-                className={cn(
-                  "mt-3 max-h-48 overflow-auto rounded-[var(--radius-md)] border p-3 font-mono text-[11px] leading-relaxed",
-                  receiptResult.ok
-                    ? "border-success/30 bg-success-bg text-success"
-                    : "border-border bg-bg text-muted",
-                )}
-              >
-                {`HTTP ${receiptResult.status}\n`}
-                {JSON.stringify(receiptResult.body, null, 2)}
-              </pre>
+              <div className="mt-3 space-y-2">
+                {receiptResult.ok &&
+                  typeof receiptResult.body === "object" &&
+                  receiptResult.body !== null &&
+                  "recognition" in receiptResult.body &&
+                  (receiptResult.body as { recognition?: string }).recognition ===
+                    "generous" && (
+                    <div className="rounded-[var(--radius-md)] border border-ember/40 bg-ember/10 px-3 py-2 text-sm text-fg">
+                      <span className="font-semibold text-ember">Huge thank you.</span>{" "}
+                      {(receiptResult.body as { message?: string }).message ??
+                        "Your support went above the suggested range and it truly helps keep this free."}
+                    </div>
+                  )}
+                <pre
+                  className={cn(
+                    "max-h-48 overflow-auto rounded-[var(--radius-md)] border p-3 font-mono text-[11px] leading-relaxed",
+                    receiptResult.ok
+                      ? "border-success/30 bg-success-bg text-success"
+                      : "border-border bg-bg text-muted",
+                  )}
+                >
+                  {`HTTP ${receiptResult.status}\n`}
+                  {JSON.stringify(receiptResult.body, null, 2)}
+                </pre>
+              </div>
             )}
           </div>
         </div>
@@ -305,30 +351,42 @@ curl -s ${endpointUrl} -H "X-PAYMENT: <base64 proof with your tx signature>"`;
 
       <Card>
         <CardHeader>
-          <div className="mb-1 flex flex-wrap items-center gap-2">
-            <CardTitle className="flex items-center gap-2">
-              <Bot className="size-5 text-primary" />
-              Agents donate via x402
-            </CardTitle>
-            <Badge variant="learn">Live endpoint</Badge>
-          </div>
+          <CardTitle className="flex items-center gap-2">
+            <Bot className="size-5 text-primary" />
+            Agent tip (x402)
+          </CardTitle>
           <CardDescription>
-            Real SOL on mainnet to the same address. Minimum {DONATION_MIN_SOL} SOL.
+            Live mainnet 402. Agents GET the endpoint, send SOL, retry with proof.
+            Tips are optional — suggested 0.01 / 0.05 / 0.25 SOL.
           </CardDescription>
         </CardHeader>
-
-        <div className="space-y-3">
+        <div className="space-y-4 p-6 pt-0">
           <div className="rounded-[var(--radius-md)] border border-border bg-bg p-3">
-            <div className="text-xs uppercase tracking-wide text-subtle">payTo</div>
-            <div className="mt-1 break-all font-mono text-sm text-fg">
-              {DONATION_ADDRESS}
+            <div className="mb-1 text-xs font-medium uppercase tracking-wide text-subtle">
+              Endpoint
+            </div>
+            <div className="flex items-center gap-2">
+              <code className="flex-1 break-all font-mono text-xs text-fg">
+                {endpointUrl}
+              </code>
+              <Button
+                size="sm"
+                variant="secondary"
+                onClick={async () => {
+                  await copyText(endpointUrlAbsolute);
+                  toast.success("Endpoint copied");
+                }}
+              >
+                <Copy className="size-3.5" />
+              </Button>
             </div>
           </div>
+
           <div className="rounded-[var(--radius-md)] border border-border bg-bg p-3">
-            <div className="text-xs uppercase tracking-wide text-subtle">Endpoint</div>
-            <div className="mt-1 break-all font-mono text-sm text-fg">
-              GET {endpointUrl}
+            <div className="mb-1 text-xs font-medium uppercase tracking-wide text-subtle">
+              payTo (mainnet)
             </div>
+            <Input readOnly value={DONATION_ADDRESS} className="font-mono text-xs" />
           </div>
 
           <Button
@@ -342,36 +400,20 @@ curl -s ${endpointUrl} -H "X-PAYMENT: <base64 proof with your tx signature>"`;
             ) : (
               <TerminalSquare className="size-4" />
             )}
-            Preview the 402 price tag
+            Preview the live 402
           </Button>
 
           {preview402 && (
-            <pre className="max-h-64 overflow-auto rounded-[var(--radius-md)] border border-border bg-bg p-3 font-mono text-[11px] leading-relaxed text-muted">
+            <pre className="max-h-56 overflow-auto rounded-[var(--radius-md)] border border-border bg-bg p-3 font-mono text-[11px] text-muted">
               {preview402}
             </pre>
           )}
 
-          <div className="rounded-[var(--radius-md)] border border-border bg-bg p-3">
-            <div className="mb-2 flex items-center justify-between gap-2">
-              <div className="text-xs uppercase tracking-wide text-subtle">
-                For agents & builders
-              </div>
-              <Button
-                variant="ghost"
-                size="sm"
-                onClick={async () => {
-                  await copyText(curlExample);
-                  toast.success("curl example copied");
-                }}
-              >
-                <Copy className="size-3.5" />
-                Copy
-              </Button>
-            </div>
-            <pre className="overflow-x-auto font-mono text-[11px] leading-relaxed text-muted">
-              {curlExample}
-            </pre>
-          </div>
+          <pre className="overflow-auto rounded-[var(--radius-md)] border border-border bg-bg p-3 font-mono text-[11px] text-muted">
+            {curlExample}
+          </pre>
+
+          <Badge variant="default">required: false · customary: 0.05 SOL</Badge>
         </div>
       </Card>
     </div>

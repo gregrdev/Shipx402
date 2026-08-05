@@ -6,7 +6,6 @@ import {
   SystemProgram,
   Transaction,
   clusterApiUrl,
-  sendAndConfirmTransaction,
   type Cluster,
 } from "@solana/web3.js";
 import bs58 from "bs58";

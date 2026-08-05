@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Copy, Loader2, Search } from "lucide-react";
+import { Copy, Heart, Loader2, Search, Share2 } from "lucide-react";
 import { toast } from "sonner";
 import { Link } from "@tanstack/react-router";
 import { Button } from "@/components/ui/button";
@@ -44,9 +44,21 @@ export function Check402Panel({ defaultUrl = "" }: { defaultUrl?: string }) {
     }
   };
 
+  const shareGrade = async (report: GradeReport) => {
+    const text = `My x402 endpoint scored ${report.grade} on shipx402.com/check\n${url.trim() || "endpoint"}\n\nGrade your 402: https://shipx402.com/check`;
+    await copyText(text);
+    toast.success("Share text copied — paste it anywhere");
+  };
+
   return (
     <div className="space-y-5">
-      <div className="rounded-[var(--radius-xl)] border border-border bg-surface p-5">
+      <div className="rounded-[var(--radius-xl)] border border-primary/30 bg-primary/5 p-5">
+        <div className="mb-3 flex flex-wrap items-center gap-2">
+          <Badge variant="default">Free lead magnet</Badge>
+          <span className="text-sm text-muted">
+            Paste a URL → get an A–F grade. Screenshot an A.
+          </span>
+        </div>
         <Label>API URL to check</Label>
         <div className="mt-1 flex flex-col gap-2 sm:flex-row">
           <Input
@@ -107,6 +119,14 @@ export function Check402Panel({ defaultUrl = "" }: { defaultUrl?: string }) {
               <Copy className="size-3.5" />
               Copy report
             </Button>
+            <Button
+              variant="secondary"
+              size="sm"
+              onClick={() => void shareGrade(report)}
+            >
+              <Share2 className="size-3.5" />
+              Share grade
+            </Button>
           </div>
           <ul className="space-y-2">
             {report.items.map((item) => (
@@ -134,17 +154,26 @@ export function Check402Panel({ defaultUrl = "" }: { defaultUrl?: string }) {
               {report.bodyPreview}
             </pre>
           )}
-          <p className="text-sm text-subtle">
-            This tool is free — agents and humans can tip via x402 →{" "}
-            <Link to="/donate" className="link-readable">
-              /donate
-            </Link>
-            . Build snippets at{" "}
-            <Link to="/ship" className="link-readable">
-              /ship
-            </Link>
-            .
-          </p>
+
+          {/* Soft post-value tip — no modal, no guilt */}
+          <div className="rounded-[var(--radius-md)] border border-border bg-bg/80 px-4 py-3 text-sm text-muted">
+            <div className="mb-1 flex items-center gap-2 font-medium text-fg">
+              <Heart className="size-3.5 text-primary" />
+              This checker is free
+            </div>
+            <p>
+              If it helped you ship or debug a 402, tip what you think it's worth
+              (optional). Suggested 0.01–0.25 SOL —{" "}
+              <Link to="/donate" className="link-readable">
+                /donate
+              </Link>
+              . Need middleware?{" "}
+              <Link to="/ship" className="link-readable">
+                /ship
+              </Link>
+              .
+            </p>
+          </div>
         </div>
       )}
     </div>
