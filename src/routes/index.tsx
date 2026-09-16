@@ -103,7 +103,7 @@ function HomePage() {
               1. What Is x402
             </Link>
             <Link to="/loop" className="link-readable text-sm font-medium">
-              2. Walk the Loop
+              2. Walk the loop
             </Link>
             <Link to="/learn" className="text-sm text-subtle hover:text-muted">
               Full

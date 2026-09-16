@@ -33,16 +33,7 @@ function CheckPage() {
           </h1>
           <p className="text-lg text-muted">
             Paste an API URL. We fetch once over HTTPS (with SSRF protection) and grade
-            the 402 against current x402 V2: <code>PAYMENT-REQUIRED</code> header,
-            CAIP-2 <code>network</code>, <code>scheme</code>, and accepts[] fields. Free
-            · no account. Source of truth:{" "}
-            <a
-              href="https://docs.x402.org/core-concepts/http-402"
-              className="link-readable"
-            >
-              docs.x402.org
-            </a>
-            .
+            the 402 body for agent readiness. Free · no account.
           </p>
           <p className="text-sm text-subtle">
             Start with this site’s donate endpoint{" "}
@@ -54,7 +45,7 @@ function CheckPage() {
               <Link to="/ship">Need middleware? Open Ship generator</Link>
             </Button>
             <Button asChild variant="outline" size="sm">
-              <Link to="/loop">Walk the payment loop</Link>
+              <Link to="/loop">Walk the loop</Link>
             </Button>
           </div>
         </header>
