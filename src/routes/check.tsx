@@ -32,20 +32,23 @@ function CheckPage() {
             {SEO_PAGES.check.h1}
           </h1>
           <p className="text-lg text-muted">
-            Paste an API URL. We fetch once over HTTPS (with SSRF protection) and grade the
-            402 body for agent readiness. Free, no accounts — screenshot an A.
+            Paste an API URL. We fetch once over HTTPS (with SSRF protection) and grade
+            the 402 (headers first) for agent readiness. Free · no account.
           </p>
           <p className="text-sm text-subtle">
-            Tip: try this site's live tip endpoint{" "}
-            <code className="text-fg">/api/x402/donate</code>. Expect a real 402 with a
-            Solana payTo address.
+            Test a known 402:{" "}
+            <code className="text-fg">/api/x402/donate</code> (returns a Solana payTo
+            — the receiving wallet address).
           </p>
-          <div className="flex flex-wrap gap-2">
+          <div className="flex flex-wrap items-center gap-2">
             <Button asChild variant="secondary" size="sm">
               <Link to="/ship">Need middleware? Open Ship generator</Link>
             </Button>
+            <span className="text-sm text-muted">
+              Ship generator — paste-ready middleware
+            </span>
             <Button asChild variant="outline" size="sm">
-              <Link to="/loop">Walk the payment loop</Link>
+              <Link to="/loop">Walk the loop</Link>
             </Button>
           </div>
         </header>

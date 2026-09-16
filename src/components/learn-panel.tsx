@@ -21,7 +21,7 @@ export function LearnPanel() {
             "Closing the tab locks the session — that is normal and safer.",
           ].map((step, i) => (
             <li key={step} className="flex gap-3">
-              <span className="flex size-7 shrink-0 items-center justify-center rounded-full bg-surface-2 text-sm font-semibold text-fg">
+              <span className="chip flex size-7 shrink-0 items-center justify-center bg-surface-2 text-sm font-semibold text-fg">
                 {i + 1}
               </span>
               <span>{step}</span>
@@ -47,7 +47,7 @@ export function LearnPanel() {
             "Balances update. The signature is your receipt.",
           ].map((step, i) => (
             <li key={step} className="flex gap-3">
-              <span className="flex size-7 shrink-0 items-center justify-center rounded-full bg-surface-2 text-sm font-semibold text-fg">
+              <span className="chip flex size-7 shrink-0 items-center justify-center bg-surface-2 text-sm font-semibold text-fg">
                 {i + 1}
               </span>
               <span>{step}</span>
@@ -97,7 +97,14 @@ export function LearnPanel() {
             Prefer encrypted backups + a password manager over screenshots.
           </li>
           <li className="rounded-[var(--radius-md)] border border-border bg-bg p-3">
-            Practice on Devnet first. Real mode mistakes are irreversible.
+            Practice on Devnet first.{" "}
+            <a
+              href="https://www.shipx402.com/guides/first-solana-wallet"
+              className="chip mx-1 inline-flex border border-border bg-bg px-2 py-0.5 text-xs font-medium text-muted no-underline hover:text-fg"
+            >
+              Devnet · practice network · free test money
+            </a>{" "}
+            Real mode mistakes are irreversible.
           </li>
           <li className="rounded-[var(--radius-md)] border border-border bg-bg p-3">
             Double-check recipient addresses — Solana has no undo.

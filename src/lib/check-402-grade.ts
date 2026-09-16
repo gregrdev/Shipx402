@@ -1,5 +1,7 @@
 /**
  * Shared grading rules for 402 Checker (client display + server result shape).
+ * Aligned with docs.x402.org HTTP 402 V2: PAYMENT-REQUIRED is the canonical
+ * wire location; JSON body is a server convenience.
  */
 
 export type GradeLevel = "pass" | "warn" | "fail";
@@ -25,6 +27,32 @@ function isSolanaPayTo(addr: string) {
 }
 function isEvmPayTo(addr: string) {
   return /^0x[a-fA-F0-9]{40}$/.test(addr);
+}
+
+function header(headers: Record<string, string>, name: string): string | undefined {
+  const lower = name.toLowerCase();
+  for (const [k, v] of Object.entries(headers)) {
+    if (k.toLowerCase() === lower) return v;
+  }
+  return undefined;
+}
+
+function decodeBase64Json(raw: string): unknown | null {
+  try {
+    const json =
+      typeof atob === "function"
+        ? atob(raw)
+        : Buffer.from(raw, "base64").toString("utf8");
+    return JSON.parse(json);
+  } catch {
+    return null;
+  }
+}
+
+function looksCaip2(network: string) {
+  return /^(solana|eip155|tvm|algorand|stellar|aptos|hedera|keeta|near|ccd|xrpl|cardano):/.test(
+    network,
+  );
 }
 
 export function grade402Response(params: {
@@ -57,23 +85,53 @@ export function grade402Response(params: {
     });
   }
 
-  let json: unknown = null;
+  const paymentRequiredRaw = header(headers, "payment-required");
+  let fromHeader: unknown = null;
+  if (paymentRequiredRaw) {
+    fromHeader = decodeBase64Json(paymentRequiredRaw);
+    items.push({
+      id: "header",
+      label: "PAYMENT-REQUIRED header present (canonical V2)",
+      level: fromHeader ? "pass" : "warn",
+      hint: fromHeader
+        ? "Canonical V2 wire location (docs.x402.org). Base64 PaymentRequired decoded."
+        : "Header present but did not decode as base64 JSON. It should be base64(PaymentRequired).",
+    });
+  } else {
+    items.push({
+      id: "header",
+      label: "PAYMENT-REQUIRED header present (canonical V2)",
+      level: "warn",
+      hint: "V2 canonical location is PAYMENT-REQUIRED (base64 PaymentRequired). JSON body alone is a convenience, not the spec wire format.",
+    });
+  }
+
+  let fromBody: unknown = null;
   try {
-    json = JSON.parse(bodyText);
+    fromBody = JSON.parse(bodyText);
     items.push({
       id: "json",
       label: "Body parses as JSON",
       level: "pass",
-      hint: "Good.",
+      hint: "Useful for humans and older clients. V2 still wants PAYMENT-REQUIRED on the wire.",
     });
   } catch {
     items.push({
       id: "json",
       label: "Body parses as JSON",
-      level: "fail",
-      hint: "Return application/json with an x402 requirements object.",
+      level: fromHeader ? "warn" : "fail",
+      hint: fromHeader
+        ? "Body is not JSON; grading the decoded PAYMENT-REQUIRED header (canonical V2)."
+        : "Return application/json and/or a base64 PAYMENT-REQUIRED header with PaymentRequired.",
     });
   }
+
+  const json =
+    fromHeader && typeof fromHeader === "object"
+      ? fromHeader
+      : fromBody && typeof fromBody === "object"
+        ? fromBody
+        : null;
 
   if (json && typeof json === "object") {
     const o = json as Record<string, unknown>;
@@ -83,7 +141,10 @@ export function grade402Response(params: {
         id: "version",
         label: `x402Version present (v${version})`,
         level: "pass",
-        hint: version >= 2 ? "v2 shape detected." : "v1 shape — fine for labs; v2 uses CAIP-2 networks.",
+        hint:
+          version >= 2
+            ? "v2 shape detected."
+            : "v1 shape — labs may still work; V2 uses CAIP-2 networks and PAYMENT-* headers.",
       });
     } else {
       items.push({
@@ -159,24 +220,61 @@ export function grade402Response(params: {
           id: "amount",
           label: "amount / maxAmountRequired is a digit string",
           level: "pass",
-          hint: "Good.",
+          hint: "Atomic integer string (e.g. USDC 6-decimal base units).",
         });
       } else if (amountStr !== undefined) {
         items.push({
           id: "amount",
           label: "amount / maxAmountRequired is a digit string",
           level: "warn",
-          hint: "Prefer atomic integer string (e.g. lamports / base units).",
+          hint: "Prefer atomic integer string (e.g. lamports / USDC base units).",
+        });
+      }
+
+      const scheme = String(first.scheme ?? "");
+      if (scheme === "exact") {
+        items.push({
+          id: "scheme",
+          label: 'scheme is "exact"',
+          level: "pass",
+          hint: "Official production scheme on Solana (and the default on most networks). upto and batch-settlement are EVM-only in current docs.",
+        });
+      } else if (scheme) {
+        items.push({
+          id: "scheme",
+          label: `scheme is "${scheme}" (not official exact)`,
+          level: "warn",
+          hint: 'docs.x402.org production schemes are exact, upto (EVM), and batch-settlement (EVM). Custom schemes (exact-lab, onchain-sol) are educational — clients that only implement exact will skip them.',
         });
       }
 
       const payTo = String(first.payTo ?? "");
-      const network = String(first.network ?? "").toLowerCase();
-      const solish = network.includes("solana") || network.startsWith("solana:");
+      const network = String(first.network ?? "");
+      const networkLc = network.toLowerCase();
+      const solish = networkLc.includes("solana") || networkLc.startsWith("solana:");
       const evmish =
-        network.includes("base") ||
-        network.includes("ethereum") ||
-        network.startsWith("eip155:");
+        networkLc.includes("base") ||
+        networkLc.includes("ethereum") ||
+        networkLc.startsWith("eip155:");
+
+      if (typeof version === "number" && version >= 2) {
+        if (looksCaip2(network)) {
+          items.push({
+            id: "caip2",
+            label: "network is CAIP-2 (v2)",
+            level: "pass",
+            hint: "Matches docs.x402.org (e.g. solana:5eykt4UsFv8P8NJdTREpY1vzqKqZKvdp, eip155:8453).",
+          });
+        } else if (network) {
+          items.push({
+            id: "caip2",
+            label: "network is CAIP-2 (v2)",
+            level: "warn",
+            hint: `Got "${network}". V2 expects CAIP-2 (solana:… / eip155:…), not v1 names like solana-devnet or base-sepolia.`,
+          });
+        }
+      }
+
       if (solish && isSolanaPayTo(payTo)) {
         items.push({
           id: "payto",
@@ -200,7 +298,7 @@ export function grade402Response(params: {
         });
       }
 
-      if (first.description) {
+      if (first.description || (o.resource && typeof o.resource === "object" && (o.resource as { description?: string }).description)) {
         items.push({
           id: "description",
           label: "description present (discovery)",
@@ -219,19 +317,29 @@ export function grade402Response(params: {
       try {
         const u = new URL(url);
         const resource = String(first.resource ?? "");
-        if (resource && (resource === u.pathname || resource.endsWith(u.pathname))) {
+        const topUrl =
+          o.resource && typeof o.resource === "object"
+            ? String((o.resource as { url?: string }).url ?? "")
+            : "";
+        const resourcePath = resource || topUrl;
+        if (
+          resourcePath &&
+          (resourcePath === u.pathname ||
+            resourcePath.endsWith(u.pathname) ||
+            resourcePath === url)
+        ) {
           items.push({
             id: "resource",
             label: "resource matches request path",
             level: "pass",
             hint: "Good.",
           });
-        } else if (resource) {
+        } else if (resourcePath) {
           items.push({
             id: "resource",
             label: "resource matches request path",
             level: "warn",
-            hint: `resource is "${resource}" vs path "${u.pathname}".`,
+            hint: `resource is "${resourcePath}" vs path "${u.pathname}".`,
           });
         }
       } catch {
@@ -247,40 +355,27 @@ export function grade402Response(params: {
     }
   }
 
-  const pr =
-    headers["payment-required"] ||
-    headers["PAYMENT-REQUIRED"] ||
-    headers["payment-required".toLowerCase()];
-  if (pr) {
-    items.push({
-      id: "header",
-      label: "PAYMENT-REQUIRED header present",
-      level: "pass",
-      hint: "Optional but agent-friendly.",
-    });
-  } else {
-    items.push({
-      id: "header",
-      label: "PAYMENT-REQUIRED header present",
-      level: "warn",
-      hint: "Consider base64 PAYMENT-REQUIRED header alongside JSON body.",
-    });
-  }
-
-  const acah = headers["access-control-allow-headers"] || "";
-  if (/x-payment/i.test(acah) || /payment-signature/i.test(acah)) {
+  const acah = header(headers, "access-control-allow-headers") || "";
+  if (/payment-signature/i.test(acah)) {
     items.push({
       id: "cors",
-      label: "CORS allows X-PAYMENT (from this response)",
+      label: "CORS allows PAYMENT-SIGNATURE",
       level: "pass",
-      hint: "Header list includes payment headers.",
+      hint: "V2 client retry header is allowed. X-PAYMENT is the legacy V1 alias.",
+    });
+  } else if (/x-payment/i.test(acah)) {
+    items.push({
+      id: "cors",
+      label: "CORS allows X-PAYMENT (legacy V1)",
+      level: "warn",
+      hint: "Also allow PAYMENT-SIGNATURE (canonical V2). Keep X-PAYMENT only as a migration alias.",
     });
   } else {
     items.push({
       id: "cors",
-      label: "CORS allows X-PAYMENT",
+      label: "CORS allows PAYMENT-SIGNATURE",
       level: "warn",
-      hint: "Expose Access-Control-Allow-Headers: X-PAYMENT for browser agents (check OPTIONS too).",
+      hint: "Expose Access-Control-Allow-Headers: PAYMENT-SIGNATURE (and optionally X-PAYMENT) for browser agents. Check OPTIONS too.",
     });
   }
 
@@ -311,10 +406,9 @@ export function reportToText(r: GradeReport) {
     `HTTP: ${r.status ?? "n/a"}`,
     `Grade: ${r.grade}`,
     "",
-    ...r.items.map(
-      (i) => `[${i.level.toUpperCase()}] ${i.label} — ${i.hint}`,
-    ),
+    ...r.items.map((i) => `[${i.level.toUpperCase()}] ${i.label} — ${i.hint}`),
     "",
+    "Grading follows docs.x402.org V2 (PAYMENT-REQUIRED / PAYMENT-SIGNATURE / PAYMENT-RESPONSE, CAIP-2).",
     "Free tool — tip at /donate",
   ];
   return lines.join("\n");

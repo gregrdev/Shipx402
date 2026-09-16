@@ -42,7 +42,7 @@ export function SupportNudge({
       aria-label="Optional support"
     >
       <div className="flex items-start gap-3">
-        <div className="mt-0.5 flex size-9 shrink-0 items-center justify-center rounded-full bg-primary/15 text-primary">
+        <div className="mt-0.5 flex size-9 shrink-0 items-center justify-center rounded-[var(--radius-sm)] bg-primary/15 text-primary">
           <Heart className="size-4" aria-hidden />
         </div>
         <div className="min-w-0 space-y-2">
@@ -56,7 +56,7 @@ export function SupportNudge({
           </p>
           <Link
             to="/donate"
-            className="inline-flex items-center gap-2 rounded-full bg-primary px-4 py-2 text-sm font-semibold text-primary-fg no-underline shadow-[0_0_20px_-6px_var(--color-primary)] transition-colors hover:bg-primary/90"
+            className="chip inline-flex items-center gap-2 bg-primary px-4 py-2 text-sm font-semibold text-primary-fg no-underline transition-colors hover:bg-primary/90"
           >
             <Heart className="size-3.5" aria-hidden />
             Tip what it's worth

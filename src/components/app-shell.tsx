@@ -23,10 +23,10 @@ export function AppShell() {
       <header className="border-b border-border/70 bg-bg/80 backdrop-blur-md">
         <div className="mx-auto flex h-16 max-w-5xl items-center justify-between gap-3 px-4 sm:px-6">
           <Link to="/" className="no-underline">
-            <BrandMark showDomain size="md" />
+            <BrandMark variant="tile" showDomain size="md" />
           </Link>
           <nav className="flex flex-wrap items-center gap-3 text-sm">
-            <Link to="/learn" hash="learn-x402" className="text-muted hover:text-fg">
+            <Link to="/learn" hash="path" className="text-muted hover:text-fg">
               Learn x402
             </Link>
             <Link to="/agents" className="text-muted hover:text-fg">
@@ -47,17 +47,24 @@ export function AppShell() {
       </main>
 
       <footer className="border-t border-border/50 py-7">
-        <div className="mx-auto max-w-5xl space-y-2 px-4 text-center text-sm text-subtle sm:px-6">
+        <div className="mx-auto max-w-5xl space-y-2 px-4 text-center text-sm text-muted sm:px-6">
           <p>
             Ship x402 wallet app — keys generated and signed only on your device. Practice
-            on Devnet before real funds.
+            on Devnet (
+            <a
+              href="https://www.shipx402.com/guides/first-solana-wallet"
+              className="text-muted underline decoration-primary/80 underline-offset-2 hover:text-fg"
+            >
+              Devnet · practice network · free test money
+            </a>
+            ) before real funds.
           </p>
-          <p className="text-xs leading-relaxed">{BRAND.independence}</p>
+          <p className="text-xs leading-relaxed text-fg/90">{BRAND.independence}</p>
           <p className="flex flex-wrap justify-center gap-3 text-xs">
             <Link to="/" className="text-muted hover:text-fg">
               {BRAND.domain}
             </Link>
-            <Link to="/learn" hash="learn-x402" className="text-muted hover:text-fg">
+            <Link to="/learn" hash="path" className="text-muted hover:text-fg">
               Learn x402
             </Link>
             <a href="/llms.txt" className="text-muted hover:text-fg">

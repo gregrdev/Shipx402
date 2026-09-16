@@ -253,7 +253,7 @@ export function testCurl(form: ShipForm) {
 curl -i "http://localhost:3000${path}"
 
 # Validate the 402 body:
-# https://shipx402.com/check
+# https://www.shipx402.com/check
 `;
 }
 
@@ -269,6 +269,6 @@ Route: ${routeKey(form.route)}
 Description: ${form.description}
 Install: ${installLine(form.framework)}
 Register ExactSvmScheme or ExactEvmScheme for the network.
-Facilitator test: ${FACILITATOR_TEST}; production: PayAI or Coinbase CDP.
-Verify against https://docs.x402.org then validate with https://shipx402.com/check`;
+Facilitator test: ${FACILITATOR_TEST}; production: PayAI (${FACILITATOR_PAYAI}) or Coinbase CDP (https://docs.cdp.coinbase.com/x402).
+Verify against https://docs.x402.org then validate with https://www.shipx402.com/check`;
 }

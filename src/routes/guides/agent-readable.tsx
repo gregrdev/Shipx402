@@ -14,7 +14,7 @@ export const Route = createFileRoute("/guides/agent-readable")({
         breadcrumbJsonLd([
           { name: "Home", path: "/" },
           { name: "Guides", path: "/learn" },
-          { name: "Agent-readable", path: "/guides/agent-readable" },
+          { name: "Agent-Readable", path: "/guides/agent-readable" },
         ]),
       ],
     }),
@@ -25,7 +25,7 @@ function GuidePage() {
     <SiteChrome activePath="/guides/agent-readable">
       <Prose>
         <p className="text-sm text-subtle">Guide · Advanced · 2026</p>
-        <h1>Why “agent-readable” matters</h1>
+        <h1>Why Agent-Readable Matters</h1>
         <p>
           Humans follow nav bars and marketing pages. Agents follow structured files,
           stable URLs, and honest error codes. If you want agents to learn from your
@@ -36,11 +36,21 @@ function GuidePage() {
         <ul>
           <li>
             <strong>
+              <a href="/site.txt" className="link-readable">
+                /site.txt
+              </a>
+            </strong>{" "}
+            — first fetch for agents: full public digest (tools, guides, APIs, V2
+            headers).
+          </li>
+          <li>
+            <strong>
               <a href="/llms.txt" className="link-readable">
                 /llms.txt
               </a>
             </strong>{" "}
-            — short map of what the site is and which URLs matter.
+            — short map of what the site is and which URLs matter. Alias:{" "}
+            <code>/.well-known/llms.txt</code>.
           </li>
           <li>
             <strong>
@@ -58,9 +68,13 @@ function GuidePage() {
           </li>
           <li>
             <strong>
-              <code>/.well-known/x402</code>
+              <a href="/.well-known/x402" className="link-readable">
+                /.well-known/x402
+              </a>
             </strong>{" "}
-            — list payable resources for x402-aware crawlers.
+            — JSON capability manifest (<code>application/json</code>). Alias:{" "}
+            <code>/.well-known/x402.json</code>. Lists payable resources for
+            x402-aware crawlers.
           </li>
           <li>
             <strong>Live 402 endpoints</strong> — e.g. lab and donate — so agents can

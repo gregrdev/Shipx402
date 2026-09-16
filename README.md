@@ -30,7 +30,7 @@ npm run typecheck
 Set on the host:
 
 ```text
-SITE_URL=https://shipx402.com
+SITE_URL=https://www.shipx402.com
 ```
 
 Optional RPC for donation verification (see `src/lib` donate / solana config).

@@ -21,6 +21,7 @@ import {
   scoreQuiz,
 } from "@/lib/loop-quiz";
 import { X402_RESOURCE_PATH } from "@/lib/x402";
+import { saveLearnProgress } from "@/lib/learn-progress";
 import { cn } from "@/lib/utils";
 
 type StepId = "see" | "read" | "dry" | "quiz" | "cert";
@@ -135,6 +136,7 @@ export function PaymentLoop() {
       }
       setLabBody(pretty);
       if (res.status === 402) {
+        saveLearnProgress("/loop", "Walk the Loop");
         toast.success("Got HTTP 402 — payment required");
       } else {
         toast.message(`Unexpected status ${res.status}`);
@@ -162,6 +164,7 @@ export function PaymentLoop() {
       date: at.toISOString().slice(0, 10),
     });
     setStep("cert");
+    saveLearnProgress("/loop", "Walk the Loop");
     toast.success("Certificate ready — free, educational only");
   };
 
@@ -211,11 +214,15 @@ export function PaymentLoop() {
             <Badge variant="learn">Lab · no real money</Badge>
           </div>
           <p className="text-sm leading-relaxed text-muted">
-            Call{" "}
+            <Link to="/guides/what-is-x402" className="link-readable">
+              402 — payment required with a machine-readable price
+            </Link>
+            . Call{" "}
             <code className="text-fg">{X402_RESOURCE_PATH}</code> without a
             payment header. A correct educational endpoint answers{" "}
-            <strong className="text-fg">HTTP 402</strong> with machine-readable
-            requirements — not a login page.
+            <strong className="text-fg">HTTP 402</strong> with{" "}
+            <code className="text-fg">PAYMENT-REQUIRED</code> (canonical V2) and
+            machine-readable requirements — not a login page.
           </p>
           <Button disabled={busy} onClick={() => void fetchLab()}>
             {busy ? (
@@ -264,8 +271,11 @@ export function PaymentLoop() {
           </h2>
           <p className="text-sm leading-relaxed text-muted">
             Agents (and humans) must see{" "}
-            <strong className="text-fg">amount, network, asset, payTo</strong>{" "}
-            before signing. Check each field from the lab response.
+            <strong className="text-fg">
+              amount, network, asset, payTo
+            </strong>{" "}
+            (payTo is the wallet address that receives the payment) before signing.
+            Check each field from the lab response.
           </p>
           {parsed ? (
             <dl className="grid gap-2 sm:grid-cols-2">
@@ -299,7 +309,7 @@ export function PaymentLoop() {
             {(
               [
                 ["amount", "I see the amount"],
-                ["network", "I see the network (CAIP-2 or legacy)"],
+                ["network", "I see the CAIP-2 network (solana:…)"],
                 ["asset", "I see the asset"],
                 ["payTo", "I see payTo"],
               ] as const
@@ -348,7 +358,7 @@ export function PaymentLoop() {
               [
                 ["request", "1. Client requests a protected resource"],
                 ["pay", "2. Client pays only after showing amount/network/asset/payTo"],
-                ["retry", "3. Client retries with payment proof header"],
+                ["retry", "3. Client retries with PAYMENT-SIGNATURE (legacy: X-PAYMENT)"],
                 ["unlock", "4. Server verifies and returns the resource"],
               ] as const
             ).map(([key, label]) => (
@@ -374,7 +384,7 @@ export function PaymentLoop() {
               Safety reminder
             </p>
             <ul className="list-disc space-y-1 pl-5">
-              <li>Devnet first; mainnet only with explicit human consent.</li>
+              <li>Devnet first (practice chain, free test SOL — no real money); mainnet only with explicit human consent.</li>
               <li>Never paste private keys into a website or agent chat.</li>
               <li>Cap spend and allowlist payTo addresses for agents.</li>
             </ul>

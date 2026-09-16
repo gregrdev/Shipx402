@@ -21,7 +21,7 @@
 - `/api/x402/lab` and `/api/x402/donate` verification
 
 ## Human steps after deploy
-1. Set `SITE_URL` or `VITE_SITE_URL` to your production origin (canonical + OG absolute URLs).
+1. Set `SITE_URL` or `VITE_SITE_URL` to `https://www.shipx402.com` (canonical + OG absolute URLs; apex redirects to www).
 2. View **page source** on `/learn` and `/guides/x402-vs-mpp` — confirm titles and body text in raw HTML (not only after JS).
 3. Submit `/sitemap.xml` in Google Search Console and Bing Webmaster Tools.
 4. Optional: replace `/public/og.svg` with a designed 1200×630 PNG and point `seo.tsx` at it.

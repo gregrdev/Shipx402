@@ -1,5 +1,5 @@
 /**
- * Client-side security helpers for EZSolWallet.
+ * Client-side security helpers for Ship x402.
  *
  * Honest model: a browser wallet can never match a hardware wallet.
  * We minimize risk: no secret persistence, short sessions, clear UX, strong backup encryption.
@@ -14,7 +14,7 @@ export const CLIPBOARD_CLEAR_MS = 45_000;
 export const SECURITY_FACTS = [
   {
     title: "Keys never leave your device",
-    body: "Generation, signing, and encryption run in your browser. EZSolWallet does not have an account database of private keys.",
+    body: "Generation, signing, and encryption run in your browser. Ship x402 does not have an account database of private keys.",
   },
   {
     title: "Nothing secret is stored on our servers",

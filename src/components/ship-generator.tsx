@@ -27,9 +27,13 @@ const FRAMEWORKS: { id: ShipFramework; label: string }[] = [
 
 const NETWORKS: { id: ShipNetwork; label: string; note?: string }[] = [
   { id: "solana-devnet", label: "Solana Devnet", note: "Free test money" },
-  { id: "solana", label: "Solana Mainnet" },
-  { id: "base-sepolia", label: "Base Sepolia", note: "Testnet" },
-  { id: "base", label: "Base Mainnet" },
+  {
+    id: "solana",
+    label: "Solana Mainnet",
+    note: "Mainnet · real money · mistakes can’t be undone",
+  },
+  { id: "base-sepolia", label: "Base Sepolia", note: "Optional" },
+  { id: "base", label: "Base Mainnet", note: "Optional" },
 ];
 
 type OutTab = "install" | "code" | "env" | "test" | "prod" | "prompt";
@@ -56,7 +60,7 @@ export function ShipGenerator() {
       ...form,
       payTo:
         form.network.startsWith("solana")
-          ? "So1anaExamp1eAddress1111111111111111111111"
+          ? "YOUR_SOLANA_PAY_TO_ADDRESS"
           : "0x0000000000000000000000000000000000000001",
     }),
     [form],
@@ -74,7 +78,7 @@ export function ShipGenerator() {
         "",
         "// --- production notes ---",
         "// Facilitator options:",
-        "// 1) Coinbase CDP facilitator: free tier, needs CDP account (docs.cdp.coinbase.com/x402)",
+        "// 1) Coinbase CDP facilitator: https://docs.cdp.coinbase.com/x402",
         "// 2) PayAI public facilitator: https://facilitator.payai.network",
         "// Verify package APIs against https://docs.x402.org before shipping.",
         "",
@@ -98,7 +102,7 @@ export function ShipGenerator() {
                 type="button"
                 onClick={() => setForm((s) => ({ ...s, framework: f.id }))}
                 className={cn(
-                  "rounded-full border px-3.5 py-2 text-sm font-medium",
+                  "chip border px-3.5 py-2 text-sm font-medium",
                   form.framework === f.id
                     ? "border-primary/40 bg-primary/15 text-primary"
                     : "border-border text-muted hover:text-fg",
@@ -135,6 +139,21 @@ export function ShipGenerator() {
               </button>
             ))}
           </div>
+          {isMainnet(form.network) && (
+            <div className="mt-2 rounded-[var(--radius-md)] border border-real/30 bg-real-bg/40 p-3">
+              <p className="text-sm text-fg">
+                Mainnet uses real money. Mistakes can’t be undone. Continue only if you
+                mean it.
+              </p>
+              <Button
+                type="button"
+                className="mt-2"
+                onClick={() => setForm((s) => ({ ...s, network: "solana-devnet" }))}
+              >
+                Stay on Devnet
+              </Button>
+            </div>
+          )}
         </div>
 
         <div className="grid gap-3 sm:grid-cols-2">
@@ -157,7 +176,9 @@ export function ShipGenerator() {
         </div>
 
         <div>
-          <Label>Receiving wallet (payTo)</Label>
+          <Label htmlFor="ship-payto">
+            Receiving wallet (payTo) — address that receives the payment
+          </Label>
           <Input
             value={form.payTo}
             onChange={(e) => setForm((s) => ({ ...s, payTo: e.target.value }))}
@@ -167,6 +188,7 @@ export function ShipGenerator() {
                 ? "Solana base58 address"
                 : "0x… EVM address"
             }
+            id="ship-payto"
             spellCheck={false}
           />
           {form.payTo && payErr && (
@@ -203,7 +225,7 @@ export function ShipGenerator() {
           </div>
         </div>
         <p className="text-xs text-subtle">
-          Schemas improve discovery in the x402 Bazaar. Nothing you type is uploaded.
+          Schemas help clients understand your API input and output. Nothing you type is uploaded.
         </p>
       </div>
 
@@ -224,7 +246,7 @@ export function ShipGenerator() {
               type="button"
               onClick={() => setTab(id)}
               className={cn(
-                "rounded-full px-3 py-1.5 text-sm font-medium",
+                "chip px-3 py-1.5 text-sm font-medium",
                 tab === id
                   ? "bg-primary/15 text-primary"
                   : "text-muted hover:text-fg",
@@ -260,10 +282,33 @@ export function ShipGenerator() {
           </Button>
         </div>
         <p className="text-xs text-subtle">
-          Templates use @x402/* v2 (routes + x402ResourceServer, CAIP-2 networks). Packages:
-          @x402/express, @x402/next, @x402/hono. Verify signatures against docs.x402.org before
-          production.
+          Templates use @x402/* v2 (routes + x402ResourceServer).{" "}
+          <Link to="/guides/x402-v1-vs-v2" className="link-readable">
+            CAIP-2 (standard network id — genesis-hash form)
+          </Link>
+          . Packages: @x402/express, @x402/next, @x402/hono. Verify signatures against
+          docs.x402.org before production.
         </p>
+        {tab === "prod" ? (
+          <p className="text-xs leading-relaxed text-muted">
+            Test facilitator{" "}
+            <a href="https://x402.org/facilitator" className="link-readable">
+              https://x402.org/facilitator
+            </a>{" "}
+            = testnets only. Production options we teach (not partners): CDP{" "}
+            <a
+              href="https://api.cdp.coinbase.com/platform/v2/x402"
+              className="link-readable"
+            >
+              https://api.cdp.coinbase.com/platform/v2/x402
+            </a>{" "}
+            · PayAI{" "}
+            <a href="https://facilitator.payai.network" className="link-readable">
+              https://facilitator.payai.network
+            </a>
+            — confirm docs. Never needs your or the buyer’s private key.
+          </p>
+        ) : null}
       </div>
     </div>
   );

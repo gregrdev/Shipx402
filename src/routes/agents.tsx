@@ -7,7 +7,7 @@ import { Button } from "@/components/ui/button";
 
 const AGENTS_FAQ = [
   {
-    q: "How do I get my agent to pay for stuff on Solana?",
+    q: "How do I get my agent to pay for APIs on Solana?",
     a: "Dedicated agent wallet, spend limits and allowlist, then the 402 loop. Prefer Devnet until the flow is solid. See the numbered path below and /guides/agent-wallet-safely.",
   },
   {
@@ -61,8 +61,9 @@ function AgentsPage() {
           <a href="/api/agents/curriculum">curriculum JSON</a>.
         </p>
         <p>
-          Same loop for both: request → <strong>HTTP 402</strong> with a price tag → pay →
-          retry with proof. No API keys. Wallet is the credential.
+          Same loop for both: request → <strong>HTTP 402</strong> with{" "}
+          <code>PAYMENT-REQUIRED</code> → pay → retry with{" "}
+          <code>PAYMENT-SIGNATURE</code>. No API keys. Wallet is the credential.
         </p>
 
         <h2>How to get your agent paying on Solana</h2>
@@ -73,23 +74,32 @@ function AgentsPage() {
           <li>
             <strong>Separate wallet</strong> — New key for the agent only. Fund small. Never
             your primary treasury. Practice on{" "}
-            <Link to="/app">Devnet in the app</Link> or read{" "}
-            <Link to="/guides/agent-wallet-safely">Giving an AI agent a wallet safely</Link>.
+            <Link to="/app">Devnet in the app</Link>{" "}
+            <a
+              href="https://www.shipx402.com/guides/first-solana-wallet"
+              className="chip mx-1 inline-flex border border-border bg-bg px-2 py-0.5 text-xs font-medium text-muted no-underline hover:text-fg"
+            >
+              Devnet · practice network · free test money
+            </a>{" "}
+            or read{" "}
+            <Link to="/guides/agent-wallet-safely">Give an Agent a Wallet Safely</Link>.
           </li>
           <li>
             <strong>Policy before power</strong> — Max per call, daily cap, hostname /{" "}
-            <code>payTo</code> allowlist. If the tool can’t enforce that, don’t connect
-            mainnet.
+            <code>payTo</code> (the wallet address that receives the payment) allowlist.
+            If the tool can’t enforce that, don’t connect mainnet.
           </li>
           <li>
-            <strong>Teach the loop, not a blog post</strong> — Unpaid request → 402 with
-            amount, network, asset, payTo → sign/pay → retry with proof. Walk it on{" "}
+            <strong>Teach the loop, not a blog post</strong> — Unpaid request → 402 with{" "}
+            <code>PAYMENT-REQUIRED</code> (amount, CAIP-2 network — standard network id
+            in genesis-hash form, asset, payTo) → sign/pay
+            → retry with <code>PAYMENT-SIGNATURE</code>. Walk it on{" "}
             <Link to="/loop">/loop</Link>, or let the agent hit{" "}
             <a href="/api/x402/lab">/api/x402/lab</a>.
           </li>
           <li>
             <strong>Point the agent here first</strong> —{" "}
-            <code>https://shipx402.com/site.txt</code>. Optional follow-ups: curriculum, lab,
+            <code>https://www.shipx402.com/site.txt</code>. Optional follow-ups: curriculum, lab,
             checker.
           </li>
           <li>
@@ -182,7 +192,9 @@ function AgentsPage() {
         </p>
         <p>
           <strong>You want agents to pay you (seller)</strong> — 402 on your route → valid{" "}
-          <code>accepts[]</code> → checker grade → optional facilitator for USDC. Tools:{" "}
+          <code>accepts[]</code> → checker grade → optional facilitator for USDC
+          (helper that verifies and settles x402 payments; not a bank — never needs your
+          or the buyer’s private key). Tools:{" "}
           <Link to="/ship">ship generator</Link>, <Link to="/check">checker</Link>,{" "}
           <Link to="/loop">loop</Link>.
         </p>
@@ -265,7 +277,7 @@ function AgentsPage() {
 
         <div className="not-prose mt-8 flex flex-wrap gap-3">
           <Button asChild>
-            <a href="/site.txt">Open site.txt</a>
+            <a href="https://www.shipx402.com/site.txt">Open site.txt</a>
           </Button>
           <Button asChild variant="secondary">
             <a href="/api/agents/curriculum">Open curriculum JSON</a>

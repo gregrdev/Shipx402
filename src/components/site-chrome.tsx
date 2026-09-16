@@ -26,9 +26,9 @@ export function SiteChrome({
       </a>
 
       <div className="border-b border-border/60 bg-surface/40">
-        <div className="mx-auto flex max-w-6xl items-center justify-between gap-3 px-4 py-1.5 text-xs text-subtle sm:px-6">
-          <span className="font-mono tracking-wide">{BRAND.domain}</span>
-          <span className="hidden sm:inline">
+        <div className="legal-quiet mx-auto flex max-w-6xl items-center justify-between gap-3 px-4 py-1.5 text-muted sm:px-6">
+          <span className="font-mono tracking-wide text-fg">{BRAND.domain}</span>
+          <span className="hidden text-fg sm:inline">
             Independent · client-side keys · agent-readable
           </span>
           <Link
@@ -40,13 +40,28 @@ export function SiteChrome({
         </div>
       </div>
 
-      <header className="sticky top-0 z-40 border-b border-border/70 bg-bg/85 backdrop-blur-md">
-        <div className="mx-auto flex max-w-6xl flex-wrap items-center justify-between gap-3 px-4 py-3.5 sm:px-6">
-          <Link to="/" className="no-underline" aria-label="Ship x402 home">
-            <BrandMark showDomain size="md" />
+      <div className="relative">
+        <div
+          className="pointer-events-none absolute inset-0 z-0 overflow-hidden"
+          aria-hidden="true"
+        >
+          <div className="cyber-columns mx-auto max-w-6xl">
+            <span className="cyber-columns-rail cyber-columns-l" />
+            <span className="cyber-columns-rail cyber-columns-r" />
+          </div>
+        </div>
+
+      <header className="sticky top-0 z-40 bg-bg/85 backdrop-blur-md">
+        <div className="mx-auto grid max-w-6xl grid-cols-[1fr_auto_1fr] items-center gap-3 px-4 py-3.5 sm:px-6">
+          <Link
+            to="/"
+            className="inline-flex items-center justify-self-start no-underline"
+            aria-label="Ship x402 home"
+          >
+            <BrandMark variant="wordmark" />
           </Link>
           <nav
-            className="flex flex-wrap items-center gap-0.5 sm:gap-1"
+            className="flex flex-wrap items-center justify-center justify-self-center gap-0.5 sm:gap-1"
             aria-label="Primary"
           >
             {NAV_LINKS.map((link) => {
@@ -59,7 +74,7 @@ export function SiteChrome({
                   key={link.href}
                   to={link.href}
                   className={cn(
-                    "rounded-full px-3 py-2 text-sm font-medium no-underline transition-colors",
+                    "chip px-3 py-2 text-sm font-medium no-underline transition-colors",
                     active
                       ? "bg-primary/15 text-primary"
                       : "text-muted hover:bg-surface-2 hover:text-fg",
@@ -70,31 +85,38 @@ export function SiteChrome({
                 </Link>
               );
             })}
-            <Link
-              to="/app"
-              className="ml-1 rounded-full bg-primary px-3.5 py-2 text-sm font-semibold text-primary-fg no-underline shadow-[0_0_20px_-6px_var(--color-primary)] hover:bg-primary/90"
-            >
-              Open app
-            </Link>
           </nav>
+          <Link
+            to="/app"
+            className="chip justify-self-end bg-primary px-3.5 py-2 text-sm font-semibold text-primary-fg no-underline hover:bg-primary/90"
+          >
+            Open practice wallet
+          </Link>
         </div>
+        <div className="rgb-nav-hairline" aria-hidden="true" />
       </header>
 
       <main
         id="main-content"
-        className="mx-auto max-w-6xl px-4 py-10 sm:px-6 sm:py-14"
+        className="relative z-10 mx-auto max-w-6xl px-4 py-8 sm:px-6 sm:py-10"
         tabIndex={-1}
       >
         {children}
       </main>
 
-      <footer className="mt-8 border-t border-border/50 bg-surface/30 py-10">
+      <footer className="relative z-10 mt-8 border-t border-border/50 bg-surface/30 py-10">
         <div className="mx-auto grid max-w-6xl gap-8 px-4 sm:grid-cols-2 lg:grid-cols-4 sm:px-6">
           <div className="space-y-3 sm:col-span-2 lg:col-span-1">
-            <BrandMark showDomain size="sm" />
+            <BrandMark variant="tile" showDomain size="sm" />
             <p className="max-w-xs text-sm leading-relaxed text-muted">
-              {BRAND.tagline}. Practice on Devnet. Ship when you understand the loop.
+              {BRAND.closer}
             </p>
+            <a
+              href="https://www.shipx402.com/guides/first-solana-wallet"
+              className="chip inline-flex w-fit border border-border bg-bg px-2.5 py-1 text-xs font-medium text-muted no-underline hover:text-fg"
+            >
+              Devnet · practice network · free test money
+            </a>
           </div>
           <div>
             <div className="mb-2 text-xs font-semibold uppercase tracking-wider text-subtle">
@@ -192,13 +214,14 @@ export function SiteChrome({
             </ul>
           </div>
         </div>
-        <div className="mx-auto mt-8 max-w-6xl space-y-2 border-t border-border/40 px-4 pt-6 text-center text-xs leading-relaxed text-subtle sm:px-6">
-          <p>{BRAND.independence}</p>
+        <div className="legal-quiet mx-auto mt-8 max-w-6xl space-y-2 border-t border-border/40 px-4 pt-6 text-center leading-relaxed text-muted sm:px-6">
+          <p className="text-fg/90">{BRAND.independence}</p>
           <p>
             © {new Date().getFullYear()} {BRAND.name} · {BRAND.domain}
           </p>
         </div>
       </footer>
+      </div>
     </div>
   );
 }

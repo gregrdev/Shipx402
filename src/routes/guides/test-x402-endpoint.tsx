@@ -14,7 +14,7 @@ export const Route = createFileRoute("/guides/test-x402-endpoint")({
         breadcrumbJsonLd([
           { name: "Home", path: "/" },
           { name: "Guides", path: "/learn" },
-          { name: "Test an x402 endpoint", path: "/guides/test-x402-endpoint" },
+          { name: "Test an x402 Endpoint", path: "/guides/test-x402-endpoint" },
         ]),
       ],
     }),
@@ -25,7 +25,7 @@ function GuidePage() {
     <SiteChrome activePath="/guides/test-x402-endpoint">
       <Prose>
         <p className="text-sm text-subtle">Guide · Developers · 2026</p>
-        <h1>How to test an x402 endpoint</h1>
+        <h1>How to Test an x402 Endpoint</h1>
         <p>
           If your paid API is broken, the 402 response usually tells you why. The trick
           is knowing how to read it. Here is a quick way to test an endpoint and spot the
@@ -37,14 +37,30 @@ function GuidePage() {
         <pre className="not-prose overflow-x-auto rounded-[var(--radius-lg)] border border-border bg-surface p-4 text-sm">
           <code>curl -i https://your-api.example/api/premium</code>
         </pre>
-        <p>A healthy x402 endpoint answers with:</p>
+        <p>
+          Read headers first, then the body. Headers carry the machine contract; the body
+          should match.
+        </p>
+        <p>Unpaid 402 — endpoint answers with:</p>
         <ul>
-          <li>Status <strong>402</strong>, not 200</li>
-          <li>Readable payment details in the body</li>
-          <li>A clear price</li>
-          <li>A valid <code>payTo</code> address</li>
-          <li>The correct network</li>
+          <li>Status 402, not 200</li>
+          <li>
+            Header: <code>PAYMENT-REQUIRED</code> (V2; may mirror older shapes)
+          </li>
+          <li>Body: clear price, valid payTo (the wallet address that receives the payment), correct network</li>
         </ul>
+        <p>
+          Canonical V2: <code>PAYMENT-REQUIRED</code> is base64 JSON PaymentRequired (
+          <a href="https://docs.x402.org/core-concepts/http-402" className="link-readable">
+            docs.x402.org
+          </a>
+          ). Body fields should match the header: amount, CAIP-2 (standard network id —
+          genesis-hash form){" "}
+          <code>network</code>, <code>asset</code>, <code>payTo</code>,{" "}
+          <code>scheme</code>. Production Solana uses <code>scheme: "exact"</code> and
+          USDC mint <code>EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v</code> (6
+          decimals).
+        </p>
 
         <h2>How to read the response</h2>
         <p>When it is not 402, the status code is a clue:</p>
@@ -70,7 +86,7 @@ function GuidePage() {
           </li>
         </ul>
 
-        <h2>Use a checker</h2>
+        <h2>Use the 402 Checker</h2>
         <p>
           Reading the raw response by hand gets old fast. Paste your public HTTPS URL
           into the <Link to="/check">402 Checker</Link>. It fetches the endpoint once and
@@ -81,18 +97,39 @@ function GuidePage() {
 
         <h2>After a real payment</h2>
         <p>
-          Once payment works, test the retry: call the same URL again with the payment
-          proof attached, and confirm you get a 200 with the resource. Then try reusing
-          the same proof a second time. If replay protection is working, the reused proof
-          should be rejected. That check matters, because it is what stops one payment
-          from unlocking a resource forever.
+          Once payment works, test the retry on the same URL. After pay (client retry /
+          success — not under “answers with”):
+        </p>
+        <ul>
+          <li>
+            Client sends proof in <code>PAYMENT-SIGNATURE</code> (accept legacy{" "}
+            <code>X-PAYMENT</code> during migration)
+          </li>
+          <li>
+            Server may return <code>PAYMENT-RESPONSE</code> on success
+          </li>
+        </ul>
+        <p>
+          A successful retry is typically status <strong>200</strong> with the resource.
+          Reusing the same proof a second time should be rejected if replay protection
+          is working — that check stops one payment from unlocking a resource forever.
         </p>
 
         <h2>Test on Devnet first</h2>
         <p>
-          Do all of this on Devnet until the path is boring and predictable. Then switch
-          the Mainnet settings on purpose, one at a time, rather than discovering a
-          misconfiguration with real money on the line.
+          Do all of this on Devnet{" "}
+          <a
+            href="https://www.shipx402.com/guides/first-solana-wallet"
+            className="chip mx-1 inline-flex border border-border bg-bg px-2 py-0.5 text-xs font-medium text-muted no-underline hover:text-fg"
+          >
+            Devnet · practice network · free test money
+          </a>{" "}
+          until the path is boring and predictable. Then switch the Mainnet settings on
+          purpose, one at a time{" "}
+          <span className="chip mx-1 inline-flex border border-border bg-bg px-2 py-0.5 text-xs font-medium text-muted">
+            Mainnet · real money · mistakes can’t be undone
+          </span>{" "}
+          rather than discovering a misconfiguration with real money on the line.
         </p>
 
         <div className="not-prose mt-8 flex flex-wrap gap-3">

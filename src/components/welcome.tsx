@@ -127,10 +127,9 @@ export function Welcome() {
 
   return (
     <div className="mx-auto w-full max-w-3xl space-y-9 animate-fade-up">
-      <div className="relative overflow-hidden rounded-[var(--radius-2xl)] border border-border hearth-panel hearth-glow">
-        <div className="pointer-events-none absolute inset-0 scan-grid opacity-70" />
+      <div className="relative overflow-hidden rounded-[var(--radius-2xl)] border border-border bg-surface">
         <div className="relative space-y-5 p-6 sm:p-8">
-          <div className="inline-flex items-center gap-2 rounded-full border border-primary/25 bg-bg/50 px-3.5 py-1.5 text-sm font-medium text-muted backdrop-blur-sm">
+          <div className="chip inline-flex items-center gap-2 border border-primary/25 bg-bg/50 px-3.5 py-1.5 text-sm font-medium text-muted backdrop-blur-sm">
             <span className="relative flex size-2">
               <span className="absolute inline-flex size-full animate-pulse-glow rounded-full bg-primary opacity-60" />
               <span className="relative inline-flex size-2 rounded-full bg-primary" />
@@ -141,14 +140,14 @@ export function Welcome() {
             A practice wallet you actually understand
           </h1>
           <p className="max-w-xl text-lg leading-relaxed text-muted">
-            Safe-by-design setup for any browser, plus an{" "}
+            Client-side setup for any modern browser, plus an{" "}
             <strong className="font-medium text-primary">agent classroom</strong> that
             teaches the whole process without taking custody of keys.
           </p>
 
           <div className="grid gap-2 sm:grid-cols-3">
             {[
-              { icon: PenLine, t: "Write down 2 secrets" },
+              { icon: PenLine, t: "Write key offline" },
               { icon: Smartphone, t: "Any device import" },
               { icon: Bot, t: "Agent curriculum" },
             ].map((item) => (
@@ -174,6 +173,12 @@ export function Welcome() {
             <CardDescription className="text-base leading-relaxed">
               Free Devnet practice with full write-down ceremony and safety locks.
             </CardDescription>
+            <a
+              href="https://www.shipx402.com/guides/first-solana-wallet"
+              className="chip mt-2 inline-flex w-fit border border-border bg-bg px-2.5 py-1 text-xs font-medium text-muted no-underline hover:text-fg"
+            >
+              Devnet · practice network · free test money
+            </a>
           </CardHeader>
           <Button className="w-full" size="lg" onClick={() => start("devnet")}>
             Start learning
@@ -188,7 +193,7 @@ export function Welcome() {
             </div>
             <CardTitle className="text-xl">New wallet · Real</CardTitle>
             <CardDescription className="text-base leading-relaxed">
-              Mainnet keys — same safety steps. Keep balances modest in-browser.
+              Mainnet uses real money. Same safety steps — keep balances modest in-browser.
             </CardDescription>
           </CardHeader>
           <Button
@@ -197,7 +202,7 @@ export function Welcome() {
             className="w-full border-real/30"
             onClick={() => start("mainnet-beta")}
           >
-            Set up for real
+            Use Mainnet carefully
             <ArrowRight className="size-4" />
           </Button>
         </Card>
@@ -304,7 +309,7 @@ export function Welcome() {
                 type="button"
                 onClick={() => go(i)}
                 className={cn(
-                  "inline-flex items-center gap-2 rounded-full border px-3.5 py-2 text-sm font-medium transition-colors",
+                  "chip inline-flex items-center gap-2 border px-3.5 py-2 text-sm font-medium transition-colors",
                   active
                     ? "border-primary/40 bg-primary/15 text-primary"
                     : "border-border bg-surface text-muted hover:border-border-strong hover:text-fg",
@@ -346,7 +351,7 @@ export function Welcome() {
                   <ol className="space-y-2">
                     {X402_TUTORIAL_STEPS.map((step) => (
                       <li key={step.id} className="flex gap-3 text-sm sm:text-base">
-                        <span className="flex size-6 shrink-0 items-center justify-center rounded-full bg-surface-2 font-mono text-xs text-primary">
+                        <span className="chip flex size-6 shrink-0 items-center justify-center bg-surface-2 font-mono text-xs text-primary">
                           {step.id}
                         </span>
                         <span>

@@ -14,7 +14,7 @@ export const Route = createFileRoute("/guides/what-is-an-rpc")({
         breadcrumbJsonLd([
           { name: "Home", path: "/" },
           { name: "Guides", path: "/learn" },
-          { name: "What is an RPC", path: "/guides/what-is-an-rpc" },
+          { name: "What Is an RPC", path: "/guides/what-is-an-rpc" },
         ]),
       ],
     }),
@@ -25,7 +25,7 @@ function GuidePage() {
     <SiteChrome activePath="/guides/what-is-an-rpc">
       <Prose>
         <p className="text-sm text-subtle">Guide · Beginner · 2026</p>
-        <h1>What is an RPC, and why your x402 endpoint needs one</h1>
+        <h1>{SEO_PAGES.whatIsAnRpc.h1}</h1>
         <p>
           People often mix up three different pieces: the <strong>x402 paywall</strong>,
           the <strong>facilitator</strong>, and the <strong>RPC</strong>. This guide

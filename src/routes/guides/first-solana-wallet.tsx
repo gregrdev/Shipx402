@@ -14,7 +14,7 @@ export const Route = createFileRoute("/guides/first-solana-wallet")({
         breadcrumbJsonLd([
           { name: "Home", path: "/" },
           { name: "Guides", path: "/learn" },
-          { name: "Your first Solana wallet", path: "/guides/first-solana-wallet" },
+          { name: "Your First Solana Wallet", path: "/guides/first-solana-wallet" },
         ]),
       ],
     }),
@@ -25,7 +25,7 @@ function GuidePage() {
     <SiteChrome activePath="/guides/first-solana-wallet">
       <Prose>
         <p className="text-sm text-subtle">Guide · Beginner · 2026</p>
-        <h1>Your first Solana wallet (Devnet, no risk)</h1>
+        <h1>Your First Solana Wallet (Devnet, No Risk)</h1>
         <p>
           A crypto wallet sounds intimidating, but the core idea is small. A Solana
           wallet is really just two things, and once you see them clearly the rest
@@ -129,7 +129,7 @@ function GuidePage() {
             <Link to="/learn">See the payment loop</Link>
           </Button>
           <Button asChild variant="outline">
-            <Link to="/guides/what-is-x402">What is x402?</Link>
+            <Link to="/guides/what-is-x402">What Is x402?</Link>
           </Button>
         </div>
 

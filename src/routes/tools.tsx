@@ -67,7 +67,11 @@ function CatalogCard({
                     : "real"
               }
             >
-              {item.tier}
+              {item.tier === "beginner"
+                ? "Beginner"
+                : item.tier === "intermediate"
+                  ? "Intermediate"
+                  : "Advanced"}
             </Badge>
           )}
         </div>
@@ -144,7 +148,7 @@ function ToolsPage() {
 
   return (
     <SiteChrome activePath="/tools">
-      <div className="space-y-12 animate-fade-up">
+      <div className="space-y-8 animate-fade-up">
         <header className="max-w-2xl space-y-3">
           <p className="font-mono text-xs uppercase tracking-[0.14em] text-primary">
             Directory
@@ -153,8 +157,7 @@ function ToolsPage() {
             {SEO_PAGES.tools.h1}
           </h1>
           <p className="text-lg text-muted">
-            Everything public on this site in one place — tools you can click, guides
-            in learning order, and machine endpoints agents can fetch.
+            Public tools, guides in learning order, and agent endpoints — in one place.
           </p>
           <div className="flex flex-wrap gap-2 pt-1">
             {(
@@ -169,7 +172,7 @@ function ToolsPage() {
               <a
                 key={j.href}
                 href={j.href}
-                className="rounded-full border border-border bg-surface px-3 py-1.5 text-sm text-muted no-underline hover:border-primary/40 hover:text-fg"
+                className="chip border border-border bg-surface px-3 py-1.5 text-sm text-muted no-underline hover:border-primary/40 hover:text-fg"
               >
                 {j.label}
               </a>
@@ -250,7 +253,7 @@ function ToolsPage() {
           title="For AI agents · one-file first stop"
           blurb="Agents should fetch a single condensed file before crawling HTML."
         >
-          <div className="rounded-[var(--radius-xl)] border border-primary/30 bg-primary/5 p-5 cyber-edge">
+          <div className="rounded-[var(--radius-xl)] border border-border bg-surface p-5">
             <div className="flex items-start gap-3">
               <Sparkles className="mt-0.5 size-5 shrink-0 text-primary" />
               <div className="min-w-0 space-y-3">
@@ -291,7 +294,7 @@ function ToolsPage() {
           </div>
         </Section>
       </div>
-        <SupportNudge className="mt-10" />
+        <SupportNudge className="mt-10" compact />
     </SiteChrome>
   );
 }

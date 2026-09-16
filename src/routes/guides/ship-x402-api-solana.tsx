@@ -28,7 +28,7 @@ function GuidePage() {
     <SiteChrome activePath="/guides/ship-x402-api-solana">
       <Prose>
         <p className="text-sm text-subtle">Guide · Solana · 2026</p>
-        <h1>How to build an x402-paid API on Solana</h1>
+        <h1>Ship an x402 API on Solana</h1>
         <p>
           This is the seller path: your API stays locked until payment clears, then
           returns the data. Always re-check{" "}
@@ -42,12 +42,17 @@ function GuidePage() {
         <ol>
           <li>Client hits your route.</li>
           <li>
-            You return <strong>HTTP 402</strong> with price and payment details.
+            You return <strong>HTTP 402</strong> with{" "}
+            <code>PAYMENT-REQUIRED</code> (canonical V2 header).
           </li>
           <li>Client pays on Solana.</li>
-          <li>Client retries with payment proof.</li>
           <li>
-            You verify and return <strong>200</strong>.
+            Client retries with <code>PAYMENT-SIGNATURE</code> (legacy alias:{" "}
+            <code>X-PAYMENT</code>).
+          </li>
+          <li>
+            You verify and return <strong>200</strong> plus{" "}
+            <code>PAYMENT-RESPONSE</code>.
           </li>
         </ol>
 
@@ -56,7 +61,18 @@ function GuidePage() {
           Create a Solana wallet. Put only the <strong>public address</strong> on your
           server. Never put a private key in your API.
         </p>
-        <p>Practice on <strong>devnet</strong> first. Devnet money is fake on purpose.</p>
+        <p>
+          Practice on <strong>Devnet</strong> first.{" "}
+          <a
+            href="https://www.shipx402.com/guides/first-solana-wallet"
+            className="chip mx-1 inline-flex border border-border bg-bg px-2 py-0.5 text-xs font-medium text-muted no-underline hover:text-fg"
+          >
+            Devnet · practice network · free test money
+          </a>
+          <span className="chip mx-1 inline-flex border border-border bg-bg px-2 py-0.5 text-xs font-medium text-muted">
+            Mainnet · real money · mistakes can’t be undone
+          </span>
+        </p>
         <ul>
           <li>
             Devnet network ID:{" "}
@@ -65,6 +81,28 @@ function GuidePage() {
           <li>
             Mainnet network ID:{" "}
             <code>solana:5eykt4UsFv8P8NJdTREpY1vzqKqZKvdp</code>
+          </li>
+        </ul>
+        <p>
+          Production Solana x402 uses scheme <code>exact</code> (not{" "}
+          <code>upto</code> or <code>batch-settlement</code> — those are EVM). Default
+          dollar-string USDC mints from{" "}
+          <a
+            href="https://docs.x402.org/core-concepts/network-and-token-support"
+            className="link-readable"
+          >
+            docs.x402.org
+          </a>
+          :
+        </p>
+        <ul>
+          <li>
+            Mainnet USDC: <code>EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v</code> (6
+            decimals)
+          </li>
+          <li>
+            Devnet USDC: <code>4zMMC9srt5Ri5X14GAgXhaHii3GnPAEERYPJgZJDncDU</code> (6
+            decimals)
           </li>
         </ul>
 
@@ -136,8 +174,21 @@ app.listen(3000);`}</pre>
         <ol>
           <li>Switch to the mainnet network ID.</li>
           <li>
-            Switch to a production facilitator (for example Coinbase CDP or PayAI at{" "}
-            <code>https://facilitator.payai.network</code>).
+            Switch to a production facilitator (for example Coinbase CDP at{" "}
+            <a
+              href="https://api.cdp.coinbase.com/platform/v2/x402"
+              className="link-readable"
+            >
+              https://api.cdp.coinbase.com/platform/v2/x402
+            </a>{" "}
+            or PayAI at{" "}
+            <a
+              href="https://facilitator.payai.network"
+              className="link-readable"
+            >
+              https://facilitator.payai.network
+            </a>{" "}
+            — confirm both in current docs before production).
           </li>
           <li>Use your real receiving address.</li>
           <li>Test with a tiny amount first.</li>

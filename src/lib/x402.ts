@@ -1,15 +1,17 @@
 /**
  * Educational x402 helpers for Ship x402 Lab.
  *
- * Real production x402 (x402 Foundation / Coinbase CDP / public facilitators)
- * often uses headers like PAYMENT-REQUIRED / PAYMENT-SIGNATURE / PAYMENT-RESPONSE.
- * Solana native examples commonly use HTTP 402 body + X-PAYMENT retry.
+ * Production x402 V2 (docs.x402.org / x402-foundation HTTP transport) uses
+ * PAYMENT-REQUIRED (402), PAYMENT-SIGNATURE (client retry), PAYMENT-RESPONSE
+ * (settlement). X-PAYMENT / X-PAYMENT-RESPONSE are legacy V1 aliases.
  *
  * This lab implements a simplified, fully working "exact-lab" scheme so you can
  * experience the 402 → pay → retry loop without needing mainnet USDC.
+ * Production Solana x402 typically uses scheme "exact" with SPL USDC via a
+ * facilitator (not this lab scheme).
  *
- * 2026: challenge envelope is x402 v2-shaped (CAIP-2 network, top-level resource,
- * amount field) with legacy v1 mirrors so older clients and the in-app lab still work.
+ * Challenge envelope is x402 v2-shaped (CAIP-2 network, top-level resource,
+ * amount field) with legacy v1 mirrors so older clients still work.
  */
 
 import bs58 from "bs58";
@@ -244,49 +246,50 @@ export function verifyLabPayment(
 export const X402_TUTORIAL_STEPS = [
   {
     id: 1,
-    title: "You ask for a paid resource",
+    title: "You Ask for a Paid Resource",
     plain: "Your app (or an AI agent) does a normal HTTP request — same as loading any API.",
     why: "No special payment channel. Money rides on the same web request/response loop the internet already uses.",
     technical: "GET /api/x402/lab with no payment headers.",
   },
   {
     id: 2,
-    title: "Server answers 402 Payment Required",
+    title: "Server Answers 402 Payment Required",
     plain: "Instead of 200 OK or 401 Login, you get 402: 'Pay this amount, on this network, to this address, for this resource.'",
     why: "HTTP already reserved 402 for payments. x402 finally defines the machine-readable details so software can pay without humans filling forms.",
     technical:
-      "Status 402 + v2 JSON (x402Version 2, top-level resource, accepts[] with CAIP-2 network + amount) and PAYMENT-REQUIRED header.",
+      "Status 402 + PAYMENT-REQUIRED header (canonical V2) carrying base64 PaymentRequired. JSON body is a convenience; docs.x402.org treats the header as the wire location.",
   },
   {
     id: 3,
-    title: "Client builds a payment",
+    title: "Client Builds a Payment",
     plain: "Your wallet signs a payment that matches the requirements — amount, destination, resource.",
     why: "Only the key holder can authorize spend. Signing proves intent without handing the server your private key.",
     technical:
-      "Lab: sign a payment-intent message. Production Solana: often a signed SPL USDC transfer / partial tx for a facilitator.",
+      "Lab: sign a payment-intent message. Production Solana: scheme \"exact\" — typically a signed SPL USDC transfer settled by a facilitator (helper that verifies and settles; never needs your private key).",
   },
   {
     id: 4,
-    title: "Retry the same request with proof",
+    title: "Retry the Same Request with Proof",
     plain: "You call the same URL again, this time attaching the payment proof in a header.",
     why: "One protocol for humans, bots, and agents: request → price → pay → unlock. No account signup required.",
     technical:
-      "Header X-PAYMENT or PAYMENT-SIGNATURE carries base64 payment payload (v2).",
+      "Header PAYMENT-SIGNATURE carries base64 PaymentPayload (V2). Legacy V1 alias: X-PAYMENT — still accepted here during migration.",
   },
   {
     id: 5,
-    title: "Server verifies / settles, then delivers",
-    plain: "The server checks the proof (itself or via a facilitator), settles on-chain if needed, and returns 200 + the goods.",
-    why: "Sellers get paid per call. Buyers only pay when they need the resource. Micropayments become practical on fast, cheap chains like Solana.",
-    technical: "Verify signature/tx → optional facilitator settle → reject replays (nonce/sig) → 200 + body.",
+    title: "Server Verifies / Settles, Then Delivers",
+    plain:
+      "The server checks the proof itself or via a facilitator — a helper that verifies and settles x402 payments. Not a bank — never needs your private key. Then it settles on-chain if needed and returns 200 + the goods.",
+    why: "Sellers get paid per call. Buyers only pay when they need the resource. Micropayments become practical on fast, cheap chains like Solana (the chain we teach first for these payments).",
+    technical: "Verify signature/tx → optional facilitator settle → reject replays (nonce/sig) → 200 + PAYMENT-RESPONSE header.",
   },
 ] as const;
 
 export const PREMIUM_FACTS = [
   "Solana finalizes blocks in roughly a few hundred milliseconds — fast enough that per-request micropayments feel like normal web latency.",
   "HTTP 402 existed for decades as a reserved status; x402 is the open protocol that finally standardizes what 'Payment Required' means for machines.",
-  "A facilitator is an optional helper that verifies and settles payments so every API shop doesn't have to run full chain infrastructure themselves.",
-  "On Solana, production x402 often moves USDC (SPL). The client authorizes a transfer; settlement can be gas-abstracted so the user may not need SOL for fees.",
+  "A facilitator is a helper that verifies and settles x402 payments. Not a bank — never needs your or the buyer’s private key.",
+  "On Solana, production x402 typically moves USDC (SPL mint EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v, 6 decimals) with scheme exact. Devnet USDC mint is 4zMMC9srt5Ri5X14GAgXhaHii3GnPAEERYPJgZJDncDU.",
   "Agents love x402 because they can discover a price, pay, and continue — no OAuth dance, no 'create an account' wall mid-task.",
-  "In 2026, x402 is governed under the Linux Foundation's x402 Foundation; network IDs in v2 use CAIP-2 form (solana:… / eip155:…).",
+  "x402 is governed under the Linux Foundation's x402 Foundation. V2 network IDs use CAIP-2 (solana:… / eip155:…). Solana currently implements exact; upto and batch-settlement are EVM schemes.",
 ];

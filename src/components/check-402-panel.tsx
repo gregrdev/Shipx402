@@ -45,7 +45,7 @@ export function Check402Panel({ defaultUrl = "" }: { defaultUrl?: string }) {
   };
 
   const shareGrade = async (report: GradeReport) => {
-    const text = `My x402 endpoint scored ${report.grade} on shipx402.com/check\n${url.trim() || "endpoint"}\n\nGrade your 402: https://shipx402.com/check`;
+    const text = `My x402 endpoint scored ${report.grade} on www.shipx402.com/check\n${url.trim() || "endpoint"}\n\nGrade your 402: https://www.shipx402.com/check`;
     await copyText(text);
     toast.success("Share text copied — paste it anywhere");
   };
@@ -54,9 +54,9 @@ export function Check402Panel({ defaultUrl = "" }: { defaultUrl?: string }) {
     <div className="space-y-5">
       <div className="rounded-[var(--radius-xl)] border border-primary/30 bg-primary/5 p-5">
         <div className="mb-3 flex flex-wrap items-center gap-2">
-          <Badge variant="default">Free lead magnet</Badge>
+          <Badge variant="default">Free · no account</Badge>
           <span className="text-sm text-muted">
-            Paste a URL → get an A–F grade. Screenshot an A.
+            Paste a URL → A–F grade on the 402 (headers first).
           </span>
         </div>
         <Label>API URL to check</Label>
@@ -78,7 +78,7 @@ export function Check402Panel({ defaultUrl = "" }: { defaultUrl?: string }) {
           </Button>
         </div>
         <p className="mt-2 text-sm text-subtle">
-          We fetch once over HTTPS with SSRF protections. Try this site:{" "}
+          We fetch once over HTTPS with SSRF protections. Test a known 402:{" "}
           <button
             type="button"
             className="link-readable"
@@ -91,7 +91,8 @@ export function Check402Panel({ defaultUrl = "" }: { defaultUrl?: string }) {
             }
           >
             /api/x402/donate
-          </button>
+          </button>{" "}
+          (returns a Solana payTo — the receiving wallet address).
         </p>
       </div>
 

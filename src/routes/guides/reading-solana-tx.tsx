@@ -15,7 +15,7 @@ export const Route = createFileRoute("/guides/reading-solana-tx")({
           { name: "Home", path: "/" },
           { name: "Guides", path: "/learn" },
           {
-            name: "Reading a Solana transaction",
+            name: "Reading a Solana Transaction",
             path: "/guides/reading-solana-tx",
           },
         ]),
@@ -28,7 +28,7 @@ function GuidePage() {
     <SiteChrome activePath="/guides/reading-solana-tx">
       <Prose>
         <p className="text-sm text-subtle">Guide · Beginner · 2026</p>
-        <h1>Reading a Solana transaction on Solscan</h1>
+        <h1>Reading a Solana Transaction on Solscan</h1>
         <p>
           After you send SOL (or an agent pays an x402 endpoint), you will want to
           prove it. Wallet UIs can feel noisy. A block explorer is the calm version of
@@ -106,7 +106,7 @@ function GuidePage() {
         <h2>Common confusions</h2>
         <ul>
           <li>
-            <strong>“Phantom looks janky”:</strong> explorers show the same data with
+            <strong>“Phantom looks confusing”:</strong> explorers show the same data with
             less UI chrome. Trust confirmed chain state over a loading spinner.
           </li>
           <li>
@@ -127,7 +127,7 @@ function GuidePage() {
             <Link to="/guides/first-solana-wallet">First wallet guide</Link>
           </Button>
           <Button asChild variant="outline">
-            <Link to="/guides/what-is-an-rpc">What is an RPC?</Link>
+            <Link to="/guides/what-is-an-rpc">What Is an RPC?</Link>
           </Button>
         </div>
 

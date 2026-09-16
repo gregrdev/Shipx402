@@ -25,11 +25,11 @@ function GuidePage() {
     <SiteChrome activePath="/guides/x402-v1-vs-v2">
       <Prose>
         <p className="text-sm text-subtle">Guide · Intermediate · 2026</p>
-        <h1>x402 v1 vs v2: what changed and how not to crash a tester</h1>
+        <h1>x402 v1 vs v2: What Changed (and How to Keep Testers Working)</h1>
         <p>
           x402 V2 shipped in December 2025. V2 is the recommended baseline in 2026.
           Older tutorials still show V1 shapes. Mixing them is the fastest way to fail
-          a 402 checker or a modern client.
+          a 402 Checker or a modern client.
         </p>
 
         <h2>Quick comparison</h2>
@@ -47,18 +47,18 @@ function GuidePage() {
                 ["Version field", "x402Version: 1", "x402Version: 2"],
                 [
                   "Payment header (client → server)",
-                  "X-PAYMENT",
-                  "PAYMENT-SIGNATURE (often still accept X-PAYMENT)",
+                  "X-PAYMENT (legacy)",
+                  "PAYMENT-SIGNATURE (canonical). X-PAYMENT is a V1 alias only.",
                 ],
                 [
                   "Requirements header (server → client)",
                   "mostly body only",
-                  "PAYMENT-REQUIRED (base64) + body",
+                  "PAYMENT-REQUIRED (canonical, base64 PaymentRequired). Body is optional convenience.",
                 ],
                 [
                   "Response header",
-                  "X-PAYMENT-RESPONSE",
-                  "PAYMENT-RESPONSE (+ legacy mirror OK)",
+                  "X-PAYMENT-RESPONSE (legacy)",
+                  "PAYMENT-RESPONSE (canonical). Legacy X-PAYMENT-RESPONSE is a V1 alias.",
                 ],
                 [
                   "Network id",
@@ -127,8 +127,9 @@ function GuidePage() {
             Using the public test facilitator URL on mainnet.
           </li>
           <li>
-            Clients sending only <code>X-PAYMENT</code> to a server that only reads{" "}
-            <code>PAYMENT-SIGNATURE</code> (or the reverse). Accept both during migration.
+            Clients sending only <code>X-PAYMENT</code> (legacy V1) to a server that
+            only reads <code>PAYMENT-SIGNATURE</code>. During migration, accept both
+            — but teach and emit the V2 names first.
           </li>
         </ul>
 
@@ -146,7 +147,10 @@ function GuidePage() {
           </li>
           <li>CAIP-2 <code>network</code> in accepts</li>
           <li>
-            Accept inbound proofs with either modern headers or <code>X-PAYMENT</code>
+          <li>
+            Accept inbound proofs on <code>PAYMENT-SIGNATURE</code> first; keep{" "}
+            <code>X-PAYMENT</code> as a legacy alias
+          </li>
           </li>
         </ul>
         <p>
@@ -161,7 +165,7 @@ function GuidePage() {
             register (ExactSvmScheme / ExactEvmScheme).
           </li>
           <li>Replace network strings with CAIP-2.</li>
-          <li>Add PAYMENT-* headers; keep X-* during a transition window.</li>
+          <li>Add PAYMENT-* headers as the default; keep X-* only as a documented legacy alias.</li>
           <li>
             Validate with{" "}
             <Link to="/check" className="link-readable">

@@ -31,8 +31,9 @@ function ExplorerPage() {
             {SEO_PAGES.explorer.h1}
           </h1>
           <p className="text-lg text-muted">
-            Paste a Solana wallet address to see live SOL balance, a rough USD value,
-            and recent transactions. Read-only — no keys, no login.
+            This is a <strong>read-only Solana wallet lookup</strong> (public address →
+            SOL balance, rough USD, recent transactions via RPC). It is not an x402
+            facilitator explorer, Bazaar catalog, or payment-scheme API.
           </p>
           <div className="flex flex-wrap gap-2">
             <Button asChild variant="secondary" size="sm">

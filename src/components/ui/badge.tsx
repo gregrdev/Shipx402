@@ -10,7 +10,7 @@ export function Badge({
   return (
     <span
       className={cn(
-        "inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-medium",
+        "chip inline-flex items-center px-2.5 py-0.5 text-xs font-medium",
         variant === "default" && "bg-surface-2 text-muted border border-border",
         variant === "learn" && "bg-learn-bg text-learn border border-learn/25",
         variant === "real" && "bg-real-bg text-real border border-real/25",

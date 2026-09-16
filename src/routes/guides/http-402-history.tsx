@@ -81,7 +81,7 @@ function GuidePage() {
             <Link to="/learn">Learn the payment loop</Link>
           </Button>
           <Button asChild variant="secondary">
-            <Link to="/guides/what-is-x402">What is x402?</Link>
+            <Link to="/guides/what-is-x402">What Is x402?</Link>
           </Button>
           <Button asChild variant="outline">
             <Link to="/guides/x402-v1-vs-v2">v1 vs v2</Link>

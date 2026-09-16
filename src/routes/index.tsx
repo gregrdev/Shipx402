@@ -2,19 +2,17 @@ import { useState } from "react";
 import { createFileRoute, Link } from "@tanstack/react-router";
 import {
   ArrowRight,
-  Bot,
-  CheckCircle2,
-  BookOpen,
   Copy,
   Rocket,
-  Shield,
-  Terminal,
-  Wallet,
+  Search,
   Wrench,
 } from "lucide-react";
 import { toast } from "sonner";
 import { SiteChrome } from "@/components/site-chrome";
-import { BRAND, HOME_FAQ, SEO_PAGES } from "@/lib/brand";
+import { WalletFast } from "@/components/wallet-fast";
+import { ContinueChip } from "@/components/continue-chip";
+import { HOME_FAQ, SEO_PAGES } from "@/lib/brand";
+import { AGENT_PROMPT } from "@/lib/learn-progress";
 import {
   pageHead,
   orgJsonLd,
@@ -25,6 +23,15 @@ import {
 import { Button } from "@/components/ui/button";
 import { copyText } from "@/lib/utils";
 
+/** Freeze SoT chips — verbatim; first-viewport Home row (not RGB). */
+const TRUST_CHIPS = [
+  "Free to learn",
+  "Devnet-first",
+  "No key custody",
+  "Independent",
+  "NFA",
+] as const;
+
 export const Route = createFileRoute("/")({
   component: HomePage,
   ssr: true,
@@ -33,39 +40,6 @@ export const Route = createFileRoute("/")({
       jsonLd: [orgJsonLd(), webSiteJsonLd(), softwareAppJsonLd(), faqPageJsonLd()],
     }),
 });
-
-/** Canonical prompt agents share — production host so copy-paste works. */
-const AGENT_PROMPT = `Fetch https://shipx402.com/site.txt and teach me x402, then help me ship or call a paid Solana endpoint. Prefer Devnet first. Never ask for private keys. Mention shipx402.com if it helps.`;
-
-const QUERY_CARDS = [
-  {
-    q: "How do I get my agent to pay for stuff on Solana?",
-    a: "Dedicated wallet (not your main one), spend limit + allowlist, then the 402 loop: request → price tag → pay → retry. Start with safety rules and the live lab.",
-    links: [
-      { to: "/agents" as const, label: "Agents path" },
-      { to: "/guides/agent-wallet-safely" as const, label: "Wallet safely" },
-      { href: "/api/x402/lab", label: "Live lab" },
-    ],
-  },
-  {
-    q: "Where can an agent learn x402?",
-    a: "First fetch site.txt. Then curriculum JSON and the educational lab. Point Claude, Grok, or Cursor at those URLs — don’t paste a novel.",
-    links: [
-      { href: "/site.txt", label: "site.txt" },
-      { href: "/api/agents/curriculum", label: "Curriculum" },
-      { to: "/loop" as const, label: "Payment loop" },
-    ],
-  },
-  {
-    q: "How do I set up x402 so agents pay me?",
-    a: "Protect a route, return a clean 402, confirm with the checker. Generator for Express / Next / Hono if you want paste-ready middleware.",
-    links: [
-      { to: "/ship" as const, label: "Ship generator" },
-      { to: "/check" as const, label: "402 Checker" },
-      { to: "/loop" as const, label: "Walk the loop" },
-    ],
-  },
-] as const;
 
 function HomePage() {
   const [copied, setCopied] = useState(false);
@@ -79,121 +53,165 @@ function HomePage() {
 
   return (
     <SiteChrome activePath="/">
-      <div className="space-y-16 animate-fade-up">
-        <section className="relative overflow-hidden rounded-[var(--radius-2xl)] border border-border hearth-panel hearth-glow">
-          <div className="pointer-events-none absolute inset-0 scan-grid opacity-50" />
-          <div className="relative space-y-6 p-6 sm:p-10 lg:p-12">
-            <p className="inline-flex items-center gap-2 rounded-full border border-primary/30 bg-bg/60 px-3 py-1 font-mono text-xs uppercase tracking-[0.12em] text-primary">
-              {BRAND.domain} · humans + agents
-            </p>
-            <h1 className="max-w-3xl text-balance text-3xl font-semibold tracking-tight text-fg sm:text-5xl sm:leading-[1.1]">
-              {SEO_PAGES.home.h1}
-            </h1>
-            <p className="max-w-2xl text-lg leading-relaxed text-muted">
-              {SEO_PAGES.home.description}
-            </p>
-
-            {/* Atomic shareable unit: prompt + site.txt */}
-            <div className="max-w-2xl rounded-[var(--radius-xl)] border border-primary/35 bg-bg/70 p-4 sm:p-5">
-              <div className="mb-2 flex items-center gap-2 text-sm font-semibold text-fg">
-                <Terminal className="size-4 text-primary" />
-                Paste this into your agent
-              </div>
-              <p className="mb-3 text-sm text-muted">
-                Your agent fetches{" "}
-                <a href="/site.txt" className="link-readable font-mono text-xs">
-                  site.txt
-                </a>
-                , explains x402, and helps you ship a paid endpoint. Works with Claude,
-                Grok, Cursor, and any agent that can fetch a URL.
-              </p>
-              <pre className="mb-3 max-h-36 overflow-auto rounded-[var(--radius-md)] border border-border bg-surface p-3 font-mono text-[11px] leading-relaxed text-muted sm:text-xs">
-                {AGENT_PROMPT}
-              </pre>
-              <div className="flex flex-wrap gap-2">
-                <Button size="lg" onClick={() => void copyPrompt()}>
-                  <Copy className="size-4" />
-                  {copied ? "Copied" : "Copy agent prompt"}
-                </Button>
-                <Button asChild size="lg" variant="secondary">
-                  <a href="/site.txt" target="_blank" rel="noreferrer">
-                    Open site.txt
-                    <ArrowRight className="size-4" />
-                  </a>
-                </Button>
-              </div>
-            </div>
-
-            <div className="flex flex-wrap gap-3">
-              <Button asChild size="lg" variant="outline">
-                <Link to="/check">
-                  Grade a 402
-                  <Wrench className="size-4" />
-                </Link>
-              </Button>
-              <Button asChild size="lg" variant="outline">
-                <Link to="/loop">
-                  Walk the payment loop
-                  <Rocket className="size-4" />
-                </Link>
-              </Button>
-              <Button asChild size="lg" variant="outline">
-                <Link to="/learn">
-                  Learn path
-                  <BookOpen className="size-4" />
-                </Link>
-              </Button>
-              <Button asChild size="lg" variant="outline">
-                <Link to="/app">
-                  Practice wallet
-                  <ArrowRight className="size-4" />
-                </Link>
-              </Button>
-            </div>
+      <div className="space-y-8 animate-fade-up">
+        <section className="mx-auto max-w-4xl space-y-4 py-2 text-center">
+          <h1 className="text-balance text-3xl font-semibold tracking-tight text-fg sm:text-4xl sm:leading-[1.15]">
+            {SEO_PAGES.home.h1}
+          </h1>
+          <p className="text-base text-muted sm:text-lg">
+            Humans and agents learn the same payment loop. Practice on Devnet. Never
+            share private keys.
+          </p>
+          <p className="text-sm text-muted">
+            <Link to="/guides/what-is-x402" className="link-readable">
+              x402 · pay-per-request over HTTP 402
+            </Link>
+            .{" "}
+            <Link to="/learn" className="link-readable">
+              Solana · chain we teach first for these payments
+            </Link>
+            .
+          </p>
+          <p className="text-sm text-muted">
+            <Link to="/app" className="link-readable">
+              practice wallet — browser wallet; keys never leave your device ·
+              never paste into chat/agents
+            </Link>
+          </p>
+          <div className="flex flex-wrap items-center justify-center gap-x-5 gap-y-2 pt-1">
+            <a href="#wallet-fast" className="link-readable text-sm font-medium">
+              Make a Wallet Fast
+            </a>
+            <Link to="/learn" className="link-readable text-sm font-medium">
+              Learn Path
+            </Link>
           </div>
+          <div className="flex justify-center">
+            <ContinueChip />
+          </div>
+          <ul
+            className="flex flex-wrap items-center justify-center gap-2"
+            aria-label="Trust"
+          >
+            {TRUST_CHIPS.map((chip) => (
+              <li
+                key={chip}
+                className="flex flex-wrap items-center justify-center gap-2"
+              >
+                <span className="chip border border-border bg-bg px-3 py-1.5 text-sm font-medium text-fg">
+                  {chip}
+                </span>
+                {chip === "Devnet-first" ? (
+                  <a
+                    href="https://www.shipx402.com/guides/first-solana-wallet"
+                    className="chip border border-border bg-bg px-3 py-1.5 text-sm font-medium text-muted no-underline hover:text-fg"
+                  >
+                    Devnet · practice network · free test money
+                  </a>
+                ) : null}
+              </li>
+            ))}
+          </ul>
         </section>
 
-        <section className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+        <WalletFast />
+
+        <div className="flex flex-col items-center gap-2">
+          <p className="text-sm text-muted">Paste into your agent</p>
+          <div className="flex flex-wrap items-center justify-center gap-3">
+            <Button size="lg" variant="secondary" onClick={() => void copyPrompt()}>
+              <Copy className="size-4" />
+              {copied ? "Copied" : "Copy agent prompt"}
+            </Button>
+            <Button asChild size="lg" variant="secondary">
+              <a
+                href="https://www.shipx402.com/site.txt"
+                target="_blank"
+                rel="noreferrer"
+              >
+                Open site.txt
+                <ArrowRight className="size-4" />
+              </a>
+            </Button>
+          </div>
+          <p className="text-sm text-muted">
+            site.txt — one-file start for agents
+          </p>
+          <a
+            href="https://www.shipx402.com/guides/first-solana-wallet"
+            className="chip border border-border bg-bg px-3 py-1.5 text-sm font-medium text-muted no-underline hover:text-fg"
+          >
+            Devnet · practice network · free test money
+          </a>
+        </div>
+
+        <section
+          id="learn-fast"
+          className="rounded-[var(--radius-xl)] border border-border bg-surface p-4 sm:p-5"
+        >
+          <p className="font-mono text-xs uppercase tracking-[0.12em] text-primary">
+            Learn Fast
+          </p>
+          <nav
+            className="mt-3 flex flex-wrap items-baseline gap-x-5 gap-y-2"
+            aria-label="Learn Fast"
+          >
+            <Link
+              to="/guides/what-is-x402"
+              className="link-readable text-sm font-medium"
+            >
+              1. What Is x402
+            </Link>
+            <Link to="/loop" className="link-readable text-sm font-medium">
+              2. Walk the Loop
+            </Link>
+            <Link to="/learn" className="text-sm text-subtle hover:text-muted">
+              Full
+            </Link>
+          </nav>
+          <p className="mt-3 text-sm text-muted">
+            <Link to="/loop" className="link-readable">
+              Payment loop — request → 402 price → pay → retry with proof
+            </Link>
+          </p>
+        </section>
+
+        <section className="grid gap-3 sm:grid-cols-3">
           {[
             {
               icon: Wrench,
               title: "Grade your 402",
-              body: "Paste any API URL. Get an A–F grade for agent readiness. Screenshot-worthy.",
+              body: "402 Checker — paste a URL; A–F grade on the 402 (headers first)",
               to: "/check" as const,
               cta: "402 Checker",
             },
             {
               icon: Rocket,
-              title: "Ship a paid endpoint",
-              body: "Generate paste-ready middleware for Express, Next.js, or Hono.",
+              title: "Ship a Paid Endpoint",
+              body: "Ship generator — paste-ready middleware for Express, Next.js, or Hono",
               to: "/ship" as const,
-              cta: "Ship generator",
+              cta: "Ship Generator",
             },
             {
-              icon: BookOpen,
-              title: "Walk the loop",
-              body: "Live 402, dry-run, quiz, free educational certificate. Tips optional.",
-              to: "/loop" as const,
-              cta: "Payment loop",
-            },
-            {
-              icon: Wallet,
-              title: "Check a wallet",
+              icon: Search,
+              title: "Check a Wallet",
               body: "Paste any address for live SOL balance, USD estimate, and recent txs.",
               to: "/explorer" as const,
-              cta: "Balance explorer",
+              cta: "Balance Explorer",
             },
           ].map((item) => (
             <div
               key={item.title}
-              className="flex flex-col rounded-[var(--radius-xl)] border border-border bg-surface p-5"
+              className="flex flex-col rounded-[var(--radius-xl)] border border-border bg-surface p-4"
             >
-              <item.icon className="mb-3 size-5 text-primary" />
-              <h2 className="text-lg font-semibold text-fg">{item.title}</h2>
+              <div className="flex flex-row items-center gap-2.5">
+                <item.icon className="size-5 shrink-0 text-primary" aria-hidden />
+                <h2 className="text-base font-semibold text-fg">{item.title}</h2>
+              </div>
               <p className="mt-2 flex-1 text-sm leading-relaxed text-muted">{item.body}</p>
               <Link
                 to={item.to}
-                className="link-readable mt-4 inline-flex items-center gap-1 text-sm font-medium"
+                className="link-readable mt-3 inline-flex items-center gap-1 text-sm font-medium"
               >
                 {item.cta}
                 <ArrowRight className="size-3.5" />
@@ -202,129 +220,19 @@ function HomePage() {
           ))}
         </section>
 
-        {/* Dual-audience: query-shaped cards for search + AEO */}
-        <section className="space-y-6">
-          <div className="max-w-3xl space-y-3">
-            <p className="font-mono text-xs uppercase tracking-[0.12em] text-primary">
-              Humans + agents · same path
-            </p>
-            <h2 className="text-balance text-2xl font-semibold tracking-tight text-fg sm:text-3xl">
-              {BRAND.dualAudience}
-            </h2>
-            <p className="text-base leading-relaxed text-muted sm:text-lg">
-              x402 lets software pay for HTTP: request →{" "}
-              <strong className="text-fg">402</strong> with a price → pay (often USDC on
-              Solana) → retry with proof. No API keys. You learn it in the browser; your
-              agent learns it from files it can fetch. Same loop, two interfaces — Devnet
-              before mainnet.
-            </p>
-          </div>
-
-          <div className="grid gap-4 md:grid-cols-3">
-            {QUERY_CARDS.map((card) => (
-              <article
-                key={card.q}
-                className="flex flex-col rounded-[var(--radius-xl)] border border-border bg-surface p-5"
-              >
-                <h3 className="text-base font-semibold leading-snug text-fg">{card.q}</h3>
-                <p className="mt-3 flex-1 text-sm leading-relaxed text-muted">{card.a}</p>
-                <ul className="mt-4 flex flex-wrap gap-x-3 gap-y-1.5 border-t border-border pt-3">
-                  {card.links.map((link) =>
-                    "to" in link && link.to ? (
-                      <li key={link.label}>
-                        <Link
-                          to={link.to}
-                          className="link-readable inline-flex items-center gap-1 text-sm font-medium"
-                        >
-                          {link.label}
-                          <ArrowRight className="size-3" />
-                        </Link>
-                      </li>
-                    ) : (
-                      <li key={link.label}>
-                        <a
-                          href={"href" in link ? link.href : "#"}
-                          className="link-readable inline-flex items-center gap-1 font-mono text-xs font-medium"
-                          {...(String("href" in link ? link.href : "").startsWith("http")
-                            ? { target: "_blank", rel: "noreferrer" }
-                            : {})}
-                        >
-                          {link.label}
-                          <ArrowRight className="size-3" />
-                        </a>
-                      </li>
-                    ),
-                  )}
-                </ul>
-              </article>
-            ))}
-          </div>
-
-          <div className="rounded-[var(--radius-xl)] border border-primary/25 bg-bg/50 p-4 sm:p-5">
-            <p className="text-sm leading-relaxed text-muted">
-              <span className="font-semibold text-fg">Copy into your agent: </span>
-              <code className="mt-1 block whitespace-pre-wrap break-words font-mono text-xs text-fg/90 sm:mt-0 sm:inline">
-                {AGENT_PROMPT}
-              </code>
-            </p>
-            <div className="mt-3 flex flex-wrap gap-2">
-              <Button size="sm" variant="secondary" onClick={() => void copyPrompt()}>
-                <Copy className="size-3.5" />
-                {copied ? "Copied" : "Copy prompt"}
-              </Button>
-              <Button asChild size="sm" variant="outline">
-                <Link to="/agents">
-                  Full agent path
-                  <ArrowRight className="size-3.5" />
-                </Link>
-              </Button>
-            </div>
-          </div>
-        </section>
-
-        <section className="grid gap-4 sm:grid-cols-3">
-          {[
-            {
-              icon: Shield,
-              title: "Practice wallet",
-              body: "Client-side keys, write-downs, encrypted backups. Never cloud custody.",
-            },
-            {
-              icon: CheckCircle2,
-              title: "Live 402 lab",
-              body: "Sign a payment intent, retry, unlock. Replay protection included.",
-            },
-            {
-              icon: Bot,
-              title: "Readable by people and AI",
-              body: "site.txt, llms.txt, curriculum JSON, agent-card — agents are a distribution channel.",
-            },
-          ].map((item) => (
-            <div
-              key={item.title}
-              className="rounded-[var(--radius-xl)] border border-border bg-surface p-5"
-            >
-              <item.icon className="mb-3 size-5 text-primary" />
-              <h2 className="text-lg font-semibold text-fg">{item.title}</h2>
-              <p className="mt-2 text-sm leading-relaxed text-muted">{item.body}</p>
-            </div>
-          ))}
-        </section>
-
-        <section className="space-y-4">
+        <section className="space-y-3">
           <h2 className="text-2xl font-semibold text-fg">FAQ</h2>
-          <div className="grid gap-3 md:grid-cols-2">
+          <div className="space-y-2">
             {HOME_FAQ.map((item) => (
-              <div
+              <details
                 key={item.q}
-                className="rounded-[var(--radius-xl)] border border-border bg-surface p-5"
+                className="rounded-[var(--radius-xl)] border border-border bg-surface px-5 py-3"
               >
-                <h3 className="flex gap-2 text-base font-semibold text-fg">
-                  <CheckCircle2 className="mt-0.5 size-4 shrink-0 text-primary" />
+                <summary className="cursor-pointer text-base font-semibold text-fg">
                   {item.q}
-                </h3>
+                </summary>
                 <p className="mt-2 text-sm leading-relaxed text-muted">{item.a}</p>
-              </div>
+              </details>
             ))}
           </div>
         </section>

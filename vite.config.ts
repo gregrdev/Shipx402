@@ -23,5 +23,30 @@ export default defineConfig(({ command }) => ({
     tanstackStart(),
     ...(command === "build" ? [nitro({ preset: "vercel" })] : []),
     viteReact(),
+    {
+      name: "well-known-aliases",
+      configureServer(server) {
+        server.middlewares.use((req, _res, next) => {
+          const path = req.url?.split("?")[0];
+          if (path === "/.well-known/x402") {
+            req.url = "/.well-known/x402.json";
+          } else if (path === "/.well-known/llms.txt") {
+            req.url = "/llms.txt";
+          }
+          next();
+        });
+      },
+      configurePreviewServer(server) {
+        server.middlewares.use((req, _res, next) => {
+          const path = req.url?.split("?")[0];
+          if (path === "/.well-known/x402") {
+            req.url = "/.well-known/x402.json";
+          } else if (path === "/.well-known/llms.txt") {
+            req.url = "/llms.txt";
+          }
+          next();
+        });
+      },
+    },
   ],
 }));

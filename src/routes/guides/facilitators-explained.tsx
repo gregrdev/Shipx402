@@ -14,7 +14,7 @@ export const Route = createFileRoute("/guides/facilitators-explained")({
         breadcrumbJsonLd([
           { name: "Home", path: "/" },
           { name: "Guides", path: "/learn" },
-          { name: "Facilitators explained", path: "/guides/facilitators-explained" },
+          { name: "Facilitators Explained", path: "/guides/facilitators-explained" },
         ]),
       ],
     }),
@@ -33,10 +33,10 @@ function GuidePage() {
 
         <h2>What a facilitator does</h2>
         <p>
-          A facilitator is a helper service that verifies and settles payments, so every
-          API does not have to run full blockchain operations on its own. Instead of your
-          server tracking chains, tokens, and signatures by hand, it hands the heavy part
-          to a facilitator and gets back a simple yes or no.
+          A facilitator is a helper that verifies and settles x402 payments. Not a bank
+          — never needs your or the buyer’s private key. Instead of your server tracking
+          chains, tokens, and signatures by hand, it hands the heavy part to a
+          facilitator and gets back a simple yes or no.
         </p>
         <p>
           Two things worth knowing. First, the buyer still signs the payment themselves,
@@ -46,25 +46,46 @@ function GuidePage() {
         </p>
 
         <h2>The common options</h2>
+        <p>
+          Anyone can run a facilitator. Official selected production options live on{" "}
+          <a href="https://docs.x402.org/dev-tools/facilitators" className="link-readable">
+            docs.x402.org/dev-tools/facilitators
+          </a>
+          . That list is not exhaustive and changes; re-check it before you ship.
+        </p>
         <ul>
           <li>
-            <strong>The free test facilitator:</strong> the public one at
-            {" "}
-            <code>x402.org/facilitator</code> is the easiest way to develop on testnets
-            like Solana Devnet and Base Sepolia. Use it while you build, not for real
-            money.
+            <strong>x402.org test facilitator:</strong>{" "}
+            <code>https://x402.org/facilitator</code> — the default in the official
+            packages. Easiest way to develop on Solana Devnet (
+            <code>solana:EtWTRABZaYq6iMfeYKouRu166VU2xqa1</code>
+            ) (and other testnets the public facilitator lists, such as Base Sepolia{" "}
+            <code>eip155:84532</code>). Prefer Solana Devnet here. Use it while you
+            build, not for real money.
           </li>
           <li>
-            <strong>Coinbase CDP:</strong> a production path with polished docs and a
-            free tier that needs a CDP account. A common default when you go live.
+            <strong>Coinbase CDP Facilitator:</strong> hosted production path with
+            KYT/OFAC checks. Solana support is scheme <code>exact</code> only (USDC and
+            other SPL tokens). Facilitator base URL:{" "}
+            <code>https://api.cdp.coinbase.com/platform/v2/x402</code> — confirm in
+            current CDP docs before production. See{" "}
+            <a href="https://docs.cdp.coinbase.com/x402/network-support" className="link-readable">
+              CDP network support
+            </a>
+            .
           </li>
           <li>
-            <strong>PayAI:</strong> a public facilitator popular for Solana production
-            traffic.
+            <strong>PayAI Facilitator:</strong> a public facilitator popular for Solana
+            production traffic. Facilitator base URL:{" "}
+            <a href="https://facilitator.payai.network" className="link-readable">
+              https://facilitator.payai.network
+            </a>{" "}
+            — confirm in current PayAI docs before production.
           </li>
           <li>
-            <strong>Self-hosted:</strong> run your own for full control. That also means
-            full responsibility for uptime, security, and keeping current with the spec.
+            <strong>Others on the official list</strong> (examples: Corbits, Dexter,
+            Solvador) plus <strong>self-hosted / self-facilitate</strong> if you need
+            full control. Do not treat a blog post as the catalog — use the docs page.
           </li>
         </ul>
 
@@ -91,11 +112,23 @@ function GuidePage() {
 
         <h2>A simple starting rule</h2>
         <p>
-          Use the free test facilitator on Devnet while you learn the loop. When you are
-          ready for real payments, start with a hosted production facilitator like CDP or
-          PayAI, and only consider self-hosting once you have a clear reason and the time
-          to maintain it. Always confirm the current setup against the official docs
-          before production, since these services evolve.
+          Use the x402.org test facilitator on Devnet while you learn the loop{" "}
+          <a
+            href="https://www.shipx402.com/guides/first-solana-wallet"
+            className="chip mx-1 inline-flex border border-border bg-bg px-2 py-0.5 text-xs font-medium text-muted no-underline hover:text-fg"
+          >
+            Devnet · practice network · free test money
+          </a>
+          . Test facilitator{" "}
+          <code>https://x402.org/facilitator</code> = testnets only. CDP / PayAI =
+          production options we teach (not partners). When you are ready for real
+          payments, pick a production facilitator from the official list that supports
+          your network, and only consider self-hosting once you have a clear reason.
+          Always confirm the current setup against{" "}
+          <a href="https://docs.x402.org" className="link-readable">
+            docs.x402.org
+          </a>{" "}
+          before production.
         </p>
 
         <div className="not-prose mt-8 flex flex-wrap gap-3">

@@ -1,5 +1,5 @@
 /**
- * Production HTTP security headers for EZSolWallet.
+ * Production HTTP security headers for Ship x402.
  * Applied via Nitro routeRules (build/deploy only) so Vite HMR stays unrestricted in dev.
  */
 

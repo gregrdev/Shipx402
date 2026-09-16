@@ -117,7 +117,7 @@ function GuidePage() {
             <Link to="/agents">Agent classroom</Link>
           </Button>
           <Button asChild variant="outline">
-            <Link to="/guides/what-is-x402">What is x402?</Link>
+            <Link to="/guides/what-is-x402">What Is x402?</Link>
           </Button>
         </div>
 

@@ -14,7 +14,7 @@ export const Route = createFileRoute("/guides/what-is-x402")({
         breadcrumbJsonLd([
           { name: "Home", path: "/" },
           { name: "Guides", path: "/learn" },
-          { name: "What is x402", path: "/guides/what-is-x402" },
+          { name: "What Is x402", path: "/guides/what-is-x402" },
         ]),
       ],
     }),
@@ -25,7 +25,7 @@ function GuidePage() {
     <SiteChrome activePath="/guides/what-is-x402">
       <Prose>
         <p className="text-sm text-subtle">Guide · Plain English · 2026</p>
-        <h1>What is x402?</h1>
+        <h1>{SEO_PAGES.whatIsX402.h1}</h1>
         <p>
           <strong>x402 is a simple idea:</strong> a website or API can charge a small
           payment before it gives you the data.
@@ -46,13 +46,37 @@ function GuidePage() {
         <h2>How it works</h2>
         <ol>
           <li>You ask for something (an API call).</li>
-          <li>The server replies: “This costs money,” and includes the price and where to pay.</li>
-          <li>You pay from a crypto wallet (often a stablecoin like USDC).</li>
-          <li>You ask again, this time with proof of payment.</li>
-          <li>The server unlocks the response.</li>
+          <li>
+            The server replies HTTP <strong>402</strong> with{" "}
+            <code>PAYMENT-REQUIRED</code> — the canonical V2 header that carries the
+            price, network (
+            <Link to="/guides/x402-v1-vs-v2" className="link-readable">
+              CAIP-2
+            </Link>{" "}
+            — standard network id, genesis-hash form), asset, and payTo (the wallet
+            address that receives the payment). A JSON body is a convenience;
+            official docs treat the header as the wire location.
+          </li>
+          <li>
+            You pay from a crypto wallet (on Solana — the chain we teach first for these
+            payments — typically USDC with scheme <code>exact</code>).
+          </li>
+          <li>
+            You ask again with <code>PAYMENT-SIGNATURE</code> (the V2 retry header).
+            Older tutorials show <code>X-PAYMENT</code> — that is the legacy V1 name.
+          </li>
+          <li>
+            The server unlocks the response and may send{" "}
+            <code>PAYMENT-RESPONSE</code> with settlement details.
+          </li>
         </ol>
         <p>
           Think of it like a vending machine on the internet. Request, pay, receive.
+          See{" "}
+          <a href="https://docs.x402.org/core-concepts/http-402" className="link-readable">
+            docs.x402.org — HTTP 402
+          </a>
+          .
         </p>
 
         <h2>Why it matters now</h2>
@@ -72,7 +96,10 @@ function GuidePage() {
         <ul>
           <li>Not a credit card processor</li>
           <li>Not a replacement for every subscription</li>
-          <li>Not free (you still pay small network fees)</li>
+          <li>
+            Not free of chain costs (x402 is the protocol; the chain still charges small
+            network fees)
+          </li>
           <li>Not only for crypto experts</li>
         </ul>
 
@@ -85,8 +112,14 @@ function GuidePage() {
 
         <h2>Try it here</h2>
         <p>
-          Start with the interactive lessons, practice a wallet on Devnet, then ship
-          middleware when you are ready.
+          Start with the interactive lessons, practice a wallet on Devnet{" "}
+          <a
+            href="https://www.shipx402.com/guides/first-solana-wallet"
+            className="chip mx-1 inline-flex border border-border bg-bg px-2 py-0.5 text-xs font-medium text-muted no-underline hover:text-fg"
+          >
+            Devnet · practice network · free test money
+          </a>
+          , then ship middleware when you are ready.
         </p>
 
         <div className="not-prose mt-8 flex flex-wrap gap-3">
