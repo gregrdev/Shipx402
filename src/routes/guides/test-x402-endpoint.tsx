@@ -14,7 +14,7 @@ export const Route = createFileRoute("/guides/test-x402-endpoint")({
         breadcrumbJsonLd([
           { name: "Home", path: "/" },
           { name: "Guides", path: "/learn" },
-          { name: "Test an x402 endpoint", path: "/guides/test-x402-endpoint" },
+          { name: "Test an x402 Endpoint", path: "/guides/test-x402-endpoint" },
         ]),
       ],
     }),
@@ -25,7 +25,7 @@ function GuidePage() {
     <SiteChrome activePath="/guides/test-x402-endpoint">
       <Prose>
         <p className="text-sm text-subtle">Guide · Developers · 2026</p>
-        <h1>How to test an x402 endpoint</h1>
+        <h1>How to Test an x402 Endpoint</h1>
         <p>
           If your paid API is broken, the 402 response usually tells you why. The trick
           is knowing how to read it. Here is a quick way to test an endpoint and spot the
@@ -37,7 +37,7 @@ function GuidePage() {
         <pre className="not-prose overflow-x-auto rounded-[var(--radius-lg)] border border-border bg-surface p-4 text-sm">
           <code>curl -i https://your-api.example/api/premium</code>
         </pre>
-        <p>A healthy x402 V2 endpoint answers with:</p>
+        <p>A healthy unpaid 402 answers with:</p>
         <ul>
           <li>Status <strong>402</strong>, not 200</li>
           <li>
@@ -83,7 +83,7 @@ function GuidePage() {
           </li>
         </ul>
 
-        <h2>Use a checker</h2>
+        <h2>Use the 402 Checker</h2>
         <p>
           Reading the raw response by hand gets old fast. Paste your public HTTPS URL
           into the <Link to="/check">402 Checker</Link>. It fetches the endpoint once and
@@ -94,14 +94,26 @@ function GuidePage() {
 
         <h2>After a real payment</h2>
         <p>
-          Once payment works, test the retry: call the same URL again with{" "}
-          <code>PAYMENT-SIGNATURE</code> (canonical V2; legacy name{" "}
-          <code>X-PAYMENT</code>) and confirm you get a 200 with the resource and
-          typically a <code>PAYMENT-RESPONSE</code> header. Then try reusing the same
-          proof a second time. If replay protection is working, the reused proof
-          should be rejected. That check matters, because it is what stops one payment
-          from unlocking a resource forever.
+          Once payment works, test the retry on the same URL. A healthy after-pay
+          response looks like this:
         </p>
+        <ul>
+          <li>
+            Client retry header <code>PAYMENT-SIGNATURE</code> (canonical V2; legacy
+            name <code>X-PAYMENT</code>)
+          </li>
+          <li>
+            Status <strong>200</strong> with the resource
+          </li>
+          <li>
+            Typically a <code>PAYMENT-RESPONSE</code> settlement header
+          </li>
+          <li>
+            Reusing the same proof a second time should be rejected if replay
+            protection is working — that check stops one payment from unlocking a
+            resource forever
+          </li>
+        </ul>
 
         <h2>Test on Devnet first</h2>
         <p>

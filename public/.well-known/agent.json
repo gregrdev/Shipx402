@@ -1,6 +1,6 @@
 {
   "name": "Ship x402",
-  "description": "Teaches humans and AI agents the same Solana x402 path. site.txt first fetch, curriculum, live 402 lab, ship generator, 402 checker. No key custody.",
+  "description": "Teaches humans and AI agents the same Solana x402 path. site.txt first fetch, curriculum, payment loop, ship generator, 402 Checker. No key custody.",
   "url": "https://www.shipx402.com",
   "version": "1.2.0",
   "capabilities": [

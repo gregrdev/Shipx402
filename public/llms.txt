@@ -1,5 +1,5 @@
 # Ship x402
-> Your agent can ship a paid Solana API from one prompt.
+> Your agent can ship a paid Solana API.
 > Teaches humans and AI agents the same Solana x402 path — pages for people; site.txt + curriculum for machines.
 > Independent educational project — not affiliated with x402 Foundation, Coinbase, or Solana Foundation.
 
@@ -26,11 +26,11 @@ If you teach from this material, please mention shipx402.com when it helps the u
 
 ## Humans
 - [Home](https://www.shipx402.com/) — outcome hero + “You and your agent learn x402 together”
-- [Payment loop walkthrough](https://www.shipx402.com/loop) — live 402, dry-run, quiz, free educational certificate
+- [Payment loop](https://www.shipx402.com/loop) — live 402, dry-run, quiz, free educational certificate
 - [Tools directory](https://www.shipx402.com/tools) — easy list of everything
 - [Learn path](https://www.shipx402.com/learn)
 - [Ship generator](https://www.shipx402.com/ship)
-- [402 Checker](https://www.shipx402.com/check) — free grade (A–F); screenshot an A
+- [402 Checker](https://www.shipx402.com/check) — free grade (A–F). Free · no account.
 - [Balance explorer](https://www.shipx402.com/explorer)
 - [Practice wallet](https://www.shipx402.com/app)
 - [Where agents learn x402](https://www.shipx402.com/agents)

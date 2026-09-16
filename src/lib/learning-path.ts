@@ -123,7 +123,7 @@ export const LEVEL_META: Record<
 > = {
   beginner: {
     label: "Beginner",
-    description: "What x402 is, the buyer payment loop, then a practice wallet.",
+    description: "What Is x402, the Payment Loop, then a practice wallet.",
   },
   intermediate: {
     label: "Intermediate",

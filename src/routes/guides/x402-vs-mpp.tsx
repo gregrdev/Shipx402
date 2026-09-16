@@ -101,7 +101,7 @@ function GuidePage() {
           Yes. Some products use x402 for open agent traffic and Stripe or MPP for human
           or enterprise buyers. That is a normal split, not a contradiction. Stripe also
           participates in the broader x402 ecosystem, which is another signal this is
-          convergence more than a holy war.
+          convergence more than a rivalry.
         </p>
 
         <h2>Simple rule</h2>

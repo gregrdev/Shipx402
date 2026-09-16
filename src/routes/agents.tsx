@@ -75,7 +75,7 @@ function AgentsPage() {
             <strong>Separate wallet</strong> — New key for the agent only. Fund small. Never
             your primary treasury. Practice on{" "}
             <Link to="/app">Devnet in the app</Link> or read{" "}
-            <Link to="/guides/agent-wallet-safely">Giving an AI agent a wallet safely</Link>.
+            <Link to="/guides/agent-wallet-safely">Give an Agent a Wallet Safely</Link>.
           </li>
           <li>
             <strong>Policy before power</strong> — Max per call, daily cap, hostname /{" "}

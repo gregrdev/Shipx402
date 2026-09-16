@@ -19,7 +19,10 @@ export const BRAND = {
   /** User-facing wallet product name (not the site brand) */
   practiceWallet: "practice wallet",
   productWallet: "Ship x402 practice wallet",
-  tagline: "Your agent can ship a paid Solana API from one prompt.",
+  tagline: "Your agent can ship a paid Solana API.",
+  /** Shared closer — one string, never glue a leftover “from one prompt.” */
+  closer:
+    "Your agent can ship a paid Solana API. Practice on Devnet. Ship when you understand the loop.",
   /** Dual-audience line — homepage section H2, social, word-of-mouth */
   dualAudience: "You and your agent learn x402 together",
   /** Agent-search line — /agents H1, machine surfaces */
@@ -78,7 +81,7 @@ export const SEO_PAGES: Record<string, SeoPage> = {
     path: "/",
     title: "Ship x402 | Your Agent Can Ship a Paid Solana API",
     description:
-      "Paste site.txt into your agent and ship a paid Solana endpoint. Humans and AI agents learn the same x402 path — interactive lab, 402 checker, practice wallet, free curriculum.",
+      "Paste site.txt into your agent and ship a paid Solana endpoint. Humans and AI agents learn the same x402 path — payment loop, 402 Checker, practice wallet, free curriculum.",
     h1: "Your Agent Can Ship a Paid Solana API",
     keywords:
       "x402, Ship x402, Solana, pay per request, HTTP 402, agent payments, AI agent pay for APIs, site.txt, learn x402",
@@ -123,7 +126,7 @@ export const SEO_PAGES: Record<string, SeoPage> = {
   },
   loop: {
     path: "/loop",
-    title: "x402 Payment Loop Walkthrough + Free Certificate | Ship x402",
+    title: "x402 Payment Loop + Free Certificate | Ship x402",
     description:
       "Interactive walkthrough: see a live 402, read the price tag, dry-run the client loop, pass a knowledge check, and earn a free educational certificate. Tips optional.",
     h1: "Walk the x402 Payment Loop",
@@ -164,7 +167,7 @@ export const SEO_PAGES: Record<string, SeoPage> = {
     path: "/tools",
     title: "Tools & Site Directory | Ship x402",
     description:
-      "Easy list of every public tool, guide, page, and API on Ship x402 — plus a one-file digest agents can fetch first.",
+      "Public tools, guides in learning order, and agent endpoints — in one place.",
     h1: "Everything on this site",
     keywords: "ship x402 tools, x402 directory, agent digest, site map",
   },
@@ -196,7 +199,7 @@ export const SEO_PAGES: Record<string, SeoPage> = {
     title: "Your First Solana Wallet (Devnet, No Risk) | Ship x402",
     description:
       "Make your first Solana wallet the safe way: practice on Devnet with fake money, learn public keys vs private keys, and back it up right. No real funds needed.",
-    h1: "Your first Solana wallet (Devnet, no risk)",
+    h1: "Your First Solana Wallet (Devnet, No Risk)",
     keywords:
       "how to make a Solana wallet, Solana devnet wallet, Phantom devnet, practice Solana wallet",
   },
@@ -214,7 +217,7 @@ export const SEO_PAGES: Record<string, SeoPage> = {
     title: "How to Test an x402 Endpoint (Read the 402 Response) | Ship x402",
     description:
       "If your paid API is broken, the 402 response usually tells you why. How to test an x402 endpoint, read the response, and fix common setup mistakes.",
-    h1: "How to test an x402 endpoint",
+    h1: "How to Test an x402 Endpoint",
     keywords: "test x402 endpoint, read 402 response, debug x402, 402 checker",
   },
   facilitatorsExplained: {
@@ -260,10 +263,10 @@ export const SEO_PAGES: Record<string, SeoPage> = {
   },
   agentWalletSafely: {
     path: "/guides/agent-wallet-safely",
-    title: "Give an AI Agent a Wallet Safely | Ship x402",
+    title: "Give an Agent a Wallet Safely | Ship x402",
     description:
       "Spend limits, allowlists, dry-runs, separate keys — how to fund an agent without risking the main vault.",
-    h1: "Giving an AI agent a wallet safely",
+    h1: "Give an Agent a Wallet Safely",
     keywords: "agent wallet, spend limits, allowlist, AI payments safety",
   },
   readingSolanaTx: {
@@ -271,7 +274,7 @@ export const SEO_PAGES: Record<string, SeoPage> = {
     title: "Reading a Solana Transaction on Solscan | Ship x402",
     description:
       "Beginner guide to transaction signatures, balance changes, and checking payment proofs on Solscan.",
-    h1: "Reading a Solana transaction on Solscan",
+    h1: "Reading a Solana Transaction on Solscan",
     keywords: "Solscan tutorial, Solana transaction, payment proof",
   },
   agentReadable: {
@@ -279,7 +282,7 @@ export const SEO_PAGES: Record<string, SeoPage> = {
     title: "Why Agent-Readable Sites Matter | Ship x402",
     description:
       "llms.txt, curriculum JSON, well-known agent cards, and live 402 endpoints — design for humans and machines.",
-    h1: "Why “agent-readable” matters",
+    h1: "Why Agent-Readable Matters",
     keywords: "llms.txt, agent-card.json, agent discovery, x402 curriculum",
   },
   http402History: {

@@ -1,6 +1,6 @@
 {
   "name": "Ship x402",
-  "description": "Teaches humans and AI agents the same Solana x402 path. Paste site.txt into an agent to ship a paid Solana endpoint. Interactive lab, 402 checker, practice wallet, curriculum, middleware generator. No key custody.",
+  "description": "Teaches humans and AI agents the same Solana x402 path. Paste site.txt into an agent to ship a paid Solana endpoint. Payment loop, 402 Checker, practice wallet, curriculum, middleware generator. No key custody.",
   "url": "https://www.shipx402.com",
   "version": "1.2.0",
   "provider": {
@@ -82,7 +82,7 @@
   "siteDigest": "https://www.shipx402.com/site.txt",
   "agentClassroom": "https://www.shipx402.com/agents",
   "positioning": {
-    "outcome": "Your agent can ship a paid Solana API from one prompt",
+    "outcome": "Your agent can ship a paid Solana API",
     "dualAudience": "You and your agent learn x402 together",
     "agentsLearn": "Where agents learn x402 on Solana"
   },

@@ -14,7 +14,7 @@ export const Route = createFileRoute("/guides/agent-readable")({
         breadcrumbJsonLd([
           { name: "Home", path: "/" },
           { name: "Guides", path: "/learn" },
-          { name: "Agent-readable", path: "/guides/agent-readable" },
+          { name: "Agent-Readable", path: "/guides/agent-readable" },
         ]),
       ],
     }),
@@ -25,7 +25,7 @@ function GuidePage() {
     <SiteChrome activePath="/guides/agent-readable">
       <Prose>
         <p className="text-sm text-subtle">Guide · Advanced · 2026</p>
-        <h1>Why “agent-readable” matters</h1>
+        <h1>Why Agent-Readable Matters</h1>
         <p>
           Humans follow nav bars and marketing pages. Agents follow structured files,
           stable URLs, and honest error codes. If you want agents to learn from your

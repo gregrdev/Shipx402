@@ -32,7 +32,7 @@
   --color-rgb-r: #ff6b9a;
   --color-rgb-g: #3ee8b0;
   --color-rgb-b: #5b9dff;
-  --cyber-rail-glow: 0.6;
+  --cyber-rail-glow: 0.55;
 
   /* Near-rect — sharper than the first restyle (~2–4px) */
   --radius-sm: 0.125rem;
@@ -269,13 +269,13 @@
     linear-gradient(var(--color-surface), var(--color-surface)),
     linear-gradient(
       180deg,
-      color-mix(in oklab, var(--color-rgb-r) 42%, transparent),
-      color-mix(in oklab, var(--color-rgb-g) 48%, transparent),
-      color-mix(in oklab, var(--color-rgb-b) 52%, transparent),
-      color-mix(in oklab, var(--color-rgb-r) 42%, transparent),
-      color-mix(in oklab, var(--color-rgb-g) 48%, transparent),
-      color-mix(in oklab, var(--color-rgb-b) 52%, transparent),
-      color-mix(in oklab, var(--color-rgb-r) 42%, transparent)
+      color-mix(in oklab, var(--color-rgb-r) 26%, transparent),
+      color-mix(in oklab, var(--color-rgb-g) 30%, transparent),
+      color-mix(in oklab, var(--color-rgb-b) 34%, transparent),
+      color-mix(in oklab, var(--color-rgb-r) 26%, transparent),
+      color-mix(in oklab, var(--color-rgb-g) 30%, transparent),
+      color-mix(in oklab, var(--color-rgb-b) 34%, transparent),
+      color-mix(in oklab, var(--color-rgb-r) 26%, transparent)
     );
   background-origin: padding-box, border-box;
   background-clip: padding-box, border-box;

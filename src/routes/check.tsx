@@ -34,8 +34,8 @@ function CheckPage() {
           <p className="text-lg text-muted">
             Paste an API URL. We fetch once over HTTPS (with SSRF protection) and grade
             the 402 against current x402 V2: <code>PAYMENT-REQUIRED</code> header,
-            CAIP-2 <code>network</code>, <code>scheme</code>, and accepts[] fields. Free,
-            no accounts — screenshot an A. Source of truth:{" "}
+            CAIP-2 <code>network</code>, <code>scheme</code>, and accepts[] fields. Free
+            · no account. Source of truth:{" "}
             <a
               href="https://docs.x402.org/core-concepts/http-402"
               className="link-readable"
@@ -45,9 +45,9 @@ function CheckPage() {
             .
           </p>
           <p className="text-sm text-subtle">
-            Tip: try this site's live tip endpoint{" "}
-            <code className="text-fg">/api/x402/donate</code>. Expect a real 402 with a
-            Solana payTo address.
+            Start with this site’s donate endpoint{" "}
+            <code className="text-fg">/api/x402/donate</code> — you’ll see a real 402
+            with a Solana payTo.
           </p>
           <div className="flex flex-wrap gap-2">
             <Button asChild variant="secondary" size="sm">

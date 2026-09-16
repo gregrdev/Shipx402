@@ -54,9 +54,9 @@ export function Check402Panel({ defaultUrl = "" }: { defaultUrl?: string }) {
     <div className="space-y-5">
       <div className="rounded-[var(--radius-xl)] border border-primary/30 bg-primary/5 p-5">
         <div className="mb-3 flex flex-wrap items-center gap-2">
-          <Badge variant="default">Free lead magnet</Badge>
+          <Badge variant="default">Free · no account</Badge>
           <span className="text-sm text-muted">
-            Paste a URL → get an A–F grade. Screenshot an A.
+            Paste a URL → get an A–F grade.
           </span>
         </div>
         <Label>API URL to check</Label>

@@ -14,7 +14,7 @@ export const Route = createFileRoute("/guides/facilitators-explained")({
         breadcrumbJsonLd([
           { name: "Home", path: "/" },
           { name: "Guides", path: "/learn" },
-          { name: "Facilitators explained", path: "/guides/facilitators-explained" },
+          { name: "Facilitators Explained", path: "/guides/facilitators-explained" },
         ]),
       ],
     }),
@@ -72,8 +72,11 @@ function GuidePage() {
           </li>
           <li>
             <strong>PayAI Facilitator:</strong>{" "}
-            <code>https://facilitator.payai.network</code> — multi-network, no API key
-            required. Listed on the official facilitators page.
+            <a href="https://facilitator.payai.network" className="link-readable">
+              https://facilitator.payai.network
+            </a>{" "}
+            — multi-network, no API key required. Listed on the official facilitators
+            page.
           </li>
           <li>
             <strong>Others on the official list</strong> (examples: Corbits, Dexter,

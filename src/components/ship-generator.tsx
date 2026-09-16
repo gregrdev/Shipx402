@@ -28,8 +28,8 @@ const FRAMEWORKS: { id: ShipFramework; label: string }[] = [
 const NETWORKS: { id: ShipNetwork; label: string; note?: string }[] = [
   { id: "solana-devnet", label: "Solana Devnet", note: "Free test money" },
   { id: "solana", label: "Solana Mainnet" },
-  { id: "base-sepolia", label: "Base Sepolia", note: "Testnet" },
-  { id: "base", label: "Base Mainnet" },
+  { id: "base-sepolia", label: "Base Sepolia", note: "Optional" },
+  { id: "base", label: "Base Mainnet", note: "Optional" },
 ];
 
 type OutTab = "install" | "code" | "env" | "test" | "prod" | "prompt";
@@ -74,7 +74,7 @@ export function ShipGenerator() {
         "",
         "// --- production notes ---",
         "// Facilitator options:",
-        "// 1) Coinbase CDP facilitator: free tier, needs CDP account (docs.cdp.coinbase.com/x402)",
+        "// 1) Coinbase CDP facilitator: https://docs.cdp.coinbase.com/x402",
         "// 2) PayAI public facilitator: https://facilitator.payai.network",
         "// Verify package APIs against https://docs.x402.org before shipping.",
         "",

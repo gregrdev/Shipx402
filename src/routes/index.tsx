@@ -52,10 +52,10 @@ function HomePage() {
           <p className="text-base text-muted sm:text-lg">
             Devnet-first x402 on Solana — humans and agents, same loop.
           </p>
-          <div className="flex flex-wrap items-center justify-center gap-3 pt-1">
-            <Button asChild variant="outline">
-              <a href="#wallet-fast">Make a Wallet Fast</a>
-            </Button>
+          <div className="flex flex-wrap items-center justify-center gap-x-5 gap-y-2 pt-1">
+            <a href="#wallet-fast" className="link-readable text-sm font-medium">
+              Make a Wallet Fast
+            </a>
             <Link to="/learn" className="link-readable text-sm font-medium">
               Learn Path
             </Link>
@@ -85,24 +85,27 @@ function HomePage() {
           </div>
         </div>
 
-        <section className="rounded-[var(--radius-xl)] border border-border bg-surface p-4 sm:p-5">
+        <section
+          id="learn-fast"
+          className="rounded-[var(--radius-xl)] border border-border bg-surface p-4 sm:p-5"
+        >
           <p className="font-mono text-xs uppercase tracking-[0.12em] text-primary">
             Learn Fast
           </p>
           <nav
-            className="mt-3 flex flex-wrap items-center gap-x-5 gap-y-2"
+            className="mt-3 flex flex-wrap items-baseline gap-x-5 gap-y-2"
             aria-label="Learn Fast"
           >
             <Link
               to="/guides/what-is-x402"
               className="link-readable text-sm font-medium"
             >
-              What Is x402
+              1. What Is x402
             </Link>
             <Link to="/loop" className="link-readable text-sm font-medium">
-              Walk the Loop
+              2. Walk the Loop
             </Link>
-            <Link to="/learn" className="link-readable text-sm font-medium">
+            <Link to="/learn" className="text-sm text-subtle hover:text-muted">
               Full
             </Link>
           </nav>
@@ -113,7 +116,7 @@ function HomePage() {
             {
               icon: Wrench,
               title: "Grade Your 402",
-              body: "Free · no account — get an A–F grade.",
+              body: "Free · no account.",
               to: "/check" as const,
               cta: "402 Checker",
             },

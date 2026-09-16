@@ -6,7 +6,7 @@
 
 import { BRAND } from "./brand";
 
-export const SITE_CATALOG_VERSION = 7;
+export const SITE_CATALOG_VERSION = 8;
 
 export type CatalogItem = {
   path: string;
@@ -23,7 +23,7 @@ export const TOOLS: CatalogItem[] = [
   {
     kind: "tool",
     path: "/loop",
-    name: "Payment loop walkthrough",
+    name: "Payment loop",
     gist: "See a live 402, read the tag, dry-run, quiz, free educational certificate.",
   },
   {
@@ -81,7 +81,7 @@ export const PAGES: CatalogItem[] = [
     kind: "page",
     path: "/wallet",
     name: "Wallet explainer",
-    gist: "Marketing page for the practice wallet (keys stay client-side).",
+    gist: "Practice wallet explainer — keys stay on your device.",
   },
   {
     kind: "page",
@@ -109,7 +109,7 @@ export const GUIDES: CatalogItem[] = [
     kind: "guide",
     tier: "beginner",
     path: "/guides/first-solana-wallet",
-    name: "First Solana wallet",
+    name: "Your First Solana Wallet",
     gist: "Devnet practice keys, public vs private, no real funds.",
   },
   {
@@ -123,7 +123,7 @@ export const GUIDES: CatalogItem[] = [
     kind: "guide",
     tier: "beginner",
     path: "/guides/reading-solana-tx",
-    name: "Reading a Solana tx",
+    name: "Reading a Solana Transaction",
     gist: "Signatures, Solscan, balance changes as payment proof.",
   },
   {
@@ -137,14 +137,14 @@ export const GUIDES: CatalogItem[] = [
     kind: "guide",
     tier: "intermediate",
     path: "/guides/facilitators-explained",
-    name: "Facilitators explained",
+    name: "Facilitators Explained",
     gist: "Who verifies/settles 402 payments (x402.org test, CDP, PayAI, self-host).",
   },
   {
     kind: "guide",
     tier: "intermediate",
     path: "/guides/test-x402-endpoint",
-    name: "Test an x402 endpoint",
+    name: "Test an x402 Endpoint",
     gist: "Read PAYMENT-REQUIRED + the 402 body; fix common setup mistakes.",
   },
   {
@@ -186,14 +186,14 @@ export const GUIDES: CatalogItem[] = [
     kind: "guide",
     tier: "advanced",
     path: "/guides/agent-wallet-safely",
-    name: "Agent wallet safely",
+    name: "Give an Agent a Wallet Safely",
     gist: "Spend limits, allowlists, dry-run, separate keys.",
   },
   {
     kind: "guide",
     tier: "advanced",
     path: "/guides/agent-readable",
-    name: "Why agent-readable matters",
+    name: "Why Agent-Readable Matters",
     gist: "llms.txt, curriculum, well-known cards, live 402s.",
   },
   {

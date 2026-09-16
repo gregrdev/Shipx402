@@ -269,6 +269,6 @@ Route: ${routeKey(form.route)}
 Description: ${form.description}
 Install: ${installLine(form.framework)}
 Register ExactSvmScheme or ExactEvmScheme for the network.
-Facilitator test: ${FACILITATOR_TEST}; production: PayAI or Coinbase CDP.
+Facilitator test: ${FACILITATOR_TEST}; production: PayAI (${FACILITATOR_PAYAI}) or Coinbase CDP (https://docs.cdp.coinbase.com/x402).
 Verify against https://docs.x402.org then validate with https://www.shipx402.com/check`;
 }

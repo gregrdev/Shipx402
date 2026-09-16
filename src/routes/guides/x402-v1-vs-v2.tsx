@@ -29,7 +29,7 @@ function GuidePage() {
         <p>
           x402 V2 shipped in December 2025. V2 is the recommended baseline in 2026.
           Older tutorials still show V1 shapes. Mixing them is the fastest way to fail
-          a 402 checker or a modern client.
+          a 402 Checker or a modern client.
         </p>
 
         <h2>Quick comparison</h2>

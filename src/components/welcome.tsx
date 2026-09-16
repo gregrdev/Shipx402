@@ -147,7 +147,7 @@ export function Welcome() {
 
           <div className="grid gap-2 sm:grid-cols-3">
             {[
-              { icon: PenLine, t: "Write down 2 secrets" },
+              { icon: PenLine, t: "Write key offline" },
               { icon: Smartphone, t: "Any device import" },
               { icon: Bot, t: "Agent curriculum" },
             ].map((item) => (

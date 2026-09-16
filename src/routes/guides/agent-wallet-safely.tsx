@@ -15,7 +15,7 @@ export const Route = createFileRoute("/guides/agent-wallet-safely")({
           { name: "Home", path: "/" },
           { name: "Guides", path: "/learn" },
           {
-            name: "Agent wallet safely",
+            name: "Give an Agent a Wallet Safely",
             path: "/guides/agent-wallet-safely",
           },
         ]),
@@ -28,7 +28,7 @@ function GuidePage() {
     <SiteChrome activePath="/guides/agent-wallet-safely">
       <Prose>
         <p className="text-sm text-subtle">Guide · Advanced · 2026</p>
-        <h1>Giving an AI agent a wallet safely</h1>
+        <h1>Give an Agent a Wallet Safely</h1>
         <p>
           Agents can sign payments. That does not mean you should drop your life
           savings into a chat process. Treat agent wallets like service accounts with

@@ -87,7 +87,7 @@ export function SiteChrome({
               to="/app"
               className="chip ml-1 bg-primary px-3.5 py-2 text-sm font-semibold text-primary-fg no-underline hover:bg-primary/90"
             >
-              Open app
+              Open practice wallet
             </Link>
           </nav>
         </div>
@@ -106,7 +106,7 @@ export function SiteChrome({
           <div className="space-y-3 sm:col-span-2 lg:col-span-1">
             <BrandMark showDomain size="sm" />
             <p className="max-w-xs text-sm leading-relaxed text-muted">
-              {BRAND.tagline} Practice on Devnet. Ship when you understand the loop.
+              {BRAND.closer}
             </p>
           </div>
           <div>

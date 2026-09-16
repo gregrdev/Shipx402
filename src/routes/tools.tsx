@@ -67,7 +67,11 @@ function CatalogCard({
                     : "real"
               }
             >
-              {item.tier}
+              {item.tier === "beginner"
+                ? "Beginner"
+                : item.tier === "intermediate"
+                  ? "Intermediate"
+                  : "Advanced"}
             </Badge>
           )}
         </div>
@@ -144,7 +148,7 @@ function ToolsPage() {
 
   return (
     <SiteChrome activePath="/tools">
-      <div className="space-y-12 animate-fade-up">
+      <div className="space-y-8 animate-fade-up">
         <header className="max-w-2xl space-y-3">
           <p className="font-mono text-xs uppercase tracking-[0.14em] text-primary">
             Directory
@@ -153,8 +157,7 @@ function ToolsPage() {
             {SEO_PAGES.tools.h1}
           </h1>
           <p className="text-lg text-muted">
-            Everything public on this site in one place — tools you can click, guides
-            in learning order, and machine endpoints agents can fetch.
+            Public tools, guides in learning order, and agent endpoints — in one place.
           </p>
           <div className="flex flex-wrap gap-2 pt-1">
             {(

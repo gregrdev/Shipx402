@@ -1,5 +1,5 @@
 # Ship x402 — public site digest
-# version: 7
+# version: 8
 # base: https://www.shipx402.com
 # first-fetch: GET https://www.shipx402.com/site.txt  (this file)
 # also: GET https://www.shipx402.com/api/agents/digest  (same body)
@@ -39,7 +39,7 @@ A: Learning tools and the educational lab are free. Tips are optional (suggested
 - Phishing test: anyone asking for a private key is hostile.
 
 ## tools (interactive)
-- Payment loop walkthrough | https://www.shipx402.com/loop
+- Payment loop | https://www.shipx402.com/loop
   See a live 402, read the tag, dry-run, quiz, free educational certificate.
 - Ship generator | https://www.shipx402.com/ship
   Paste-ready Express / Next / Hono x402 middleware from your wallet + price.
@@ -60,7 +60,7 @@ A: Learning tools and the educational lab are free. Tips are optional (suggested
 - Tools directory | https://www.shipx402.com/tools
   Human-readable list of every public tool, page, guide, and API on this site.
 - Wallet explainer | https://www.shipx402.com/wallet
-  Marketing page for the practice wallet (keys stay client-side).
+  Practice wallet explainer — keys stay on your device.
 - Where agents learn x402 | https://www.shipx402.com/agents
   How to get your agent paying on Solana; fetch order; buyer vs seller; safety + curriculum.
 - About | https://www.shipx402.com/about
@@ -69,19 +69,19 @@ A: Learning tools and the educational lab are free. Tips are optional (suggested
 ## guides · beginner
 - What Is x402? | https://www.shipx402.com/guides/what-is-x402
   HTTP 402 pay-per-request in plain English.
-- First Solana wallet | https://www.shipx402.com/guides/first-solana-wallet
+- Your First Solana Wallet | https://www.shipx402.com/guides/first-solana-wallet
   Devnet practice keys, public vs private, no real funds.
 - What Is an RPC? | https://www.shipx402.com/guides/what-is-an-rpc
   RPC ≠ paywall ≠ facilitator — mental model for builders.
-- Reading a Solana tx | https://www.shipx402.com/guides/reading-solana-tx
+- Reading a Solana Transaction | https://www.shipx402.com/guides/reading-solana-tx
   Signatures, Solscan, balance changes as payment proof.
 
 ## guides · intermediate
 - x402 v1 vs v2 | https://www.shipx402.com/guides/x402-v1-vs-v2
   CAIP-2, PAYMENT-* headers, resource, amount — don’t crash testers.
-- Facilitators explained | https://www.shipx402.com/guides/facilitators-explained
+- Facilitators Explained | https://www.shipx402.com/guides/facilitators-explained
   Who verifies/settles 402 payments (x402.org test, CDP, PayAI, self-host).
-- Test an x402 endpoint | https://www.shipx402.com/guides/test-x402-endpoint
+- Test an x402 Endpoint | https://www.shipx402.com/guides/test-x402-endpoint
   Read PAYMENT-REQUIRED + the 402 body; fix common setup mistakes.
 - Ship an x402 API on Solana | https://www.shipx402.com/guides/ship-x402-api-solana
   Protect a route, test 402, mainnet facilitators.
@@ -95,9 +95,9 @@ A: Learning tools and the educational lab are free. Tips are optional (suggested
   Yes with guardrails; per-request spend via 402.
 - x402 vs token-gating | https://www.shipx402.com/guides/x402-vs-token-gating
   Pay-per-request vs membership checks for agents.
-- Agent wallet safely | https://www.shipx402.com/guides/agent-wallet-safely
+- Give an Agent a Wallet Safely | https://www.shipx402.com/guides/agent-wallet-safely
   Spend limits, allowlists, dry-run, separate keys.
-- Why agent-readable matters | https://www.shipx402.com/guides/agent-readable
+- Why Agent-Readable Matters | https://www.shipx402.com/guides/agent-readable
   llms.txt, curriculum, well-known cards, live 402s.
 - HTTP 402 history | https://www.shipx402.com/guides/http-402-history
   30 years dormant → agent payment layer.
