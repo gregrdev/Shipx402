@@ -56,7 +56,7 @@ export function ShipGenerator() {
       ...form,
       payTo:
         form.network.startsWith("solana")
-          ? "So1anaExamp1eAddress1111111111111111111111"
+          ? "YOUR_SOLANA_PAY_TO_ADDRESS"
           : "0x0000000000000000000000000000000000000001",
     }),
     [form],
@@ -135,6 +135,21 @@ export function ShipGenerator() {
               </button>
             ))}
           </div>
+          {isMainnet(form.network) && (
+            <div className="mt-2 rounded-[var(--radius-md)] border border-real/30 bg-real-bg/40 p-3">
+              <p className="text-sm text-fg">
+                Mainnet uses real money. Mistakes can’t be undone. Continue only if you
+                mean it.
+              </p>
+              <Button
+                type="button"
+                className="mt-2"
+                onClick={() => setForm((s) => ({ ...s, network: "solana-devnet" }))}
+              >
+                Stay on Devnet
+              </Button>
+            </div>
+          )}
         </div>
 
         <div className="grid gap-3 sm:grid-cols-2">
@@ -203,7 +218,7 @@ export function ShipGenerator() {
           </div>
         </div>
         <p className="text-xs text-subtle">
-          Schemas improve discovery in the x402 Bazaar. Nothing you type is uploaded.
+          Schemas help clients understand your API input and output. Nothing you type is uploaded.
         </p>
       </div>
 

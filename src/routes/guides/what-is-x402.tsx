@@ -88,7 +88,10 @@ function GuidePage() {
         <ul>
           <li>Not a credit card processor</li>
           <li>Not a replacement for every subscription</li>
-          <li>Not free (you still pay small network fees)</li>
+          <li>
+            Not free of chain costs (x402 is the protocol; the chain still charges small
+            network fees)
+          </li>
           <li>Not only for crypto experts</li>
         </ul>
 

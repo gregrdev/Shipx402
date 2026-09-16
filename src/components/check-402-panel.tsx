@@ -78,7 +78,7 @@ export function Check402Panel({ defaultUrl = "" }: { defaultUrl?: string }) {
           </Button>
         </div>
         <p className="mt-2 text-sm text-subtle">
-          We fetch once over HTTPS with SSRF protections. Try this site:{" "}
+          We fetch once over HTTPS with SSRF protections. Test a known 402:{" "}
           <button
             type="button"
             className="link-readable"

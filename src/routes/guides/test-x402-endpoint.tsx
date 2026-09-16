@@ -37,6 +37,10 @@ function GuidePage() {
         <pre className="not-prose overflow-x-auto rounded-[var(--radius-lg)] border border-border bg-surface p-4 text-sm">
           <code>curl -i https://your-api.example/api/premium</code>
         </pre>
+        <p>
+          Read headers first, then the body. Headers carry the machine contract; the body
+          should match.
+        </p>
         <p>A healthy unpaid 402 answers with:</p>
         <ul>
           <li>Status <strong>402</strong>, not 200</li>

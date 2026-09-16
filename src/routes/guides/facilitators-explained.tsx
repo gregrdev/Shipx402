@@ -57,14 +57,18 @@ function GuidePage() {
           <li>
             <strong>x402.org test facilitator:</strong>{" "}
             <code>https://x402.org/facilitator</code> — the default in the official
-            packages. Supports testnets including Base Sepolia (
-            <code>eip155:84532</code>) and Solana Devnet (
-            <code>solana:EtWTRABZaYq6iMfeYKouRu166VU2xqa1</code>). Not for mainnet.
+            packages. Easiest way to develop on Solana Devnet (
+            <code>solana:EtWTRABZaYq6iMfeYKouRu166VU2xqa1</code>
+            ) (and other testnets the public facilitator lists, such as Base Sepolia{" "}
+            <code>eip155:84532</code>). Prefer Solana Devnet here. Use it while you
+            build, not for real money.
           </li>
           <li>
             <strong>Coinbase CDP Facilitator:</strong> hosted production path with
             KYT/OFAC checks. Solana support is scheme <code>exact</code> only (USDC and
-            other SPL tokens). See{" "}
+            other SPL tokens). Facilitator base URL:{" "}
+            <code>https://api.cdp.coinbase.com/platform/v2/x402</code> — confirm in
+            current CDP docs before production. See{" "}
             <a href="https://docs.cdp.coinbase.com/x402/network-support" className="link-readable">
               CDP network support
             </a>

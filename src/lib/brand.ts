@@ -88,7 +88,7 @@ export const SEO_PAGES: Record<string, SeoPage> = {
   },
   app: {
     path: "/app",
-    title: "Practice Wallet App  |  Ship x402",
+    title: "Practice wallet | Ship x402",
     description:
       "Create a Solana practice wallet client-side: write-downs, encrypted backups, Solana Pay, send, x402 lab. Devnet first.",
     h1: "Practice wallet",
@@ -242,7 +242,7 @@ export const SEO_PAGES: Record<string, SeoPage> = {
     title: "x402 v1 vs v2: Migration Guide | Ship x402",
     description:
       "PAYMENT-REQUIRED / PAYMENT-SIGNATURE / PAYMENT-RESPONSE, CAIP-2 networks, top-level resource — what changed in x402 v2.",
-    h1: "x402 v1 vs v2: what changed and how not to crash a tester",
+    h1: "x402 v1 vs v2: What Changed (and How to Keep Testers Working)",
     keywords: "x402 v2, CAIP-2, PAYMENT-SIGNATURE, migrate x402",
   },
   blindTransfer: {

@@ -25,7 +25,7 @@ function GuidePage() {
     <SiteChrome activePath="/guides/x402-v1-vs-v2">
       <Prose>
         <p className="text-sm text-subtle">Guide · Intermediate · 2026</p>
-        <h1>x402 v1 vs v2: what changed and how not to crash a tester</h1>
+        <h1>x402 v1 vs v2: What Changed (and How to Keep Testers Working)</h1>
         <p>
           x402 V2 shipped in December 2025. V2 is the recommended baseline in 2026.
           Older tutorials still show V1 shapes. Mixing them is the fastest way to fail

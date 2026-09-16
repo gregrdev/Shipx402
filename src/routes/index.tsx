@@ -1,18 +1,14 @@
-import { useState } from "react";
 import { createFileRoute, Link } from "@tanstack/react-router";
 import {
   ArrowRight,
-  Copy,
   Rocket,
   Search,
   Wrench,
 } from "lucide-react";
-import { toast } from "sonner";
 import { SiteChrome } from "@/components/site-chrome";
 import { WalletFast } from "@/components/wallet-fast";
 import { ContinueChip } from "@/components/continue-chip";
 import { HOME_FAQ, SEO_PAGES } from "@/lib/brand";
-import { AGENT_PROMPT } from "@/lib/learn-progress";
 import {
   pageHead,
   orgJsonLd,
@@ -20,8 +16,6 @@ import {
   softwareAppJsonLd,
   faqPageJsonLd,
 } from "@/lib/seo";
-import { Button } from "@/components/ui/button";
-import { copyText } from "@/lib/utils";
 
 export const Route = createFileRoute("/")({
   component: HomePage,
@@ -33,15 +27,6 @@ export const Route = createFileRoute("/")({
 });
 
 function HomePage() {
-  const [copied, setCopied] = useState(false);
-
-  const copyPrompt = async () => {
-    await copyText(AGENT_PROMPT);
-    setCopied(true);
-    toast.success("Agent prompt copied — paste it into Claude, Grok, or Cursor");
-    window.setTimeout(() => setCopied(false), 2000);
-  };
-
   return (
     <SiteChrome activePath="/">
       <div className="space-y-8 animate-fade-up">
@@ -67,23 +52,11 @@ function HomePage() {
 
         <WalletFast />
 
-        <div className="flex flex-col gap-2 rounded-[var(--radius-xl)] border border-border bg-surface px-4 py-3 sm:flex-row sm:items-center sm:justify-between">
-          <p className="text-sm text-muted">
-            Agents: fetch https://www.shipx402.com/site.txt first — not a second start-here.
-          </p>
-          <div className="flex flex-wrap gap-2">
-            <Button size="sm" variant="secondary" onClick={() => void copyPrompt()}>
-              <Copy className="size-3.5" />
-              {copied ? "Copied" : "Copy prompt"}
-            </Button>
-            <Button asChild size="sm" variant="outline">
-              <a href="/site.txt" target="_blank" rel="noreferrer">
-                Open site.txt
-                <ArrowRight className="size-3.5" />
-              </a>
-            </Button>
-          </div>
-        </div>
+        <p className="text-center">
+          <a href="#wallet-fast" className="link-readable text-sm font-medium">
+            Open the agent path
+          </a>
+        </p>
 
         <section
           id="learn-fast"
@@ -115,7 +88,7 @@ function HomePage() {
           {[
             {
               icon: Wrench,
-              title: "Grade Your 402",
+              title: "Grade your 402",
               body: "Paste any API URL. Get an A–F grade for agent readiness. Free · no account.",
               to: "/check" as const,
               cta: "402 Checker",

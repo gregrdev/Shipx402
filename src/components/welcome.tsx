@@ -140,7 +140,7 @@ export function Welcome() {
             A practice wallet you actually understand
           </h1>
           <p className="max-w-xl text-lg leading-relaxed text-muted">
-            Safe-by-design setup for any browser, plus an{" "}
+            Client-side setup for any modern browser, plus an{" "}
             <strong className="font-medium text-primary">agent classroom</strong> that
             teaches the whole process without taking custody of keys.
           </p>
@@ -187,7 +187,7 @@ export function Welcome() {
             </div>
             <CardTitle className="text-xl">New wallet · Real</CardTitle>
             <CardDescription className="text-base leading-relaxed">
-              Mainnet keys — same safety steps. Keep balances modest in-browser.
+              Mainnet uses real money. Same safety steps — keep balances modest in-browser.
             </CardDescription>
           </CardHeader>
           <Button
@@ -196,7 +196,7 @@ export function Welcome() {
             className="w-full border-real/30"
             onClick={() => start("mainnet-beta")}
           >
-            Set up for real
+            Use Mainnet carefully
             <ArrowRight className="size-4" />
           </Button>
         </Card>

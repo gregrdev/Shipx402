@@ -6,7 +6,7 @@
 
 import { BRAND } from "./brand";
 
-export const SITE_CATALOG_VERSION = 8;
+export const SITE_CATALOG_VERSION = 9;
 
 export type CatalogItem = {
   path: string;
@@ -329,7 +329,7 @@ export const COMMON_QUESTIONS: { q: string; a: string }[] = [
     a: "With x402. The agent requests a resource, gets HTTP 402 with PAYMENT-REQUIRED (canonical V2) carrying amount, network (CAIP-2), asset, payTo; pays—often USDC via scheme exact—then retries with PAYMENT-SIGNATURE. No API keys or subscriptions. Wallet is the credential.",
   },
   {
-    q: "How do I get my agent to pay for stuff on Solana?",
+    q: "How do I get my agent to pay for APIs on Solana?",
     a: "(1) Dedicated agent wallet, not your main one. (2) Spend limits + allowlist. (3) Teach the 402 loop. (4) Prefer Devnet until the flow is solid. Start: https://www.shipx402.com/site.txt then curriculum + agent-wallet-safely guide. Practice: /api/x402/lab",
   },
   {

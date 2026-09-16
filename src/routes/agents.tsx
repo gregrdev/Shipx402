@@ -7,7 +7,7 @@ import { Button } from "@/components/ui/button";
 
 const AGENTS_FAQ = [
   {
-    q: "How do I get my agent to pay for stuff on Solana?",
+    q: "How do I get my agent to pay for APIs on Solana?",
     a: "Dedicated agent wallet, spend limits and allowlist, then the 402 loop. Prefer Devnet until the flow is solid. See the numbered path below and /guides/agent-wallet-safely.",
   },
   {
