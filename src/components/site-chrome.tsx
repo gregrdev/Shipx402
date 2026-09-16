@@ -55,13 +55,13 @@ export function SiteChrome({
         <div className="mx-auto grid max-w-6xl grid-cols-1 items-center gap-3 px-4 py-3.5 sm:grid-cols-[1fr_auto_1fr] sm:px-6">
           <Link
             to="/"
-            className="justify-self-start no-underline"
+            className="inline-flex items-center justify-self-start no-underline"
             aria-label="Ship x402 home"
           >
-            <BrandMark variant="tile" size="lg" />
+            <BrandMark variant="wordmark" />
           </Link>
           <nav
-            className="flex flex-wrap items-center justify-center gap-0.5 sm:gap-1"
+            className="flex flex-wrap items-center justify-center justify-self-center gap-0.5 sm:gap-1"
             aria-label="Primary"
           >
             {NAV_LINKS.map((link) => {
