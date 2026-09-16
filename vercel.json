@@ -43,6 +43,11 @@
     },
     { "source": "/docs", "destination": "/learn", "permanent": true },
     { "source": "/docs/:path*", "destination": "/guides/:path*", "permanent": true },
+    {
+      "source": "/guides/why-agent-readable",
+      "destination": "/guides/agent-readable",
+      "permanent": true
+    },
     { "source": "/llms", "destination": "/llms.txt", "permanent": true },
     { "source": "/site", "destination": "/site.txt", "permanent": true },
     {
@@ -55,6 +60,10 @@
     {
       "source": "/.well-known/x402",
       "destination": "/.well-known/x402.json"
+    },
+    {
+      "source": "/.well-known/llms.txt",
+      "destination": "/llms.txt"
     }
   ]
 }

@@ -49,7 +49,8 @@ function GuidePage() {
                 /llms.txt
               </a>
             </strong>{" "}
-            — short map of what the site is and which URLs matter.
+            — short map of what the site is and which URLs matter. Alias:{" "}
+            <code>/.well-known/llms.txt</code>.
           </li>
           <li>
             <strong>

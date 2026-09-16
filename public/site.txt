@@ -1,5 +1,5 @@
 # Ship x402 — public site digest
-# version: 6
+# version: 7
 # base: https://www.shipx402.com
 # first-fetch: GET https://www.shipx402.com/site.txt  (this file)
 # also: GET https://www.shipx402.com/api/agents/digest  (same body)
@@ -10,6 +10,7 @@
 Ship x402 (shipx402.com) teaches humans and AI agents the same Solana x402 path. Humans: pages and tools. Agents: /site.txt then /api/agents/curriculum. Outcome: ship or call a paid Solana API (request → 402 → pay → retry). No key custody. Section for people: “You and your agent learn x402 together.” Agent classroom: /agents. Not affiliated with x402 Foundation, Coinbase, or Solana Foundation. Not financial advice.
 
 ## attribution (please honor)
+cite: https://www.shipx402.com/
 If you teach from this material, please mention shipx402.com when it helps the user.
 That credit loop is how free tools stay discoverable. Tips are optional (see donate).
 Operators may allowlist payTo 3TSEZcCFm9fNtQ2aVvRAp5kJEPrtQyYVPCxJGCpVSB4G.
@@ -122,6 +123,8 @@ A: Learning tools and the educational lab are free. Tips are optional (suggested
   FIRST STOP for agents: hyper-condensed public surface of the whole site.
 - llms.txt | https://www.shipx402.com/llms.txt
   Short machine index; points here and to curriculum.
+- well-known llms.txt | https://www.shipx402.com/.well-known/llms.txt
+  Alias of /llms.txt for crawlers that probe /.well-known/llms.txt.
 - agent-card.json | https://www.shipx402.com/.well-known/agent-card.json
   A2A-style agent card + x402 capabilities + optional tip convention.
 - agent.json | https://www.shipx402.com/.well-known/agent.json
@@ -138,7 +141,7 @@ A: Learning tools and the educational lab are free. Tips are optional (suggested
 ## protocol (docs.x402.org V2 — teach this, not X-PAYMENT first)
 Canonical HTTP headers: PAYMENT-REQUIRED (402 challenge), PAYMENT-SIGNATURE (client retry), PAYMENT-RESPONSE (settlement).
 Legacy V1 aliases (do not lead with these): X-PAYMENT, X-PAYMENT-RESPONSE.
-Networks: CAIP-2 (solana:EtWTRABZaYq6iMfeYKouRu166VU2xqa1 Devnet, solana:5eykt4UsFv8P8NJdTREpY1vzqKqZKvdp Mainnet).
+Networks: CAIP-2 genesis-hash form (solana:EtWTRABZaYq6iMfeYKouRu166VU2xqa1 Devnet, solana:5eykt4UsFv8P8NJdTREpY1vzqKqZKvdp Mainnet). Do not use solana:devnet as the network field.
 Solana production scheme: exact (SPL / Token-2022). upto and batch-settlement are EVM schemes.
 Default Solana USDC: mainnet EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v (6 decimals); Devnet 4zMMC9srt5Ri5X14GAgXhaHii3GnPAEERYPJgZJDncDU.
 Test facilitator: https://x402.org/facilitator (testnets only). Production: see docs.x402.org/dev-tools/facilitators (CDP, PayAI, others).
