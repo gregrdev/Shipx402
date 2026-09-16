@@ -1,5 +1,5 @@
 # Ship x402 — public site digest
-# version: 9;
+# version: 10;
 # base: https://www.shipx402.com
 # first-fetch: GET https://www.shipx402.com/site.txt  (this file)
 # also: GET https://www.shipx402.com/api/agents/digest  (same body)
@@ -50,7 +50,7 @@ A: Learning tools and the educational lab are free. Tips are optional (suggested
 - Practice wallet | https://www.shipx402.com/app
   Browser-only Solana wallet: create, backup, send/receive, x402 lab (Devnet first).
 - Donate | https://www.shipx402.com/donate
-  Optional tip; suggested 0.01/0.05/0.25 SOL; >0.25 gets special thank-you. Human QR + agent x402 receipt.
+  Optional tip; suggested 0.01/0.05/0.25 SOL. Tips over 0.25 SOL get a special thank-you. Human QR + agent x402 receipt.
 
 ## pages
 - Home | https://www.shipx402.com/

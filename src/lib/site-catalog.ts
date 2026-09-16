@@ -6,7 +6,7 @@
 
 import { BRAND } from "./brand";
 
-export const SITE_CATALOG_VERSION = 9;
+export const SITE_CATALOG_VERSION = 10;
 
 export type CatalogItem = {
   path: string;
@@ -54,7 +54,7 @@ export const TOOLS: CatalogItem[] = [
     kind: "tool",
     path: "/donate",
     name: "Donate",
-    gist: "Optional tip; suggested 0.01/0.05/0.25 SOL; >0.25 gets special thank-you. Human QR + agent x402 receipt.",
+    gist: "Optional tip; suggested 0.01/0.05/0.25 SOL. Tips over 0.25 SOL get a special thank-you. Human QR + agent x402 receipt.",
   },
 ];
 
