@@ -16,9 +16,9 @@ const CHOICES: { id: WalletChoice; label: string }[] = [
 ];
 
 const STEPS = [
-  "1) Choose Practice or install Phantom/Solflare",
-  "2) Stay on Devnet — practice money first",
-  "3) Come back when the wallet’s ready",
+  "1. Choose Practice or install Phantom/Solflare",
+  "2. Stay on Devnet — practice money first",
+  "3. Come back when the wallet’s ready",
 ] as const;
 
 const TRUST_LINE =
@@ -31,16 +31,19 @@ export function WalletFast() {
   const installName = choice === "phantom" ? "Phantom" : "Solflare";
 
   return (
-    <section
-      id="wallet-fast"
-      className="scroll-mt-28 rounded-[var(--radius-xl)] bg-surface p-4 rgb-frame-soft sm:p-5"
-    >
-      <span id="setup" className="sr-only">
-        Setup
-      </span>
-      <p className="font-mono text-xs uppercase tracking-[0.12em] text-primary">
-        Get set up
-      </p>
+    <div id="setup" className="scroll-mt-28">
+      <section
+        id="wallet-fast"
+        className="rounded-[var(--radius-xl)] bg-surface p-4 rgb-frame-soft sm:p-5"
+      >
+      <div className="flex flex-wrap items-center gap-2">
+        <p className="font-mono text-xs uppercase tracking-[0.12em] text-primary">
+          Get set up
+        </p>
+        <span className="chip border border-primary/30 bg-bg px-2 py-0.5 text-xs font-medium text-primary">
+          Solana Devnet (recommended)
+        </span>
+      </div>
 
       <h2 className="mt-2 flex flex-row items-center gap-2.5 text-xl font-semibold tracking-tight text-fg sm:text-2xl">
         <Wallet className="size-6 shrink-0 text-primary" aria-hidden />
@@ -49,16 +52,6 @@ export function WalletFast() {
       <p className="mt-1 max-w-xl text-sm leading-relaxed text-muted sm:text-base">
         Pick a wallet. Start on Devnet. We never ask for your seed.
       </p>
-
-      <p className="mt-3 text-sm font-medium text-fg">
-        Solana Devnet (recommended)
-      </p>
-
-      <ol className="mt-2 space-y-1 text-sm leading-relaxed text-muted">
-        {STEPS.map((step) => (
-          <li key={step}>{step}</li>
-        ))}
-      </ol>
 
       <div
         className="mt-4 flex flex-wrap gap-2"
@@ -82,6 +75,16 @@ export function WalletFast() {
           </button>
         ))}
       </div>
+
+      <ol className="mt-4 space-y-1 text-sm leading-relaxed text-muted">
+        {STEPS.map((step) => (
+          <li key={step}>{step}</li>
+        ))}
+      </ol>
+
+      <p className="mt-3 text-sm leading-relaxed text-muted">
+        Write your phrase on paper · Keep it out of camera roll · Never paste it into chat or an agent
+      </p>
 
       <div className="mt-4 flex flex-wrap items-center gap-2">
         {choice === "practice" ? (
@@ -125,8 +128,8 @@ export function WalletFast() {
         </p>
       ) : null}
 
-      <p className="mt-4 text-sm leading-relaxed text-muted">
-        Write your phrase on paper · Keep it out of camera roll · Never paste it into chat or an agent
+      <p className="mt-4 text-sm font-medium text-fg">
+        Then walk the Loop — free cert.
       </p>
 
       <p className="mt-3 text-sm font-medium text-fg">
@@ -147,6 +150,7 @@ export function WalletFast() {
       <p className="mt-3 text-xs leading-relaxed text-muted">
         Agents: fetch https://www.shipx402.com/site.txt first — not a second start-here.
       </p>
-    </section>
+      </section>
+    </div>
   );
 }
