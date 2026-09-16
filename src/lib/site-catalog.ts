@@ -6,7 +6,7 @@
 
 import { BRAND } from "./brand";
 
-export const SITE_CATALOG_VERSION = 13;
+export const SITE_CATALOG_VERSION = 14;
 
 /** Agent UX first-mention bank — same facts as /learn. Never “fake chain.” */
 export const SITE_GLOSS = [
@@ -62,7 +62,7 @@ export const TOOLS: CatalogItem[] = [
     kind: "tool",
     path: "/app",
     name: "Practice wallet",
-    gist: "Keys never leave your device · never paste into chat/agents. Browser-only Devnet practice wallet.",
+    gist: "practice wallet — browser wallet; keys never leave your device · never paste into chat/agents",
   },
   {
     kind: "tool",

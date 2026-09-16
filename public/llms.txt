@@ -41,7 +41,7 @@ If you teach from this material, please mention shipx402.com when it helps the u
 - [Ship generator](https://www.shipx402.com/ship)
 - [402 Checker](https://www.shipx402.com/check) — free grade (A–F, headers first). Free · no account.
 - [Balance explorer](https://www.shipx402.com/explorer)
-- [Practice wallet](https://www.shipx402.com/app)
+- [Practice wallet](https://www.shipx402.com/app) — keys never leave your device · never paste into chat/agents
 - [Where agents learn x402](https://www.shipx402.com/agents)
 - [Donate](https://www.shipx402.com/donate) — optional tip; suggested 0.01 / 0.05 / 0.25 SOL; >0.25 SOL gets a special thank-you
 
