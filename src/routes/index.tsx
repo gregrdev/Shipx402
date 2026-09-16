@@ -79,27 +79,30 @@ function HomePage() {
 
   return (
     <SiteChrome activePath="/">
-      <div className="space-y-16 animate-fade-up">
-        <section className="relative overflow-hidden rounded-[var(--radius-2xl)] border border-transparent hearth-panel rgb-frame">
-          <div className="pointer-events-none absolute inset-0 z-0 scan-grid opacity-50" />
-          <div className="relative z-10 mx-auto flex w-full max-w-3xl flex-col items-center justify-center space-y-6 p-6 text-center sm:p-10 lg:p-12">
+      <div className="space-y-10 animate-fade-up">
+        <section className="relative overflow-hidden rounded-[var(--radius-2xl)] bg-surface rgb-frame">
+          <div className="cyber-rails" aria-hidden="true">
+            <span className="cyber-rail cyber-rail-l" />
+            <span className="cyber-rail cyber-rail-r" />
+          </div>
+          <div className="relative z-10 mx-auto flex w-full max-w-3xl flex-col items-center justify-center space-y-4 px-5 py-5 text-center sm:px-7 sm:py-6">
             <p className="chip inline-flex items-center gap-2 border border-primary/30 bg-bg/60 px-3 py-1 font-mono text-xs uppercase tracking-[0.12em] text-primary">
               {BRAND.domain} · humans + agents
             </p>
-            <h1 className="text-balance text-3xl font-semibold tracking-tight text-fg sm:text-5xl sm:leading-[1.1]">
+            <h1 className="text-balance text-3xl font-semibold tracking-tight text-fg sm:text-4xl sm:leading-[1.15]">
               {SEO_PAGES.home.h1}
             </h1>
-            <p className="text-lg leading-relaxed text-muted">
+            <p className="max-w-2xl text-base leading-relaxed text-muted sm:text-lg">
               {SEO_PAGES.home.description}
             </p>
 
             {/* Atomic shareable unit: prompt + site.txt */}
-            <div className="w-full rounded-[var(--radius-xl)] border border-primary/35 bg-bg/70 p-4 text-left sm:p-5">
-              <div className="mb-2 flex items-center gap-2 text-sm font-semibold text-fg">
+            <div className="w-full rounded-[var(--radius-xl)] border border-border bg-bg p-3 text-left sm:p-4">
+              <div className="mb-1.5 flex items-center gap-2 text-sm font-semibold text-fg">
                 <Terminal className="size-4 text-primary" />
                 Paste This into Your Agent
               </div>
-              <p className="mb-3 text-sm text-muted">
+              <p className="mb-2 text-sm text-muted">
                 Your agent fetches{" "}
                 <a href="/site.txt" className="link-readable font-mono text-xs">
                   site.txt
@@ -107,15 +110,15 @@ function HomePage() {
                 , explains x402, and helps you ship a paid endpoint. Works with Claude,
                 Grok, Cursor, and any agent that can fetch a URL.
               </p>
-              <pre className="mb-3 max-h-36 overflow-auto rounded-[var(--radius-md)] border border-border bg-surface p-3 font-mono text-[11px] leading-relaxed text-muted sm:text-xs">
+              <pre className="mb-2 max-h-28 overflow-auto rounded-[var(--radius-md)] border border-border bg-surface p-2.5 font-mono text-[11px] leading-relaxed text-muted sm:text-xs">
                 {AGENT_PROMPT}
               </pre>
               <div className="flex flex-wrap gap-2">
-                <Button size="lg" onClick={() => void copyPrompt()}>
+                <Button onClick={() => void copyPrompt()}>
                   <Copy className="size-4" />
                   {copied ? "Copied" : "Copy Agent Prompt"}
                 </Button>
-                <Button asChild size="lg" variant="secondary">
+                <Button asChild variant="secondary">
                   <a href="/site.txt" target="_blank" rel="noreferrer">
                     Open site.txt
                     <ArrowRight className="size-4" />
@@ -124,31 +127,67 @@ function HomePage() {
               </div>
             </div>
 
-            <div className="flex flex-wrap justify-center gap-3">
-              <Button asChild size="lg" variant="outline">
+            <div className="flex flex-wrap justify-center gap-2">
+              <Button asChild variant="outline">
                 <Link to="/check">
                   Grade a 402
                   <Wrench className="size-4" />
                 </Link>
               </Button>
-              <Button asChild size="lg" variant="outline">
+              <Button asChild variant="outline">
                 <Link to="/loop">
                   Walk the Payment Loop
                   <Rocket className="size-4" />
                 </Link>
               </Button>
-              <Button asChild size="lg" variant="outline">
+              <Button asChild variant="outline">
                 <Link to="/learn">
                   Learn Path
                   <BookOpen className="size-4" />
                 </Link>
               </Button>
-              <Button asChild size="lg" variant="outline">
+            </div>
+          </div>
+        </section>
+
+        <section className="rounded-[var(--radius-xl)] border border-border bg-surface p-4 sm:p-5">
+          <div className="flex flex-col gap-3 lg:flex-row lg:items-center lg:justify-between">
+            <div className="space-y-1">
+              <p className="font-mono text-xs uppercase tracking-[0.12em] text-primary">
+                Setup · Devnet First
+              </p>
+              <h2 className="text-xl font-semibold tracking-tight text-fg">
+                Make a Wallet Fast
+              </h2>
+              <p className="max-w-xl text-sm leading-relaxed text-muted">
+                In-browser practice wallet (keys stay on your device), or a browser
+                wallet you already use. Devnet first — no mainnet funds required to
+                learn. Never share a private key.
+              </p>
+            </div>
+            <div className="flex flex-wrap items-center gap-2">
+              <Button asChild>
                 <Link to="/app">
                   Practice Wallet
                   <ArrowRight className="size-4" />
                 </Link>
               </Button>
+              <Button asChild variant="outline">
+                <a href="https://phantom.com" target="_blank" rel="noreferrer">
+                  Phantom
+                </a>
+              </Button>
+              <Button asChild variant="outline">
+                <a href="https://www.solflare.com" target="_blank" rel="noreferrer">
+                  Solflare
+                </a>
+              </Button>
+              <Link
+                to="/guides/first-solana-wallet"
+                className="link-readable text-sm font-medium"
+              >
+                How keys work
+              </Link>
             </div>
           </div>
         </section>

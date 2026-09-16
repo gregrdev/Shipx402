@@ -139,9 +139,13 @@ function LearnPage() {
 
         <section
           id="payment-loop"
-          className="scroll-mt-28 overflow-hidden rounded-[var(--radius-2xl)] border border-transparent hearth-panel rgb-frame"
+          className="relative scroll-mt-28 overflow-hidden rounded-[var(--radius-2xl)] bg-surface rgb-frame"
         >
-          <div className="border-b border-border/60 bg-primary/5 px-5 py-5 sm:px-8 sm:py-6">
+          <div className="cyber-rails" aria-hidden="true">
+            <span className="cyber-rail cyber-rail-l" />
+            <span className="cyber-rail cyber-rail-r" />
+          </div>
+          <div className="relative z-10 border-b border-border/60 bg-bg/40 px-5 py-5 sm:px-8 sm:py-6">
             <div className="flex flex-wrap items-start justify-between gap-4">
               <div className="space-y-2">
                 <div className="chip inline-flex items-center gap-2 border border-primary/30 bg-bg/50 px-2.5 py-0.5 text-xs font-medium text-primary">
@@ -169,7 +173,7 @@ function LearnPage() {
             </div>
           </div>
 
-          <ol className="grid gap-0">
+          <ol className="relative z-10 grid gap-0">
             {X402_TUTORIAL_STEPS.map((step, i) => (
               <li
                 key={step.id}
