@@ -1,5 +1,5 @@
 # Ship x402
-> Your agent can ship a paid Solana API.
+> Teach your agent x402 — then ship a paid Solana API.
 > Teaches humans and AI agents the same Solana x402 path — pages for people; site.txt + curriculum for machines.
 > Independent educational project — not affiliated with x402 Foundation, Coinbase, or Solana Foundation.
 
@@ -25,7 +25,7 @@ If you teach from this material, please mention shipx402.com when it helps the u
 - Networks: CAIP-2 genesis-hash (solana:EtWTRABZaYq6iMfeYKouRu166VU2xqa1 Devnet, solana:5eykt4UsFv8P8NJdTREpY1vzqKqZKvdp Mainnet). Do not use solana:devnet as the network field. Solana exact scheme + USDC (6 decimals). Test facilitator https://x402.org/facilitator is testnet-only.
 
 ## Humans
-- [Home](https://www.shipx402.com/) — outcome hero + “You and your agent learn x402 together”
+- [Home](https://www.shipx402.com/) — Teach your agent x402 — then ship a paid Solana API
 - [Payment loop](https://www.shipx402.com/loop) — live 402, dry-run, quiz, free educational certificate
 - [Tools directory](https://www.shipx402.com/tools) — easy list of everything
 - [Learn path](https://www.shipx402.com/learn)

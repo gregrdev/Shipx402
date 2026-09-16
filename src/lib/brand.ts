@@ -19,10 +19,10 @@ export const BRAND = {
   /** User-facing wallet product name (not the site brand) */
   practiceWallet: "practice wallet",
   productWallet: "Ship x402 practice wallet",
-  tagline: "Your agent can ship a paid Solana API.",
+  tagline: "Teach your agent x402 — then ship a paid Solana API.",
   /** Shared closer — one string, never glue a leftover “from one prompt.” */
   closer:
-    "Your agent can ship a paid Solana API. Practice on Devnet. Ship when you understand the loop.",
+    "Teach your agent x402 — then ship a paid Solana API. Practice on Devnet. Never share private keys.",
   /** Dual-audience line — homepage section H2, social, word-of-mouth */
   dualAudience: "You and your agent learn x402 together",
   /** Agent-search line — /agents H1, machine surfaces */
@@ -79,10 +79,10 @@ export type SeoPage = {
 export const SEO_PAGES: Record<string, SeoPage> = {
   home: {
     path: "/",
-    title: "Ship x402 | Your Agent Can Ship a Paid Solana API",
+    title: "Ship x402 | Teach your agent x402 — then ship a paid Solana API",
     description:
-      "Paste site.txt into your agent and ship a paid Solana endpoint. Humans and AI agents learn the same x402 path — payment loop, 402 Checker, practice wallet, free curriculum.",
-    h1: "Your agent can ship a paid Solana API",
+      "Humans and agents learn the same payment loop. Practice on Devnet. Never share private keys. 402 Checker, practice wallet, free curriculum.",
+    h1: "Teach your agent x402 — then ship a paid Solana API",
     keywords:
       "x402, Ship x402, Solana, pay per request, HTTP 402, agent payments, AI agent pay for APIs, site.txt, learn x402",
   },

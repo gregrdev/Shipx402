@@ -26,7 +26,7 @@ export function SiteChrome({
       </a>
 
       <div className="border-b border-border/60 bg-surface/40">
-        <div className="mx-auto flex max-w-6xl items-center justify-between gap-3 px-4 py-1.5 text-xs text-muted sm:px-6">
+        <div className="legal-quiet mx-auto flex max-w-6xl items-center justify-between gap-3 px-4 py-1.5 text-muted sm:px-6">
           <span className="font-mono tracking-wide text-fg">{BRAND.domain}</span>
           <span className="hidden text-fg sm:inline">
             Independent · client-side keys · agent-readable
@@ -52,12 +52,16 @@ export function SiteChrome({
         </div>
 
       <header className="sticky top-0 z-40 bg-bg/85 backdrop-blur-md">
-        <div className="mx-auto flex max-w-6xl flex-wrap items-center justify-between gap-3 px-4 py-3.5 sm:px-6">
-          <Link to="/" className="no-underline" aria-label="Ship x402 home">
-            <BrandMark showDomain size="md" />
+        <div className="mx-auto grid max-w-6xl grid-cols-1 items-center gap-3 px-4 py-3.5 sm:grid-cols-[1fr_auto_1fr] sm:px-6">
+          <Link
+            to="/"
+            className="justify-self-start no-underline"
+            aria-label="Ship x402 home"
+          >
+            <BrandMark size="md" />
           </Link>
           <nav
-            className="flex flex-wrap items-center gap-0.5 sm:gap-1"
+            className="flex flex-wrap items-center justify-center gap-0.5 sm:gap-1"
             aria-label="Primary"
           >
             {NAV_LINKS.map((link) => {
@@ -81,13 +85,13 @@ export function SiteChrome({
                 </Link>
               );
             })}
-            <Link
-              to="/app"
-              className="chip ml-1 bg-primary px-3.5 py-2 text-sm font-semibold text-primary-fg no-underline hover:bg-primary/90"
-            >
-              Open practice wallet
-            </Link>
           </nav>
+          <Link
+            to="/app"
+            className="chip justify-self-end bg-primary px-3.5 py-2 text-sm font-semibold text-primary-fg no-underline hover:bg-primary/90"
+          >
+            Open practice wallet
+          </Link>
         </div>
         <div className="rgb-nav-hairline" aria-hidden="true" />
       </header>
@@ -204,7 +208,7 @@ export function SiteChrome({
             </ul>
           </div>
         </div>
-        <div className="mx-auto mt-8 max-w-6xl space-y-2 border-t border-border/40 px-4 pt-6 text-center text-xs leading-relaxed text-muted sm:px-6">
+        <div className="legal-quiet mx-auto mt-8 max-w-6xl space-y-2 border-t border-border/40 px-4 pt-6 text-center leading-relaxed text-muted sm:px-6">
           <p className="text-fg/90">{BRAND.independence}</p>
           <p>
             © {new Date().getFullYear()} {BRAND.name} · {BRAND.domain}

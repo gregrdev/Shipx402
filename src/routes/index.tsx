@@ -23,6 +23,15 @@ import {
 import { Button } from "@/components/ui/button";
 import { copyText } from "@/lib/utils";
 
+/** Freeze SoT chips — verbatim; first-viewport Home row (not RGB). */
+const TRUST_CHIPS = [
+  "Free to learn",
+  "Devnet-first",
+  "No key custody",
+  "Independent",
+  "NFA",
+] as const;
+
 export const Route = createFileRoute("/")({
   component: HomePage,
   ssr: true,
@@ -45,12 +54,13 @@ function HomePage() {
   return (
     <SiteChrome activePath="/">
       <div className="space-y-8 animate-fade-up">
-        <section className="mx-auto max-w-4xl space-y-3 py-2 text-center">
+        <section className="mx-auto max-w-4xl space-y-4 py-2 text-center">
           <h1 className="text-balance text-3xl font-semibold tracking-tight text-fg sm:text-4xl sm:leading-[1.15]">
             {SEO_PAGES.home.h1}
           </h1>
           <p className="text-base text-muted sm:text-lg">
-            Devnet-first x402 on Solana — humans and agents, same loop.
+            Humans and agents learn the same payment loop. Practice on Devnet. Never
+            share private keys.
           </p>
           <div className="flex flex-wrap items-center justify-center gap-x-5 gap-y-2 pt-1">
             <a href="#wallet-fast" className="link-readable text-sm font-medium">
@@ -63,25 +73,41 @@ function HomePage() {
           <div className="flex justify-center">
             <ContinueChip />
           </div>
+          <ul
+            className="flex flex-wrap items-center justify-center gap-2"
+            aria-label="Trust"
+          >
+            {TRUST_CHIPS.map((chip) => (
+              <li
+                key={chip}
+                className="chip border border-border bg-bg px-3 py-1.5 text-sm font-medium text-fg"
+              >
+                {chip}
+              </li>
+            ))}
+          </ul>
         </section>
 
         <WalletFast />
 
-        <div className="flex flex-wrap items-center gap-2">
-          <Button size="sm" variant="secondary" onClick={() => void copyPrompt()}>
-            <Copy className="size-3.5" />
-            {copied ? "Copied" : "Copy agent prompt"}
-          </Button>
-          <Button asChild size="sm" variant="outline">
-            <a
-              href="https://www.shipx402.com/site.txt"
-              target="_blank"
-              rel="noreferrer"
-            >
-              Open site.txt
-              <ArrowRight className="size-3.5" />
-            </a>
-          </Button>
+        <div className="flex flex-col items-center gap-2">
+          <p className="text-sm text-muted">Paste into your agent</p>
+          <div className="flex flex-wrap items-center justify-center gap-3">
+            <Button size="lg" variant="secondary" onClick={() => void copyPrompt()}>
+              <Copy className="size-4" />
+              {copied ? "Copied" : "Copy agent prompt"}
+            </Button>
+            <Button asChild size="lg" variant="outline">
+              <a
+                href="https://www.shipx402.com/site.txt"
+                target="_blank"
+                rel="noreferrer"
+              >
+                Open site.txt
+                <ArrowRight className="size-4" />
+              </a>
+            </Button>
+          </div>
         </div>
 
         <section

@@ -1,5 +1,5 @@
 # Ship x402 — public site digest
-# version: 10;
+# version: 10
 # base: https://www.shipx402.com
 # first-fetch: GET https://www.shipx402.com/site.txt  (this file)
 # also: GET https://www.shipx402.com/api/agents/digest  (same body)

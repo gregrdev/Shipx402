@@ -62,7 +62,7 @@
 
   html {
     color-scheme: dark;
-    font-size: 17px;
+    font-size: 19px;
     scroll-behavior: smooth;
   }
 
@@ -78,7 +78,7 @@
     background-color: var(--color-bg);
     color: var(--color-fg);
     font-family: var(--font-sans);
-    font-size: 1.0625rem;
+    font-size: 1rem;
     line-height: 1.55;
     -webkit-font-smoothing: antialiased;
   }
@@ -143,6 +143,12 @@
   .link-readable:hover {
     color: var(--color-link-hover);
     text-decoration-color: var(--color-primary);
+  }
+
+  /* Independent / NFA / legal — stay quieter after the +2px type bump */
+  .legal-quiet {
+    font-size: 0.72rem;
+    line-height: 1.4;
   }
 
   /* Chips / nav pills share the small radius (not pills) */
@@ -269,13 +275,13 @@
     linear-gradient(var(--color-surface), var(--color-surface)),
     linear-gradient(
       180deg,
-      color-mix(in oklab, var(--color-rgb-r) 26%, transparent),
-      color-mix(in oklab, var(--color-rgb-g) 30%, transparent),
-      color-mix(in oklab, var(--color-rgb-b) 34%, transparent),
-      color-mix(in oklab, var(--color-rgb-r) 26%, transparent),
-      color-mix(in oklab, var(--color-rgb-g) 30%, transparent),
-      color-mix(in oklab, var(--color-rgb-b) 34%, transparent),
-      color-mix(in oklab, var(--color-rgb-r) 26%, transparent)
+      color-mix(in oklab, var(--color-rgb-r) 14%, var(--color-border)),
+      color-mix(in oklab, var(--color-rgb-g) 16%, var(--color-border)),
+      color-mix(in oklab, var(--color-rgb-b) 18%, var(--color-border)),
+      color-mix(in oklab, var(--color-rgb-r) 14%, var(--color-border)),
+      color-mix(in oklab, var(--color-rgb-g) 16%, var(--color-border)),
+      color-mix(in oklab, var(--color-rgb-b) 18%, var(--color-border)),
+      color-mix(in oklab, var(--color-rgb-r) 14%, var(--color-border))
     );
   background-origin: padding-box, border-box;
   background-clip: padding-box, border-box;
@@ -308,10 +314,10 @@
   border-radius: 1px;
   overflow: hidden;
   opacity: var(--cyber-rail-glow);
-  background: color-mix(in oklab, var(--color-rgb-b) 32%, var(--color-border));
+  background: color-mix(in oklab, var(--color-rgb-b) 16%, var(--color-border));
   box-shadow:
-    0 0 3px color-mix(in oklab, var(--color-rgb-g) 28%, transparent),
-    0 0 6px color-mix(in oklab, var(--color-rgb-b) 18%, transparent);
+    0 0 3px color-mix(in oklab, var(--color-rgb-g) 12%, var(--color-surface)),
+    0 0 6px color-mix(in oklab, var(--color-rgb-b) 10%, var(--color-surface));
 }
 
 .cyber-columns-l {
@@ -333,9 +339,9 @@
   background: linear-gradient(
     180deg,
     transparent 0%,
-    color-mix(in oklab, var(--color-rgb-r) 55%, transparent) 18%,
-    color-mix(in oklab, var(--color-rgb-g) 60%, transparent) 50%,
-    color-mix(in oklab, var(--color-rgb-b) 55%, transparent) 82%,
+    color-mix(in oklab, var(--color-rgb-r) 22%, var(--color-border)) 18%,
+    color-mix(in oklab, var(--color-rgb-g) 24%, var(--color-border)) 50%,
+    color-mix(in oklab, var(--color-rgb-b) 22%, var(--color-border)) 82%,
     transparent 100%
   );
   filter: blur(0.35px);
@@ -352,13 +358,13 @@
   border: 0;
   background-image: linear-gradient(
     180deg,
-    color-mix(in oklab, var(--color-rgb-r) 40%, transparent),
-    color-mix(in oklab, var(--color-rgb-g) 46%, transparent),
-    color-mix(in oklab, var(--color-rgb-b) 50%, transparent),
-    color-mix(in oklab, var(--color-rgb-r) 40%, transparent),
-    color-mix(in oklab, var(--color-rgb-g) 46%, transparent),
-    color-mix(in oklab, var(--color-rgb-b) 50%, transparent),
-    color-mix(in oklab, var(--color-rgb-r) 40%, transparent)
+    color-mix(in oklab, var(--color-rgb-r) 16%, var(--color-border)),
+    color-mix(in oklab, var(--color-rgb-g) 18%, var(--color-border)),
+    color-mix(in oklab, var(--color-rgb-b) 20%, var(--color-border)),
+    color-mix(in oklab, var(--color-rgb-r) 16%, var(--color-border)),
+    color-mix(in oklab, var(--color-rgb-g) 18%, var(--color-border)),
+    color-mix(in oklab, var(--color-rgb-b) 20%, var(--color-border)),
+    color-mix(in oklab, var(--color-rgb-r) 16%, var(--color-border))
   );
   background-size: 100% 200%;
   animation: rgb-nav-hairline 30s linear infinite;
