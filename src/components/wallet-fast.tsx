@@ -139,17 +139,6 @@ export function WalletFast() {
             <p className="mt-3 font-medium">
               Practice money first. Real money only when you say so.
             </p>
-
-            <div className="mt-3 flex flex-wrap gap-1.5">
-              {TRUST_LINE.split(" · ").map((chip) => (
-                <span
-                  key={chip}
-                  className="chip border border-border bg-bg px-2 py-0.5 text-xs font-medium text-muted"
-                >
-                  {chip}
-                </span>
-              ))}
-            </div>
           </div>
         </div>
 
@@ -157,6 +146,20 @@ export function WalletFast() {
           Agents: fetch https://www.shipx402.com/site.txt first — not a second start-here.
         </p>
       </section>
+
+      <ul
+        className="mt-3 flex flex-wrap items-center gap-2"
+        aria-label="Trust"
+      >
+        {TRUST_LINE.split(" · ").map((chip) => (
+          <li
+            key={chip}
+            className="chip border border-border bg-bg px-3 py-1.5 text-sm font-medium text-fg"
+          >
+            {chip}
+          </li>
+        ))}
+      </ul>
     </div>
   );
 }

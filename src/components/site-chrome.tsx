@@ -58,7 +58,7 @@ export function SiteChrome({
             className="justify-self-start no-underline"
             aria-label="Ship x402 home"
           >
-            <BrandMark variant="wordmark" size="md" />
+            <BrandMark variant="tile" size="lg" />
           </Link>
           <nav
             className="flex flex-wrap items-center justify-center gap-0.5 sm:gap-1"

@@ -41,7 +41,7 @@ export function BrandMark({
       {variant === "tile" ? (
         <div
           className={cn(
-            "flex shrink-0 items-center justify-center rounded-[var(--radius-md)] bg-primary/15 font-mono font-bold tracking-tight text-primary",
+            "flex shrink-0 items-center justify-center rounded-[var(--radius-md)] border border-border bg-surface font-mono font-bold tracking-tight text-primary",
             box,
             letter,
           )}

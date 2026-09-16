@@ -32,6 +32,9 @@
   --color-rgb-r: #ff6b9a;
   --color-rgb-g: #3ee8b0;
   --color-rgb-b: #5b9dff;
+  --rgb-line-r: color-mix(in oklab, var(--color-rgb-r) 45%, var(--color-border));
+  --rgb-line-g: color-mix(in oklab, var(--color-rgb-g) 45%, var(--color-border));
+  --rgb-line-b: color-mix(in oklab, var(--color-rgb-b) 45%, var(--color-border));
   --cyber-rail-glow: 0.55;
 
   /* Near-rect — sharper than the first restyle (~2–4px) */
@@ -62,7 +65,8 @@
 
   html {
     color-scheme: dark;
-    font-size: 19px;
+    /* ~+2px from the old 17px root; legal strip stays `.legal-quiet`. */
+    font-size: 18px;
     scroll-behavior: smooth;
   }
 
@@ -275,13 +279,13 @@
     linear-gradient(var(--color-surface), var(--color-surface)),
     linear-gradient(
       180deg,
-      color-mix(in oklab, var(--color-rgb-r) 14%, var(--color-border)),
-      color-mix(in oklab, var(--color-rgb-g) 16%, var(--color-border)),
-      color-mix(in oklab, var(--color-rgb-b) 18%, var(--color-border)),
-      color-mix(in oklab, var(--color-rgb-r) 14%, var(--color-border)),
-      color-mix(in oklab, var(--color-rgb-g) 16%, var(--color-border)),
-      color-mix(in oklab, var(--color-rgb-b) 18%, var(--color-border)),
-      color-mix(in oklab, var(--color-rgb-r) 14%, var(--color-border))
+      var(--rgb-line-r),
+      var(--rgb-line-g),
+      var(--rgb-line-b),
+      var(--rgb-line-r),
+      var(--rgb-line-g),
+      var(--rgb-line-b),
+      var(--rgb-line-r)
     );
   background-origin: padding-box, border-box;
   background-clip: padding-box, border-box;
@@ -314,10 +318,10 @@
   border-radius: 1px;
   overflow: hidden;
   opacity: var(--cyber-rail-glow);
-  background: color-mix(in oklab, var(--color-rgb-b) 16%, var(--color-border));
+  background: var(--rgb-line-b);
   box-shadow:
-    0 0 3px color-mix(in oklab, var(--color-rgb-g) 12%, var(--color-surface)),
-    0 0 6px color-mix(in oklab, var(--color-rgb-b) 10%, var(--color-surface));
+    0 0 3px color-mix(in oklab, var(--rgb-line-g) 55%, var(--color-surface)),
+    0 0 6px color-mix(in oklab, var(--rgb-line-b) 45%, var(--color-surface));
 }
 
 .cyber-columns-l {
@@ -339,9 +343,9 @@
   background: linear-gradient(
     180deg,
     transparent 0%,
-    color-mix(in oklab, var(--color-rgb-r) 22%, var(--color-border)) 18%,
-    color-mix(in oklab, var(--color-rgb-g) 24%, var(--color-border)) 50%,
-    color-mix(in oklab, var(--color-rgb-b) 22%, var(--color-border)) 82%,
+    var(--rgb-line-r) 18%,
+    var(--rgb-line-g) 50%,
+    var(--rgb-line-b) 82%,
     transparent 100%
   );
   filter: blur(0.35px);
@@ -358,13 +362,13 @@
   border: 0;
   background-image: linear-gradient(
     180deg,
-    color-mix(in oklab, var(--color-rgb-r) 16%, var(--color-border)),
-    color-mix(in oklab, var(--color-rgb-g) 18%, var(--color-border)),
-    color-mix(in oklab, var(--color-rgb-b) 20%, var(--color-border)),
-    color-mix(in oklab, var(--color-rgb-r) 16%, var(--color-border)),
-    color-mix(in oklab, var(--color-rgb-g) 18%, var(--color-border)),
-    color-mix(in oklab, var(--color-rgb-b) 20%, var(--color-border)),
-    color-mix(in oklab, var(--color-rgb-r) 16%, var(--color-border))
+    var(--rgb-line-r),
+    var(--rgb-line-g),
+    var(--rgb-line-b),
+    var(--rgb-line-r),
+    var(--rgb-line-g),
+    var(--rgb-line-b),
+    var(--rgb-line-r)
   );
   background-size: 100% 200%;
   animation: rgb-nav-hairline 30s linear infinite;
