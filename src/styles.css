@@ -257,40 +257,40 @@
  * RGB lives on LINES only (page `.cyber-columns` + thin `.rgb-frame-soft`
  * hairline). Never mask-composite a conic onto a card fill.
  *
+ * Waterfall: color travels DOWN the accent lines (~16s loop).
  * prefers-reduced-motion: pause motion; keep static rails + hairline visible.
  */
-@property --rgb-angle {
-  syntax: "<angle>";
-  inherits: false;
-  initial-value: 0deg;
-}
-
 .rgb-frame-soft {
-  --rgb-angle: 0deg;
   position: relative;
   isolation: isolate;
   border: 1px solid transparent;
   background-color: var(--color-surface);
   background-image:
     linear-gradient(var(--color-surface), var(--color-surface)),
-    conic-gradient(
-      from var(--rgb-angle),
-      color-mix(in oklab, var(--color-rgb-r) 50%, transparent),
-      color-mix(in oklab, var(--color-rgb-g) 55%, transparent),
-      color-mix(in oklab, var(--color-rgb-b) 60%, transparent),
-      color-mix(in oklab, var(--color-rgb-r) 50%, transparent)
+    linear-gradient(
+      180deg,
+      color-mix(in oklab, var(--color-rgb-r) 42%, transparent),
+      color-mix(in oklab, var(--color-rgb-g) 48%, transparent),
+      color-mix(in oklab, var(--color-rgb-b) 52%, transparent),
+      color-mix(in oklab, var(--color-rgb-r) 42%, transparent),
+      color-mix(in oklab, var(--color-rgb-g) 48%, transparent),
+      color-mix(in oklab, var(--color-rgb-b) 52%, transparent),
+      color-mix(in oklab, var(--color-rgb-r) 42%, transparent)
     );
   background-origin: padding-box, border-box;
   background-clip: padding-box, border-box;
-  animation: rgb-spin 10s linear infinite;
+  background-size: auto, 100% 200%;
+  background-repeat: no-repeat, repeat-y;
+  animation: rgb-frame-waterfall 16s linear infinite;
 }
 
-@keyframes rgb-spin {
+@keyframes rgb-frame-waterfall {
   from {
-    --rgb-angle: 0deg;
+    background-position: 0 0, 0 0;
   }
   to {
-    --rgb-angle: 360deg;
+    /* Negative Y slides the stripe up so color reads as falling down the hairline. */
+    background-position: 0 0, 0 -100%;
   }
 }
 
@@ -306,11 +306,12 @@
   bottom: 0;
   width: 2px;
   border-radius: 1px;
+  overflow: hidden;
   opacity: var(--cyber-rail-glow);
-  background: color-mix(in oklab, var(--color-rgb-b) 50%, var(--color-border));
+  background: color-mix(in oklab, var(--color-rgb-b) 42%, var(--color-border));
   box-shadow:
-    0 0 8px color-mix(in oklab, var(--color-rgb-g) 80%, transparent),
-    0 0 14px color-mix(in oklab, var(--color-rgb-b) 55%, transparent);
+    0 0 6px color-mix(in oklab, var(--color-rgb-g) 55%, transparent),
+    0 0 10px color-mix(in oklab, var(--color-rgb-b) 40%, transparent);
 }
 
 .cyber-columns-l {
@@ -325,32 +326,32 @@
   content: "";
   position: absolute;
   left: 50%;
-  top: 100%;
+  top: -30%;
   width: 4px;
-  height: 22%;
+  height: 30%;
   transform: translateX(-50%);
   background: linear-gradient(
-    0deg,
+    180deg,
     transparent 0%,
-    var(--color-rgb-r) 20%,
-    var(--color-rgb-g) 50%,
-    var(--color-rgb-b) 80%,
+    color-mix(in oklab, var(--color-rgb-r) 70%, transparent) 18%,
+    color-mix(in oklab, var(--color-rgb-g) 80%, transparent) 50%,
+    color-mix(in oklab, var(--color-rgb-b) 75%, transparent) 82%,
     transparent 100%
   );
   filter: blur(0.4px);
-  animation: cyber-columns-glow-up 3.6s linear infinite;
+  animation: cyber-columns-waterfall 18s linear infinite;
 }
 
 .cyber-columns-r::after {
-  animation-delay: -1.8s;
+  animation-delay: -9s;
 }
 
-@keyframes cyber-columns-glow-up {
+@keyframes cyber-columns-waterfall {
   from {
-    top: 100%;
+    top: -30%;
   }
   to {
-    top: -22%;
+    top: 100%;
   }
 }
 
@@ -363,7 +364,11 @@
   }
 
   .cyber-columns-rail::after {
-    top: 12%;
-    opacity: 0.9;
+    top: 18%;
+    opacity: 0.85;
+  }
+
+  .rgb-frame-soft {
+    background-position: 0 0, 0 20%;
   }
 }
