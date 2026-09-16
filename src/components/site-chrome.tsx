@@ -52,7 +52,7 @@ export function SiteChrome({
         </div>
 
       <header className="sticky top-0 z-40 bg-bg/85 backdrop-blur-md">
-        <div className="mx-auto grid max-w-6xl grid-cols-1 items-center gap-3 px-4 py-3.5 sm:grid-cols-[1fr_auto_1fr] sm:px-6">
+        <div className="mx-auto grid max-w-6xl grid-cols-[1fr_auto_1fr] items-center gap-3 px-4 py-3.5 sm:px-6">
           <Link
             to="/"
             className="inline-flex items-center justify-self-start no-underline"

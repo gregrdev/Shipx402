@@ -1,8 +1,8 @@
 import { cn } from "@/lib/utils";
 
 /**
- * Option A wordmark: Ship + teal x402 (no SVG). Tile keeps the compact Sx mark
- * for footer / app chrome.
+ * Option A: CSS/text wordmark (header) + compact Sx tile (footer / app).
+ * No SVG, no Lucide, no hearth-glow on the wordmark path.
  */
 export function BrandMark({
   className,
@@ -15,50 +15,46 @@ export function BrandMark({
   showDomain?: boolean;
   variant?: "wordmark" | "tile";
 }) {
+  if (variant === "wordmark") {
+    return (
+      <span
+        className={cn(
+          "text-[1.125rem] font-semibold tracking-tight text-fg leading-none",
+          className,
+        )}
+      >
+        Ship{" "}
+        <span className="text-primary font-semibold">x402</span>
+      </span>
+    );
+  }
+
   const text =
-    variant === "wordmark"
-      ? size === "lg"
-        ? "text-2xl sm:text-3xl"
-        : size === "sm"
-          ? "text-[1.125rem]"
-          : "text-xl sm:text-[1.375rem]"
-      : size === "lg"
-        ? "text-xl sm:text-2xl"
-        : size === "sm"
-          ? "text-sm"
-          : "text-base";
+    size === "lg" ? "text-xl sm:text-2xl" : size === "sm" ? "text-sm" : "text-base";
   const box = size === "lg" ? "size-11" : size === "sm" ? "size-7" : "size-9";
   const letter = size === "lg" ? "text-sm" : "text-xs";
 
   return (
-    <div
-      className={cn(
-        "flex min-w-0 items-center gap-2.5",
-        variant === "wordmark" && "items-baseline gap-2",
-        className,
-      )}
-    >
-      {variant === "tile" ? (
-        <div
-          className={cn(
-            "flex shrink-0 items-center justify-center rounded-[var(--radius-md)] border border-border bg-surface font-mono font-bold tracking-tight text-primary",
-            box,
-            letter,
-          )}
-          aria-hidden
-        >
-          Sx
-        </div>
-      ) : null}
+    <div className={cn("flex min-w-0 items-center gap-2.5", className)}>
+      <div
+        className={cn(
+          "flex shrink-0 items-center justify-center rounded-[var(--radius-md)] border border-border bg-surface font-mono font-bold tracking-tight text-primary",
+          box,
+          letter,
+        )}
+        aria-hidden
+      >
+        Sx
+      </div>
       <div className="min-w-0 leading-tight">
-        <div className={cn("font-semibold tracking-tight text-fg leading-none", text)}>
+        <div className={cn("font-semibold leading-none tracking-tight text-fg", text)}>
           Ship <span className="font-semibold text-primary">x402</span>
         </div>
-        {showDomain && (
+        {showDomain ? (
           <div className="font-mono text-[0.65rem] uppercase tracking-[0.14em] text-subtle">
             shipx402.com
           </div>
-        )}
+        ) : null}
       </div>
     </div>
   );
