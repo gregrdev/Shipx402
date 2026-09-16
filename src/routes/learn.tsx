@@ -62,23 +62,41 @@ function LearnPage() {
           <ContinueChip />
         </header>
 
-        <section className="rounded-[var(--radius-xl)] border border-border bg-surface p-4 sm:p-5">
+        <section>
           <p className="font-mono text-xs uppercase tracking-[0.12em] text-primary">
             Start Here
           </p>
-          <div className="mt-2 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
-            <div>
-              <h2 className="text-lg font-semibold text-fg">What Is x402?</h2>
-              <p className="mt-1 max-w-xl text-sm text-muted">
-                Plain-English idea first, then a Devnet wallet, then the payment loop.
+          <div className="mt-3 grid gap-3 sm:grid-cols-2">
+            <div className="flex flex-col rounded-[var(--radius-xl)] border border-border bg-surface p-4 sm:p-5">
+              <h2 className="flex flex-row items-center gap-2.5 text-lg font-semibold text-fg">
+                <Wallet className="size-5 shrink-0 text-primary" aria-hidden />
+                Make a Wallet Fast
+              </h2>
+              <p className="mt-1.5 flex-1 text-sm leading-relaxed text-muted">
+                Practice on Devnet. We never ask for your seed.
               </p>
+              <Button asChild className="mt-4 w-fit">
+                <Link to="/app">
+                  Practice
+                  <ArrowRight className="size-4" />
+                </Link>
+              </Button>
             </div>
-            <Button asChild>
-              <Link to="/guides/what-is-x402">
-                Begin
-                <ArrowRight className="size-4" />
-              </Link>
-            </Button>
+            <div className="flex flex-col rounded-[var(--radius-xl)] border border-border bg-surface p-4 sm:p-5">
+              <h2 className="flex flex-row items-center gap-2.5 text-lg font-semibold text-fg">
+                <FlaskConical className="size-5 shrink-0 text-primary" aria-hidden />
+                Payment Loop
+              </h2>
+              <p className="mt-1.5 flex-1 text-sm leading-relaxed text-muted">
+                Fetch 402, pay, retry — free cert when you finish.
+              </p>
+              <Button asChild className="mt-4 w-fit">
+                <Link to="/loop">
+                  Walk the Loop
+                  <ArrowRight className="size-4" />
+                </Link>
+              </Button>
+            </div>
           </div>
         </section>
 

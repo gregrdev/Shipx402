@@ -94,15 +94,28 @@ function HomePage() {
           <p className="font-mono text-xs uppercase tracking-[0.12em] text-primary">
             Learn Fast
           </p>
-          <div className="mt-2 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
-            <div>
-              <h2 className="text-lg font-semibold text-fg">Full Learning Path</h2>
-              <p className="mt-1 max-w-xl text-sm text-muted">
-                Beginner → advanced, matching docs.x402.org. Walk the Loop when you
-                have a Devnet wallet.
-              </p>
-            </div>
-            <Button asChild variant="outline">
+          <nav
+            className="mt-3 flex flex-wrap items-center gap-x-5 gap-y-2"
+            aria-label="Learn Fast"
+          >
+            <Link
+              to="/guides/what-is-x402"
+              className="link-readable text-sm font-medium"
+            >
+              What Is x402
+            </Link>
+            <Link to="/loop" className="link-readable text-sm font-medium">
+              Walk the Loop
+            </Link>
+            <Link to="/learn" className="link-readable text-sm font-medium">
+              Full
+            </Link>
+          </nav>
+          <div className="mt-3 flex flex-col gap-2 border-t border-border/60 pt-3 sm:flex-row sm:items-center sm:justify-between">
+            <p className="max-w-xl text-sm text-muted">
+              Full Learning Path — beginner → advanced, matching docs.x402.org.
+            </p>
+            <Button asChild variant="ghost" size="sm">
               <Link to="/learn">
                 Open Learn
                 <ArrowRight className="size-4" />

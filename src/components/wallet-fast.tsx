@@ -2,7 +2,6 @@ import { useState } from "react";
 import { Link } from "@tanstack/react-router";
 import { ArrowRight, Wallet } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { BRAND } from "@/lib/brand";
 import { cn } from "@/lib/utils";
 
 const PHANTOM_INSTALL = "https://phantom.com/download";
@@ -15,6 +14,15 @@ const CHOICES: { id: WalletChoice; label: string }[] = [
   { id: "phantom", label: "Phantom" },
   { id: "solflare", label: "Solflare" },
 ];
+
+const STEPS = [
+  "1) Choose Practice or install Phantom/Solflare",
+  "2) Stay on Devnet — practice money first",
+  "3) Come back when the wallet’s ready",
+] as const;
+
+const TRUST_LINE =
+  "Free to learn · Devnet-first · No key custody · Independent · NFA";
 
 export function WalletFast() {
   const [choice, setChoice] = useState<WalletChoice>("practice");
@@ -30,21 +38,27 @@ export function WalletFast() {
       <span id="setup" className="sr-only">
         Setup
       </span>
-      <div className="flex flex-wrap items-center gap-2">
-        <p className="font-mono text-xs uppercase tracking-[0.12em] text-primary">
-          Setup
-        </p>
-        <span className="chip border border-primary/30 bg-bg px-2 py-0.5 text-xs font-medium text-primary">
-          Devnet First
-        </span>
-      </div>
+      <p className="font-mono text-xs uppercase tracking-[0.12em] text-primary">
+        Get set up
+      </p>
 
-      <h2 className="mt-2 text-xl font-semibold tracking-tight text-fg sm:text-2xl">
+      <h2 className="mt-2 flex flex-row items-center gap-2.5 text-xl font-semibold tracking-tight text-fg sm:text-2xl">
+        <Wallet className="size-6 shrink-0 text-primary" aria-hidden />
         Make a Wallet Fast
       </h2>
       <p className="mt-1 max-w-xl text-sm leading-relaxed text-muted sm:text-base">
         Pick a wallet. Start on Devnet. We never ask for your seed.
       </p>
+
+      <p className="mt-3 text-sm font-medium text-fg">
+        Solana Devnet (recommended)
+      </p>
+
+      <ol className="mt-2 space-y-1 text-sm leading-relaxed text-muted">
+        {STEPS.map((step) => (
+          <li key={step}>{step}</li>
+        ))}
+      </ol>
 
       <div
         className="mt-4 flex flex-wrap gap-2"
@@ -73,8 +87,7 @@ export function WalletFast() {
         {choice === "practice" ? (
           <Button asChild>
             <Link to="/app">
-              <Wallet className="size-4" />
-              Practice Wallet
+              Practice
               <ArrowRight className="size-4" />
             </Link>
           </Button>
@@ -93,15 +106,15 @@ export function WalletFast() {
               </Link>
             </Button>
             <Button asChild variant="secondary">
-              <Link to="/app">Practice Wallet</Link>
+              <Link to="/app">Practice</Link>
             </Button>
           </>
         )}
         <Link to="/wallet" className="link-readable text-sm font-medium">
-          How keys work
+          How keys stay on your device
         </Link>
         <Link to="/loop" className="link-readable text-sm font-medium">
-          Already have a wallet?
+          I already have a wallet
         </Link>
       </div>
 
@@ -113,13 +126,27 @@ export function WalletFast() {
       ) : null}
 
       <p className="mt-4 text-sm leading-relaxed text-muted">
-        Write your phrase on paper · Keep it out of camera roll · Never paste it
-        into chat or an agent
+        Write your phrase on paper · Keep it out of camera roll · Never paste it into chat or an agent
       </p>
-      <p className="mt-2 text-sm font-medium text-fg">
-        Then walk the Loop — free cert.
+
+      <p className="mt-3 text-sm font-medium text-fg">
+        Practice money first. Real money only when you say so.
       </p>
-      <p className="mt-3 text-xs leading-relaxed text-muted">{BRAND.independence}</p>
+
+      <div className="mt-3 flex flex-wrap gap-1.5">
+        {TRUST_LINE.split(" · ").map((chip) => (
+          <span
+            key={chip}
+            className="chip border border-border bg-bg px-2 py-0.5 text-xs font-medium text-muted"
+          >
+            {chip}
+          </span>
+        ))}
+      </div>
+
+      <p className="mt-3 text-xs leading-relaxed text-muted">
+        Agents: fetch https://www.shipx402.com/site.txt first — not a second start-here.
+      </p>
     </section>
   );
 }
