@@ -49,10 +49,18 @@ function GuidePage() {
           <li>
             The server replies HTTP <strong>402</strong> with{" "}
             <code>PAYMENT-REQUIRED</code> — the canonical V2 header that carries the
-            price, network (CAIP-2), asset, and payTo. A JSON body is a convenience;
+            price, network (
+            <Link to="/guides/x402-v1-vs-v2" className="link-readable">
+              CAIP-2
+            </Link>{" "}
+            — standard network id, genesis-hash form), asset, and payTo (the wallet
+            address that receives the payment). A JSON body is a convenience;
             official docs treat the header as the wire location.
           </li>
-          <li>You pay from a crypto wallet (on Solana, typically USDC with scheme <code>exact</code>).</li>
+          <li>
+            You pay from a crypto wallet (on Solana — the chain we teach first for these
+            payments — typically USDC with scheme <code>exact</code>).
+          </li>
           <li>
             You ask again with <code>PAYMENT-SIGNATURE</code> (the V2 retry header).
             Older tutorials show <code>X-PAYMENT</code> — that is the legacy V1 name.
@@ -104,8 +112,14 @@ function GuidePage() {
 
         <h2>Try it here</h2>
         <p>
-          Start with the interactive lessons, practice a wallet on Devnet, then ship
-          middleware when you are ready.
+          Start with the interactive lessons, practice a wallet on Devnet{" "}
+          <a
+            href="https://www.shipx402.com/guides/first-solana-wallet"
+            className="chip mx-1 inline-flex border border-border bg-bg px-2 py-0.5 text-xs font-medium text-muted no-underline hover:text-fg"
+          >
+            Devnet · practice network · free test money
+          </a>
+          , then ship middleware when you are ready.
         </p>
 
         <div className="not-prose mt-8 flex flex-wrap gap-3">

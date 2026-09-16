@@ -62,8 +62,16 @@ function GuidePage() {
           server. Never put a private key in your API.
         </p>
         <p>
-          Practice on <strong>devnet</strong> first. Devnet is the practice network with
-          free test money — no real funds.
+          Practice on <strong>Devnet</strong> first.{" "}
+          <a
+            href="https://www.shipx402.com/guides/first-solana-wallet"
+            className="chip mx-1 inline-flex border border-border bg-bg px-2 py-0.5 text-xs font-medium text-muted no-underline hover:text-fg"
+          >
+            Devnet · practice network · free test money
+          </a>
+          <span className="chip mx-1 inline-flex border border-border bg-bg px-2 py-0.5 text-xs font-medium text-muted">
+            Mainnet · real money · mistakes can’t be undone
+          </span>
         </p>
         <ul>
           <li>

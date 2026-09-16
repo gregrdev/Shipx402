@@ -1,5 +1,5 @@
 # Ship x402 — public site digest
-# version: 12
+# version: 13
 # base: https://www.shipx402.com
 # first-fetch: GET https://www.shipx402.com/site.txt  (this file)
 # also: GET https://www.shipx402.com/api/agents/digest  (same body)
@@ -71,7 +71,7 @@ A: Learning tools and the educational lab are free. Tips are optional (suggested
 - Tools directory | https://www.shipx402.com/tools
   Human-readable list of every public tool, page, guide, and API on this site.
 - Wallet explainer | https://www.shipx402.com/wallet
-  Practice wallet explainer — keys stay on your device.
+  Practice wallet explainer — keys never leave your device · never paste into chat/agents.
 - Where agents learn x402 | https://www.shipx402.com/agents
   How to get your agent paying on Solana; fetch order; buyer vs seller; safety + curriculum.
 - About | https://www.shipx402.com/about

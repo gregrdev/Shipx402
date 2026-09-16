@@ -265,7 +265,7 @@ export const X402_TUTORIAL_STEPS = [
     plain: "Your wallet signs a payment that matches the requirements — amount, destination, resource.",
     why: "Only the key holder can authorize spend. Signing proves intent without handing the server your private key.",
     technical:
-      "Lab: sign a payment-intent message. Production Solana: scheme \"exact\" — typically a signed SPL USDC transfer settled by a facilitator.",
+      "Lab: sign a payment-intent message. Production Solana: scheme \"exact\" — typically a signed SPL USDC transfer settled by a facilitator (helper that verifies and settles; never needs your private key).",
   },
   {
     id: 4,
@@ -278,8 +278,9 @@ export const X402_TUTORIAL_STEPS = [
   {
     id: 5,
     title: "Server Verifies / Settles, Then Delivers",
-    plain: "The server checks the proof (itself or via a facilitator), settles on-chain if needed, and returns 200 + the goods.",
-    why: "Sellers get paid per call. Buyers only pay when they need the resource. Micropayments become practical on fast, cheap chains like Solana.",
+    plain:
+      "The server checks the proof itself or via a facilitator — a helper that verifies and settles x402 payments. Not a bank — never needs your private key. Then it settles on-chain if needed and returns 200 + the goods.",
+    why: "Sellers get paid per call. Buyers only pay when they need the resource. Micropayments become practical on fast, cheap chains like Solana (the chain we teach first for these payments).",
     technical: "Verify signature/tx → optional facilitator settle → reject replays (nonce/sig) → 200 + PAYMENT-RESPONSE header.",
   },
 ] as const;
@@ -287,7 +288,7 @@ export const X402_TUTORIAL_STEPS = [
 export const PREMIUM_FACTS = [
   "Solana finalizes blocks in roughly a few hundred milliseconds — fast enough that per-request micropayments feel like normal web latency.",
   "HTTP 402 existed for decades as a reserved status; x402 is the open protocol that finally standardizes what 'Payment Required' means for machines.",
-  "A facilitator is an optional helper that verifies and settles payments so every API shop doesn't have to run full chain infrastructure themselves.",
+  "A facilitator is a helper that verifies and settles x402 payments. Not a bank — never needs your or the buyer’s private key.",
   "On Solana, production x402 typically moves USDC (SPL mint EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v, 6 decimals) with scheme exact. Devnet USDC mint is 4zMMC9srt5Ri5X14GAgXhaHii3GnPAEERYPJgZJDncDU.",
   "Agents love x402 because they can discover a price, pay, and continue — no OAuth dance, no 'create an account' wall mid-task.",
   "x402 is governed under the Linux Foundation's x402 Foundation. V2 network IDs use CAIP-2 (solana:… / eip155:…). Solana currently implements exact; upto and batch-settlement are EVM schemes.",

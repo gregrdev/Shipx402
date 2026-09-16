@@ -198,7 +198,7 @@ export const SEO_PAGES: Record<string, SeoPage> = {
     path: "/guides/first-solana-wallet",
     title: "Your First Solana Wallet (Devnet, No Risk) | Ship x402",
     description:
-      "Make your first Solana wallet the safe way: practice on Devnet with fake money, learn public keys vs private keys, and back it up right. No real funds needed.",
+      "Make your first Solana wallet the safe way: practice on Devnet (practice network · free test money), learn public keys vs private keys, and back it up right. No real funds needed.",
     h1: "Your First Solana Wallet (Devnet, No Risk)",
     keywords:
       "how to make a Solana wallet, Solana devnet wallet, Phantom devnet, practice Solana wallet",
@@ -310,7 +310,7 @@ export const NAV_LINKS = [
 export const HOME_FAQ = [
   {
     q: "What Is x402?",
-    a: "x402 is an open protocol that uses HTTP 402 Payment Required so apps and AI agents can pay for web resources per request — typically settling stablecoins on networks like Solana. V2 puts the challenge in PAYMENT-REQUIRED, the retry in PAYMENT-SIGNATURE, and settlement in PAYMENT-RESPONSE. No API keys or subscriptions: the wallet is the credential.",
+    a: "x402 is an open protocol that uses HTTP 402 Payment Required so apps and AI agents can pay for web resources per request — typically settling stablecoins on networks like Solana (the chain we teach first for these payments). V2 puts the challenge in PAYMENT-REQUIRED, including payTo (the wallet address that receives the payment). The retry is PAYMENT-SIGNATURE; settlement is PAYMENT-RESPONSE. No API keys or subscriptions: the wallet is the credential.",
   },
   {
     q: "Do my keys ever leave my browser?",

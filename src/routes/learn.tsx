@@ -57,8 +57,16 @@ function LearnPage() {
           <p className="text-lg leading-relaxed text-muted">
             One path from first concepts to agent-safe production, matching the
             official docs.x402.org flow: what x402 is → first wallet → payment loop →
-            V2 headers / CAIP-2 → facilitators (verify/settle 402; ≠ RPC ≠ paywall) →
-            ship a paid route.
+            V2 headers /{" "}
+            <Link to="/guides/x402-v1-vs-v2" className="link-readable">
+              CAIP-2 (standard network id — genesis-hash form)
+            </Link>{" "}
+            →{" "}
+            <Link to="/guides/facilitators-explained" className="link-readable">
+              facilitators
+            </Link>{" "}
+            (helper that verifies and settles x402 payments; not a bank — never needs
+            your private key) → ship a paid route.
           </p>
           <ContinueChip />
         </header>
@@ -74,9 +82,14 @@ function LearnPage() {
                 Make a Wallet Fast
               </h2>
               <p className="mt-1.5 flex-1 text-sm leading-relaxed text-muted">
-                Practice on Devnet — free test SOL, no real money. We never ask for your
-                seed.
+                Practice on Devnet. We never ask for your seed.
               </p>
+              <a
+                href="https://www.shipx402.com/guides/first-solana-wallet"
+                className="chip mt-3 inline-flex w-fit border border-border bg-bg px-2.5 py-1 text-xs font-medium text-muted no-underline hover:text-fg"
+              >
+                Devnet · practice network · free test money
+              </a>
               <Button asChild className="mt-4 w-fit">
                 <Link to="/app">
                   Practice
@@ -90,8 +103,15 @@ function LearnPage() {
                 Payment Loop
               </h2>
               <p className="mt-1.5 flex-1 text-sm leading-relaxed text-muted">
-                Fetch 402, pay, retry — free cert when you finish.
+                Payment loop — request → 402 price → pay → retry with proof. Free cert
+                when you finish.
               </p>
+              <a
+                href="https://www.shipx402.com/guides/first-solana-wallet"
+                className="chip mt-3 inline-flex w-fit border border-border bg-bg px-2.5 py-1 text-xs font-medium text-muted no-underline hover:text-fg"
+              >
+                Devnet · practice network · free test money
+              </a>
               <Button asChild className="mt-4 w-fit">
                 <Link to="/loop">
                   Walk the Loop
@@ -200,8 +220,9 @@ function LearnPage() {
                   <code className="text-fg">PAYMENT-REQUIRED</code>, the retry in{" "}
                   <code className="text-fg">PAYMENT-SIGNATURE</code>, and settlement
                   in <code className="text-fg">PAYMENT-RESPONSE</code>. Five steps. A
-                  facilitator verifies and settles 402 payments (not the RPC, not the
-                  paywall).
+                  facilitator — helper that verifies and settles x402 payments. Not a
+                  bank — never needs your private key — is optional on settle. It is
+                  not the RPC and not the paywall.
                 </p>
               </div>
               <Button asChild>
@@ -280,12 +301,19 @@ function LearnPage() {
             </h2>
             <ul className="mt-3 space-y-2 text-base text-muted">
               <li>
-                <strong className="text-fg">Learn / Devnet:</strong> free practice SOL,
-                break things safely.
+                <strong className="text-fg">Learn / Devnet:</strong>{" "}
+                <a
+                  href="https://www.shipx402.com/guides/first-solana-wallet"
+                  className="chip mr-1 inline-flex border border-border bg-bg px-2 py-0.5 text-xs font-medium text-muted no-underline hover:text-fg"
+                >
+                  Devnet · practice network · free test money
+                </a>
               </li>
               <li>
-                <strong className="text-fg">Real / Mainnet:</strong> real value. Small
-                amounts in-browser; hardware for savings.
+                <strong className="text-fg">Real / Mainnet:</strong>{" "}
+                <span className="chip mr-1 inline-flex border border-border bg-bg px-2 py-0.5 text-xs font-medium text-muted">
+                  Mainnet · real money · mistakes can’t be undone
+                </span>
               </li>
             </ul>
           </div>
@@ -303,13 +331,13 @@ function LearnPage() {
             {[
               {
                 to: "/ship" as const,
-                title: "Ship Generator",
-                body: "Paste-ready Express / Next / Hono v2 middleware.",
+                title: "Ship generator",
+                body: "Paste-ready middleware for Express, Next.js, or Hono.",
               },
               {
                 to: "/check" as const,
                 title: "402 Checker",
-                body: "Grade a public endpoint’s 402 (headers first).",
+                body: "Paste a URL; A–F grade on the 402 (headers first).",
               },
               {
                 to: "/explorer" as const,

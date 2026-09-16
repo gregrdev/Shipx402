@@ -50,8 +50,10 @@ function GuidePage() {
             enforced in code before signing.
           </li>
           <li>
-            <strong>Allowlist destinations.</strong> Hostnames, payTo addresses, or
-            facilitator routes the agent may pay — reject everything else.
+            <strong>Allowlist destinations.</strong> Hostnames, payTo addresses (the
+            wallet address that receives the payment), or facilitator routes (helper that
+            verifies and settles x402 payments; not a bank — never needs your or the
+            buyer’s private key) the agent may pay — reject everything else.
           </li>
           <li>
             <strong>Dry-run first.</strong> Log the intended payment without signing
@@ -72,7 +74,11 @@ function GuidePage() {
   "require402": true
 }`}</pre>
         <p>
-          Your agent runtime should refuse to sign if the 402 asks for more than{" "}
+          Networks use{" "}
+          <Link to="/guides/x402-v1-vs-v2" className="link-readable">
+            CAIP-2 (standard network id — genesis-hash form)
+          </Link>
+          . Your agent runtime should refuse to sign if the 402 asks for more than{" "}
           <code>maxPerCall</code>, or if the host is not listed. Fail closed.
         </p>
 
@@ -107,7 +113,14 @@ function GuidePage() {
         <h2>Practice path on this site</h2>
         <ol>
           <li>
-            Create a Devnet wallet in the{" "}
+            Create a Devnet wallet{" "}
+            <a
+              href="https://www.shipx402.com/guides/first-solana-wallet"
+              className="chip mx-1 inline-flex border border-border bg-bg px-2 py-0.5 text-xs font-medium text-muted no-underline hover:text-fg"
+            >
+              Devnet · practice network · free test money
+            </a>{" "}
+            in the{" "}
             <Link to="/app" className="link-readable">
               practice app
             </Link>

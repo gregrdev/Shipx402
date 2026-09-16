@@ -35,11 +35,14 @@ function AboutPage() {
             <Link to="/learn">Learn x402</Link> + live lab
           </li>
           <li>
-            <Link to="/app">Practice wallet</Link> (client-side keys)
+            <Link to="/app">Practice wallet</Link> — browser wallet; keys never leave
+            your device · never paste into chat/agents
           </li>
           <li>
-            <Link to="/ship">Ship generator</Link> &{" "}
-            <Link to="/check">402 Checker</Link>
+            <Link to="/ship">Ship generator</Link> — paste-ready middleware for Express,
+            Next.js, or Hono &{" "}
+            <Link to="/check">402 Checker</Link> — paste a URL; A–F grade on the 402
+            (headers first)
           </li>
           <li>
             Agent curriculum at{" "}

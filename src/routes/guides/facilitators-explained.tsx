@@ -33,10 +33,10 @@ function GuidePage() {
 
         <h2>What a facilitator does</h2>
         <p>
-          A facilitator is a helper service that verifies and settles payments, so every
-          API does not have to run full blockchain operations on its own. Instead of your
-          server tracking chains, tokens, and signatures by hand, it hands the heavy part
-          to a facilitator and gets back a simple yes or no.
+          A facilitator is a helper that verifies and settles x402 payments. Not a bank
+          — never needs your or the buyer’s private key. Instead of your server tracking
+          chains, tokens, and signatures by hand, it hands the heavy part to a
+          facilitator and gets back a simple yes or no.
         </p>
         <p>
           Two things worth knowing. First, the buyer still signs the payment themselves,
@@ -112,11 +112,19 @@ function GuidePage() {
 
         <h2>A simple starting rule</h2>
         <p>
-          Use the x402.org test facilitator on Devnet while you learn the loop. When you
-          are ready for real payments, pick a production facilitator from the official
-          list that supports your network (CDP and PayAI are common Solana choices), and
-          only consider self-hosting once you have a clear reason. Always confirm the
-          current setup against{" "}
+          Use the x402.org test facilitator on Devnet while you learn the loop{" "}
+          <a
+            href="https://www.shipx402.com/guides/first-solana-wallet"
+            className="chip mx-1 inline-flex border border-border bg-bg px-2 py-0.5 text-xs font-medium text-muted no-underline hover:text-fg"
+          >
+            Devnet · practice network · free test money
+          </a>
+          . Test facilitator{" "}
+          <code>https://x402.org/facilitator</code> = testnets only. CDP / PayAI =
+          production options we teach (not partners). When you are ready for real
+          payments, pick a production facilitator from the official list that supports
+          your network, and only consider self-hosting once you have a clear reason.
+          Always confirm the current setup against{" "}
           <a href="https://docs.x402.org" className="link-readable">
             docs.x402.org
           </a>{" "}

@@ -74,17 +74,25 @@ function AgentsPage() {
           <li>
             <strong>Separate wallet</strong> — New key for the agent only. Fund small. Never
             your primary treasury. Practice on{" "}
-            <Link to="/app">Devnet in the app</Link> or read{" "}
+            <Link to="/app">Devnet in the app</Link>{" "}
+            <a
+              href="https://www.shipx402.com/guides/first-solana-wallet"
+              className="chip mx-1 inline-flex border border-border bg-bg px-2 py-0.5 text-xs font-medium text-muted no-underline hover:text-fg"
+            >
+              Devnet · practice network · free test money
+            </a>{" "}
+            or read{" "}
             <Link to="/guides/agent-wallet-safely">Give an Agent a Wallet Safely</Link>.
           </li>
           <li>
             <strong>Policy before power</strong> — Max per call, daily cap, hostname /{" "}
-            <code>payTo</code> allowlist. If the tool can’t enforce that, don’t connect
-            mainnet.
+            <code>payTo</code> (the wallet address that receives the payment) allowlist.
+            If the tool can’t enforce that, don’t connect mainnet.
           </li>
           <li>
             <strong>Teach the loop, not a blog post</strong> — Unpaid request → 402 with{" "}
-            <code>PAYMENT-REQUIRED</code> (amount, CAIP-2 network, asset, payTo) → sign/pay
+            <code>PAYMENT-REQUIRED</code> (amount, CAIP-2 network — standard network id
+            in genesis-hash form, asset, payTo) → sign/pay
             → retry with <code>PAYMENT-SIGNATURE</code>. Walk it on{" "}
             <Link to="/loop">/loop</Link>, or let the agent hit{" "}
             <a href="/api/x402/lab">/api/x402/lab</a>.
@@ -184,7 +192,9 @@ function AgentsPage() {
         </p>
         <p>
           <strong>You want agents to pay you (seller)</strong> — 402 on your route → valid{" "}
-          <code>accepts[]</code> → checker grade → optional facilitator for USDC. Tools:{" "}
+          <code>accepts[]</code> → checker grade → optional facilitator for USDC
+          (helper that verifies and settles x402 payments; not a bank — never needs your
+          or the buyer’s private key). Tools:{" "}
           <Link to="/ship">ship generator</Link>, <Link to="/check">checker</Link>,{" "}
           <Link to="/loop">loop</Link>.
         </p>

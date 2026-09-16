@@ -97,7 +97,14 @@ export function LearnPanel() {
             Prefer encrypted backups + a password manager over screenshots.
           </li>
           <li className="rounded-[var(--radius-md)] border border-border bg-bg p-3">
-            Practice on Devnet first. Real mode mistakes are irreversible.
+            Practice on Devnet first.{" "}
+            <a
+              href="https://www.shipx402.com/guides/first-solana-wallet"
+              className="chip mx-1 inline-flex border border-border bg-bg px-2 py-0.5 text-xs font-medium text-muted no-underline hover:text-fg"
+            >
+              Devnet · practice network · free test money
+            </a>{" "}
+            Real mode mistakes are irreversible.
           </li>
           <li className="rounded-[var(--radius-md)] border border-border bg-bg p-3">
             Double-check recipient addresses — Solana has no undo.

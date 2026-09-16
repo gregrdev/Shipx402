@@ -271,8 +271,11 @@ export function PaymentLoop() {
           </h2>
           <p className="text-sm leading-relaxed text-muted">
             Agents (and humans) must see{" "}
-            <strong className="text-fg">amount, network, asset, payTo</strong>{" "}
-            before signing. Check each field from the lab response.
+            <strong className="text-fg">
+              amount, network, asset, payTo
+            </strong>{" "}
+            (payTo is the wallet address that receives the payment) before signing.
+            Check each field from the lab response.
           </p>
           {parsed ? (
             <dl className="grid gap-2 sm:grid-cols-2">

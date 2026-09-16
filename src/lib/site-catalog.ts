@@ -6,7 +6,7 @@
 
 import { BRAND } from "./brand";
 
-export const SITE_CATALOG_VERSION = 12;
+export const SITE_CATALOG_VERSION = 13;
 
 /** Agent UX first-mention bank — same facts as /learn. Never “fake chain.” */
 export const SITE_GLOSS = [
@@ -95,7 +95,7 @@ export const PAGES: CatalogItem[] = [
     kind: "page",
     path: "/wallet",
     name: "Wallet explainer",
-    gist: "Practice wallet explainer — keys stay on your device.",
+    gist: "Practice wallet explainer — keys never leave your device · never paste into chat/agents.",
   },
   {
     kind: "page",

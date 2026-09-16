@@ -47,14 +47,15 @@ function GuidePage() {
           <li>
             Header: <code>PAYMENT-REQUIRED</code> (V2; may mirror older shapes)
           </li>
-          <li>Body: clear price, valid payTo, correct network</li>
+          <li>Body: clear price, valid payTo (the wallet address that receives the payment), correct network</li>
         </ul>
         <p>
           Canonical V2: <code>PAYMENT-REQUIRED</code> is base64 JSON PaymentRequired (
           <a href="https://docs.x402.org/core-concepts/http-402" className="link-readable">
             docs.x402.org
           </a>
-          ). Body fields should match the header: amount, CAIP-2{" "}
+          ). Body fields should match the header: amount, CAIP-2 (standard network id —
+          genesis-hash form){" "}
           <code>network</code>, <code>asset</code>, <code>payTo</code>,{" "}
           <code>scheme</code>. Production Solana uses <code>scheme: "exact"</code> and
           USDC mint <code>EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v</code> (6
@@ -116,9 +117,19 @@ function GuidePage() {
 
         <h2>Test on Devnet first</h2>
         <p>
-          Do all of this on Devnet until the path is boring and predictable. Then switch
-          the Mainnet settings on purpose, one at a time, rather than discovering a
-          misconfiguration with real money on the line.
+          Do all of this on Devnet{" "}
+          <a
+            href="https://www.shipx402.com/guides/first-solana-wallet"
+            className="chip mx-1 inline-flex border border-border bg-bg px-2 py-0.5 text-xs font-medium text-muted no-underline hover:text-fg"
+          >
+            Devnet · practice network · free test money
+          </a>{" "}
+          until the path is boring and predictable. Then switch the Mainnet settings on
+          purpose, one at a time{" "}
+          <span className="chip mx-1 inline-flex border border-border bg-bg px-2 py-0.5 text-xs font-medium text-muted">
+            Mainnet · real money · mistakes can’t be undone
+          </span>{" "}
+          rather than discovering a misconfiguration with real money on the line.
         </p>
 
         <div className="not-prose mt-8 flex flex-wrap gap-3">

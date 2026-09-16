@@ -27,7 +27,7 @@ export const LEARNING_PATH: LearningItem[] = [
     level: "beginner",
     title: "Your First Solana Wallet",
     path: "/guides/first-solana-wallet",
-    blurb: "Public vs private keys on Devnet — zero real risk.",
+    blurb: "Public vs private keys on Devnet (practice network · free test money).",
   },
   {
     level: "beginner",
@@ -52,7 +52,7 @@ export const LEARNING_PATH: LearningItem[] = [
     level: "intermediate",
     title: "x402 v1 vs v2",
     path: "/guides/x402-v1-vs-v2",
-    blurb: "PAYMENT-* headers, CAIP-2, resource envelope — avoid breaking testers.",
+    blurb: "PAYMENT-* headers, CAIP-2 (standard network id — genesis-hash form), resource envelope — avoid breaking testers.",
   },
   {
     level: "intermediate",
@@ -127,7 +127,7 @@ export const LEVEL_META: Record<
   },
   intermediate: {
     label: "Intermediate",
-    description: "V2 headers and CAIP-2, then facilitators, then ship a paid route.",
+    description: "V2 headers and CAIP-2 (standard network id — genesis-hash form), then facilitators, then ship a paid route.",
   },
   advanced: {
     label: "Advanced / Agents",
