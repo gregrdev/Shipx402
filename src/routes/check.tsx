@@ -33,7 +33,7 @@ function CheckPage() {
           </h1>
           <p className="text-lg text-muted">
             Paste an API URL. We fetch once over HTTPS (with SSRF protection) and grade
-            the 402 body for agent readiness. Free · no account.
+            the 402 (headers first) for agent readiness. Free · no account.
           </p>
           <p className="text-sm text-subtle">
             Start with this site’s donate endpoint{" "}

@@ -35,6 +35,10 @@ function LoopPage() {
           <p className="text-lg leading-relaxed text-muted">
             {SEO_PAGES.loop.description}
           </p>
+          <p className="text-sm text-muted">
+            Practice on Devnet — free test SOL, no real money. Mainnet is real funds;
+            only with explicit human consent.
+          </p>
           <div className="flex flex-wrap gap-2 pt-1">
             <Button asChild variant="secondary" size="sm">
               <Link to="/learn">Learn hub</Link>

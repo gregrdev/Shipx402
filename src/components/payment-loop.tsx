@@ -378,7 +378,7 @@ export function PaymentLoop() {
               Safety reminder
             </p>
             <ul className="list-disc space-y-1 pl-5">
-              <li>Devnet first; mainnet only with explicit human consent.</li>
+              <li>Devnet first (practice chain, free test SOL — no real money); mainnet only with explicit human consent.</li>
               <li>Never paste private keys into a website or agent chat.</li>
               <li>Cap spend and allowlist payTo addresses for agents.</li>
             </ul>

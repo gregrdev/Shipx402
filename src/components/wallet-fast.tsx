@@ -47,6 +47,9 @@ export function WalletFast() {
               <span className="chip border border-primary/30 bg-bg px-2 py-0.5 text-xs font-medium text-primary">
                 Solana Devnet (recommended)
               </span>
+              <span className="text-xs text-muted">
+                practice network · free test money
+              </span>
             </div>
 
             <h2 className="mt-2 flex flex-row items-center gap-2.5 text-xl font-semibold tracking-tight text-fg sm:text-2xl">

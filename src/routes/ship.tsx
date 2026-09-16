@@ -36,6 +36,10 @@ function ShipPage() {
             price, paste payTo, copy install + middleware. Nothing you type leaves the
             browser.
           </p>
+          <p className="text-sm text-muted">
+            Devnet is the practice chain with free test SOL — no real money. A
+            facilitator verifies and settles 402 payments (not the RPC, not the paywall).
+          </p>
           <Button asChild variant="secondary" size="sm">
             <Link to="/check">Have a URL? Run 402 Checker →</Link>
           </Button>

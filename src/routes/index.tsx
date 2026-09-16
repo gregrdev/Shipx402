@@ -62,6 +62,10 @@ function HomePage() {
             Humans and agents learn the same payment loop. Practice on Devnet. Never
             share private keys.
           </p>
+          <p className="text-sm text-muted">
+            x402 — pay-per-request over HTTP 402; the wallet is the credential.
+            Solana — chain we teach first for these payments.
+          </p>
           <div className="flex flex-wrap items-center justify-center gap-x-5 gap-y-2 pt-1">
             <a href="#wallet-fast" className="link-readable text-sm font-medium">
               Make a Wallet Fast
@@ -80,9 +84,16 @@ function HomePage() {
             {TRUST_CHIPS.map((chip) => (
               <li
                 key={chip}
-                className="chip border border-border bg-bg px-3 py-1.5 text-sm font-medium text-fg"
+                className="flex flex-wrap items-center justify-center gap-2"
               >
-                {chip}
+                <span className="chip border border-border bg-bg px-3 py-1.5 text-sm font-medium text-fg">
+                  {chip}
+                </span>
+                {chip === "Devnet-first" ? (
+                  <span className="text-sm text-muted">
+                    practice network · free test money
+                  </span>
+                ) : null}
               </li>
             ))}
           </ul>
@@ -141,7 +152,7 @@ function HomePage() {
             {
               icon: Wrench,
               title: "Grade your 402",
-              body: "Paste any API URL. Get an A–F grade for agent readiness. Free · no account.",
+              body: "Paste a URL. A–F grade on the 402 (headers first). Free · no account.",
               to: "/check" as const,
               cta: "402 Checker",
             },

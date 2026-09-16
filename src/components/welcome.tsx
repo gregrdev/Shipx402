@@ -171,7 +171,8 @@ export function Welcome() {
             </div>
             <CardTitle className="text-xl">New wallet · Learn</CardTitle>
             <CardDescription className="text-base leading-relaxed">
-              Free Devnet practice with full write-down ceremony and safety locks.
+              Free Devnet practice (practice chain, free test SOL — no real money) with
+              full write-down ceremony and safety locks.
             </CardDescription>
           </CardHeader>
           <Button className="w-full" size="lg" onClick={() => start("devnet")}>

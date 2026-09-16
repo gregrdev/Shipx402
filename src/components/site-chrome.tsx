@@ -58,7 +58,7 @@ export function SiteChrome({
             className="justify-self-start no-underline"
             aria-label="Ship x402 home"
           >
-            <BrandMark size="md" />
+            <BrandMark variant="wordmark" size="md" />
           </Link>
           <nav
             className="flex flex-wrap items-center justify-center gap-0.5 sm:gap-1"
@@ -107,7 +107,7 @@ export function SiteChrome({
       <footer className="relative z-10 mt-8 border-t border-border/50 bg-surface/30 py-10">
         <div className="mx-auto grid max-w-6xl gap-8 px-4 sm:grid-cols-2 lg:grid-cols-4 sm:px-6">
           <div className="space-y-3 sm:col-span-2 lg:col-span-1">
-            <BrandMark showDomain size="sm" />
+            <BrandMark variant="tile" showDomain size="sm" />
             <p className="max-w-xs text-sm leading-relaxed text-muted">
               {BRAND.closer}
             </p>

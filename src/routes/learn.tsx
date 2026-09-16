@@ -73,7 +73,8 @@ function LearnPage() {
                 Make a Wallet Fast
               </h2>
               <p className="mt-1.5 flex-1 text-sm leading-relaxed text-muted">
-                Practice on Devnet. We never ask for your seed.
+                Practice on Devnet — free test SOL, no real money. We never ask for your
+                seed.
               </p>
               <Button asChild className="mt-4 w-fit">
                 <Link to="/app">
@@ -305,7 +306,7 @@ function LearnPage() {
               {
                 to: "/check" as const,
                 title: "402 Checker",
-                body: "Grade a public endpoint’s 402 body.",
+                body: "Grade a public endpoint’s 402 (headers first).",
               },
               {
                 to: "/explorer" as const,
