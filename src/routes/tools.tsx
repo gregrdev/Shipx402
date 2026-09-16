@@ -250,7 +250,7 @@ function ToolsPage() {
           title="For AI agents · one-file first stop"
           blurb="Agents should fetch a single condensed file before crawling HTML."
         >
-          <div className="rounded-[var(--radius-xl)] border border-primary/30 bg-primary/5 p-5 cyber-edge">
+          <div className="rounded-[var(--radius-xl)] border border-border bg-surface p-5">
             <div className="flex items-start gap-3">
               <Sparkles className="mt-0.5 size-5 shrink-0 text-primary" />
               <div className="min-w-0 space-y-3">

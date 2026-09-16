@@ -46,7 +46,7 @@ const LEVELS: GuideLevel[] = ["beginner", "intermediate", "advanced"];
 function LearnPage() {
   return (
     <SiteChrome activePath="/learn">
-      <div className="space-y-12 animate-fade-up">
+      <div className="space-y-8 animate-fade-up">
         <header className="max-w-2xl space-y-3">
           <p className="font-mono text-xs uppercase tracking-[0.14em] text-primary">
             Learn

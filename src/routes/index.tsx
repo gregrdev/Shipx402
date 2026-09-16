@@ -2,7 +2,6 @@ import { useState } from "react";
 import { createFileRoute, Link } from "@tanstack/react-router";
 import {
   ArrowRight,
-  BookOpen,
   Copy,
   Rocket,
   Search,
@@ -53,16 +52,13 @@ function HomePage() {
           <p className="text-base text-muted sm:text-lg">
             Devnet-first x402 on Solana — humans and agents, same loop.
           </p>
-          <div className="flex flex-wrap items-center justify-center gap-2 pt-1">
-            <Button asChild>
+          <div className="flex flex-wrap items-center justify-center gap-3 pt-1">
+            <Button asChild variant="outline">
               <a href="#wallet-fast">Make a Wallet Fast</a>
             </Button>
-            <Button asChild variant="outline">
-              <Link to="/learn">
-                Learn Path
-                <BookOpen className="size-4" />
-              </Link>
-            </Button>
+            <Link to="/learn" className="link-readable text-sm font-medium">
+              Learn Path
+            </Link>
           </div>
           <div className="flex justify-center">
             <ContinueChip />
@@ -110,17 +106,6 @@ function HomePage() {
               Full
             </Link>
           </nav>
-          <div className="mt-3 flex flex-col gap-2 border-t border-border/60 pt-3 sm:flex-row sm:items-center sm:justify-between">
-            <p className="max-w-xl text-sm text-muted">
-              Full Learning Path — beginner → advanced, matching docs.x402.org.
-            </p>
-            <Button asChild variant="ghost" size="sm">
-              <Link to="/learn">
-                Open Learn
-                <ArrowRight className="size-4" />
-              </Link>
-            </Button>
-          </div>
         </section>
 
         <section className="grid gap-3 sm:grid-cols-3">
@@ -128,7 +113,7 @@ function HomePage() {
             {
               icon: Wrench,
               title: "Grade Your 402",
-              body: "Paste any API URL. Get an A–F grade for agent readiness.",
+              body: "Free · no account — get an A–F grade.",
               to: "/check" as const,
               cta: "402 Checker",
             },
@@ -167,17 +152,19 @@ function HomePage() {
           ))}
         </section>
 
-        <section className="space-y-4">
+        <section className="space-y-3">
           <h2 className="text-2xl font-semibold text-fg">FAQ</h2>
-          <div className="grid gap-3 md:grid-cols-2">
+          <div className="space-y-2">
             {HOME_FAQ.map((item) => (
-              <div
+              <details
                 key={item.q}
-                className="rounded-[var(--radius-xl)] border border-border bg-surface p-5"
+                className="rounded-[var(--radius-xl)] border border-border bg-surface px-5 py-3"
               >
-                <h3 className="text-base font-semibold text-fg">{item.q}</h3>
+                <summary className="cursor-pointer text-base font-semibold text-fg">
+                  {item.q}
+                </summary>
                 <p className="mt-2 text-sm leading-relaxed text-muted">{item.a}</p>
-              </div>
+              </details>
             ))}
           </div>
         </section>

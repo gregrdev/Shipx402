@@ -40,6 +40,8 @@ export function SiteChrome({
         </div>
       </div>
 
+      <div className="rgb-nav-hairline" aria-hidden="true" />
+
       <div className="relative">
         <div
           className="pointer-events-none absolute inset-0 z-0 overflow-hidden"
@@ -104,7 +106,7 @@ export function SiteChrome({
           <div className="space-y-3 sm:col-span-2 lg:col-span-1">
             <BrandMark showDomain size="sm" />
             <p className="max-w-xs text-sm leading-relaxed text-muted">
-              {BRAND.tagline}. Practice on Devnet. Ship when you understand the loop.
+              {BRAND.tagline} Practice on Devnet. Ship when you understand the loop.
             </p>
           </div>
           <div>

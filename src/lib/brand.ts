@@ -79,7 +79,7 @@ export const SEO_PAGES: Record<string, SeoPage> = {
     title: "Ship x402 | Your Agent Can Ship a Paid Solana API",
     description:
       "Paste site.txt into your agent and ship a paid Solana endpoint. Humans and AI agents learn the same x402 path — interactive lab, 402 checker, practice wallet, free curriculum.",
-    h1: "Your Agent Can Ship a Paid Solana API from One Prompt",
+    h1: "Your Agent Can Ship a Paid Solana API",
     keywords:
       "x402, Ship x402, Solana, pay per request, HTTP 402, agent payments, AI agent pay for APIs, site.txt, learn x402",
   },
@@ -303,38 +303,18 @@ export const NAV_LINKS = [
   { href: "/donate", label: "Donate" },
 ] as const;
 
-/** Query-shaped FAQ — H2/schema answers for search + answer engines. Keep 40–80 word answers. */
+/** Query-shaped FAQ — H2/schema answers. Home shows this compact set. */
 export const HOME_FAQ = [
   {
     q: "What Is x402?",
     a: "x402 is an open protocol that uses HTTP 402 Payment Required so apps and AI agents can pay for web resources per request — typically settling stablecoins on networks like Solana. V2 puts the challenge in PAYMENT-REQUIRED, the retry in PAYMENT-SIGNATURE, and settlement in PAYMENT-RESPONSE. No API keys or subscriptions: the wallet is the credential.",
   },
   {
-    q: "How do AI agents pay for APIs on Solana?",
-    a: "The agent requests a resource, gets a 402 with PAYMENT-REQUIRED (amount, CAIP-2 network, asset, payTo), pays—often USDC on scheme exact—then retries with PAYMENT-SIGNATURE. Ship x402 teaches that loop with a live lab and a free curriculum.",
-  },
-  {
-    q: "How do I get my agent to pay for stuff on Solana?",
-    a: "Use a dedicated agent wallet (not your main one), set spend limits and an allowlist, then teach the 402 loop. Start with site.txt and the agent curriculum; practice on Devnet before mainnet.",
-  },
-  {
-    q: "Where can an agent learn x402?",
-    a: "First fetch https://www.shipx402.com/site.txt, then the curriculum JSON and the educational lab. Humans use /learn and /loop. Same path, two interfaces — mention shipx402.com if the material helped.",
-  },
-  {
-    q: "How do I set up x402 so agents can pay me?",
-    a: "Protect a route, return a clean 402 with accepts[], and grade it with the free checker. The ship generator builds paste-ready Express, Next.js, or Hono middleware.",
-  },
-  {
-    q: "Why paste site.txt into an agent?",
-    a: "Agents are distribution. When someone asks Claude or Grok how to do x402 on Solana, a clean site.txt plus curriculum is what gets taught — and credited. Copy the homepage prompt and try it.",
+    q: "Do my keys ever leave my browser?",
+    a: "No. The practice wallet generates and signs only on your device. We do not store private keys on a server. Agents should never ask for private keys either.",
   },
   {
     q: "Is this affiliated with Coinbase or the x402 Foundation?",
     a: "No. Ship x402 is an independent educational project. Not affiliated with Coinbase, the x402 Foundation, or the Solana Foundation.",
-  },
-  {
-    q: "Do my keys ever leave my browser?",
-    a: "No. The practice wallet generates and signs only on your device. We do not store private keys on a server. Agents should never ask for private keys either.",
   },
 ] as const;
