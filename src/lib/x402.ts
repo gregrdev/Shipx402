@@ -70,6 +70,8 @@ export type X402LabPayload = {
   nonce: string;
   timestamp: number;
   signature: string;
+  /** Bound when the 402 challenge advertises payTo (lab merchant). */
+  payTo?: string;
 };
 
 export type X402PaymentProof = {
@@ -85,15 +87,18 @@ export function buildLabMessage(parts: {
   nonce: string;
   payer: string;
   timestamp: number;
+  payTo?: string;
 }) {
-  return [
+  const fields = [
     "x402-lab-v1",
     parts.resource,
     parts.amount,
     parts.nonce,
     parts.payer,
     String(parts.timestamp),
-  ].join(":");
+  ];
+  if (parts.payTo) fields.push(parts.payTo);
+  return fields.join(":");
 }
 
 export function createPaymentRequirements(payTo: string): X402PaymentRequirements {
@@ -120,8 +125,8 @@ export function createPaymentRequirements(payTo: string): X402PaymentRequirement
         resource: X402_RESOURCE_PATH,
         description,
         mimeType,
-        extra: {
-          note: "Lab scheme: sign a payment intent with your wallet. Production often settles USDC via a facilitator (Coinbase CDP, PayAI, etc.).",
+          extra: {
+            note: "Lab scheme exact-lab: sign a payment intent with your wallet. This is not Coinbase CDP / PayAI facilitator settle and not on-chain USDC exact. Production often settles USDC via a facilitator.",
           humanPrice: X402_LAB_PRICE_LABEL,
           caip2: SOLANA_DEVNET_CAIP2,
           legacyNetwork: SOLANA_DEVNET_LEGACY,
@@ -154,6 +159,8 @@ export function signLabPayment(params: {
   resource: string;
   amount: string;
   network?: string;
+  /** Include when the challenge advertises payTo so verify can bind destination. */
+  payTo?: string;
 }): X402PaymentProof {
   const keypair = keypairFromSecret(params.secretKeyBase58);
   const payer = keypair.publicKey.toBase58();
@@ -165,6 +172,7 @@ export function signLabPayment(params: {
     nonce,
     payer,
     timestamp,
+    payTo: params.payTo,
   });
   const msgBytes = new TextEncoder().encode(message);
   const signature = nacl.sign.detached(msgBytes, keypair.secretKey);
@@ -180,13 +188,14 @@ export function signLabPayment(params: {
       nonce,
       timestamp,
       signature: bs58.encode(signature),
+      ...(params.payTo ? { payTo: params.payTo } : {}),
     },
   };
 }
 
 export function verifyLabPayment(
   proof: X402PaymentProof,
-  expected: { resource: string; amount: string },
+  expected: { resource: string; amount: string; payTo?: string },
 ): { ok: true } | { ok: false; reason: string } {
   if (
     proof.x402Version !== X402_VERSION &&
@@ -216,8 +225,16 @@ export function verifyLabPayment(
   if (!payload.nonce || typeof payload.nonce !== "string") {
     return { ok: false, reason: "Missing nonce" };
   }
+  if (!Number.isFinite(payload.timestamp)) {
+    return { ok: false, reason: "Invalid timestamp" };
+  }
   if (Math.abs(Date.now() - payload.timestamp) > 120_000) {
     return { ok: false, reason: "Payment intent expired (timestamp)" };
+  }
+  if (expected.payTo) {
+    if (!payload.payTo || payload.payTo !== expected.payTo) {
+      return { ok: false, reason: "payTo mismatch" };
+    }
   }
 
   const message = buildLabMessage({
@@ -226,6 +243,7 @@ export function verifyLabPayment(
     nonce: payload.nonce,
     payer: payload.payer,
     timestamp: payload.timestamp,
+    payTo: expected.payTo ?? payload.payTo,
   });
   const msgBytes = new TextEncoder().encode(message);
 

@@ -139,6 +139,7 @@ export function X402Lab({
         resource: X402_RESOURCE_PATH,
         amount,
         network: accept.network,
+        payTo: accept.payTo,
       });
       setProof(signed);
       const paymentHeader = encodeXPaymentHeader(signed);

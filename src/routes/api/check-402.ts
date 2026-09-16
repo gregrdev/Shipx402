@@ -3,6 +3,7 @@ import { lookup } from "node:dns/promises";
 import { isIP } from "node:net";
 import https from "node:https";
 import { grade402Response } from "@/lib/check-402-grade";
+import { isPrivateIp } from "@/lib/private-ip";
 
 /**
  * POST { url } — fetch target once (SSRF-hardened) and grade x402 402 body.
@@ -37,34 +38,6 @@ function rateLimit(ip: string): boolean {
   }
   if (cur.count >= RATE_LIMIT) return false;
   cur.count += 1;
-  return true;
-}
-
-function isPrivateIp(ip: string): boolean {
-  const v = isIP(ip);
-  if (v === 4) {
-    const parts = ip.split(".").map(Number);
-    const [a, b] = parts;
-    if (a === 10) return true;
-    if (a === 127) return true;
-    if (a === 0) return true;
-    if (a === 169 && b === 254) return true;
-    if (a === 172 && b !== undefined && b >= 16 && b <= 31) return true;
-    if (a === 192 && b === 168) return true;
-    if (a === 100 && b !== undefined && b >= 64 && b <= 127) return true;
-    return false;
-  }
-  if (v === 6) {
-    const lower = ip.toLowerCase();
-    if (lower === "::1") return true;
-    if (lower.startsWith("fc") || lower.startsWith("fd")) return true;
-    if (lower.startsWith("fe80")) return true;
-    if (lower.startsWith(":ffff:")) {
-      const mapped = lower.slice(7);
-      if (isIP(mapped) === 4) return isPrivateIp(mapped);
-    }
-    return false;
-  }
   return true;
 }
 

@@ -150,11 +150,39 @@ export async function transferSol(params: {
   }
 }
 
-export function isValidSolanaAddress(address: string) {
+/**
+ * Parse a base58 Solana address only when it round-trips (`toBase58() === input`).
+ * Rejects truncated/padded encodings that `new PublicKey` may otherwise accept.
+ */
+export function parseCanonicalPublicKey(address: string): PublicKey | null {
+  const trimmed = address.trim();
+  if (!trimmed) return null;
   try {
-    const key = new PublicKey(address);
-    return PublicKey.isOnCurve(key.toBytes());
+    const key = new PublicKey(trimmed);
+    if (key.toBase58() !== trimmed) return null;
+    return key;
   } catch {
-    return false;
+    return null;
   }
+}
+
+/** Canonical encoding (wallet or PDA). Used for Solana Pay recipients. */
+export function isCanonicalSolanaAddress(address: string): boolean {
+  return parseCanonicalPublicKey(address) !== null;
+}
+
+/**
+ * Spend / donate payTo policy: canonical encoding AND on-curve (user wallet,
+ * not a program-derived address). Documented: donation receipts only credit
+ * native SOL to an on-curve payTo.
+ */
+export function isOnCurveWalletAddress(address: string): boolean {
+  const key = parseCanonicalPublicKey(address);
+  if (!key) return false;
+  return PublicKey.isOnCurve(key.toBytes());
+}
+
+/** @deprecated Prefer isOnCurveWalletAddress — same policy, clearer name. */
+export function isValidSolanaAddress(address: string) {
+  return isOnCurveWalletAddress(address);
 }

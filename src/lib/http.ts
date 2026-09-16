@@ -41,3 +41,11 @@ export function rejectMethods(allow: readonly string[], deny: readonly string[])
   for (const method of deny) handlers[method] = methodNotAllowed(allow);
   return handlers;
 }
+
+/**
+ * Headers browser JS is allowed to read on x402 lab/donate responses.
+ * PAYMENT-REQUIRED / Payment-Required must be listed or `headers.get()` is null.
+ * Keep both casings: some clients match the expose list literally.
+ */
+export const X402_CORS_EXPOSE_HEADERS =
+  "X-PAYMENT-RESPONSE, PAYMENT-RESPONSE, PAYMENT-REQUIRED, Payment-Required";

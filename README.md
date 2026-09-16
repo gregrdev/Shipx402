@@ -35,6 +35,11 @@ SITE_URL=https://shipx402.com
 
 Optional RPC for donation verification (see `src/lib` donate / solana config).
 
+Durable donation receipt replay (required in production): set
+`KV_REST_API_URL` + `KV_REST_API_TOKEN` (Vercel KV / Upstash). Local/dev
+falls back to `data/credited-donation-sigs/` (gitignored). Receipts fail
+closed if the store cannot claim a signature.
+
 ## Deploy notes
 
 - Stack: TanStack Start + Vite + Nitro (Vercel preset on build)
