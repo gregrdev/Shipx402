@@ -24,6 +24,8 @@ const STEPS = [
 const TRUST_LINE =
   "Free to learn · Devnet-first · No key custody · Independent · NFA";
 
+const END_BRIDGE = "Then walk the Loop — free cert.";
+
 export function WalletFast() {
   const [choice, setChoice] = useState<WalletChoice>("practice");
   const browserWallet = choice === "phantom" || choice === "solflare";
@@ -121,16 +123,14 @@ export function WalletFast() {
         </Link>
       </div>
 
+      <p className="mt-3 text-sm font-medium text-fg">{END_BRIDGE}</p>
+
       {browserWallet ? (
         <p className="mt-3 text-xs text-muted">
           Official {installName} install only — Ship x402 does not host that
           wallet. After install, continue the loop on Devnet.
         </p>
       ) : null}
-
-      <p className="mt-4 text-sm font-medium text-fg">
-        Then walk the Loop — free cert.
-      </p>
 
       <p className="mt-3 text-sm font-medium text-fg">
         Practice money first. Real money only when you say so.
