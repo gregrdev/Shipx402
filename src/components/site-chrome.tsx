@@ -1,20 +1,19 @@
-import type { ReactNode } from "react";
+import { useEffect, type ReactNode } from "react";
 import { Link } from "@tanstack/react-router";
 import { BrandMark } from "@/components/brand-mark";
 import { SupportNudge } from "@/components/support-nudge";
 import { BRAND, NAV_LINKS } from "@/lib/brand";
+import { markLearnProgress } from "@/lib/learn-progress";
 import { LEARNING_PATH } from "@/lib/learning-path";
 import { cn } from "@/lib/utils";
 
 /** Marketing / docs chrome — shipx402.com product site */
-export function SiteChrome({
-  children,
-  activePath,
-}: {
-  children: ReactNode;
-  activePath?: string;
-}) {
+export function SiteChrome({ children, activePath }: { children: ReactNode; activePath?: string }) {
   const guideLinks = LEARNING_PATH.filter((i) => i.path.startsWith("/guides/"));
+
+  useEffect(() => {
+    if (activePath) markLearnProgress(activePath);
+  }, [activePath]);
 
   return (
     <div className="min-h-dvh bg-bg text-fg">
@@ -45,19 +44,18 @@ export function SiteChrome({
           <Link to="/" className="no-underline" aria-label="Ship x402 home">
             <BrandMark showDomain size="md" />
           </Link>
-          <nav
-            className="flex flex-wrap items-center gap-0.5 sm:gap-1"
-            aria-label="Primary"
-          >
+          <nav className="flex flex-wrap items-center gap-0.5 sm:gap-1" aria-label="Primary">
             {NAV_LINKS.map((link) => {
+              const hash = "hash" in link ? link.hash : undefined;
               const active =
-                activePath === link.href ||
-                (link.href === "/learn" &&
-                  !!activePath?.startsWith("/guides/"));
+                !hash &&
+                (activePath === link.href ||
+                  (link.href === "/learn" && !!activePath?.startsWith("/guides/")));
               return (
                 <Link
-                  key={link.href}
+                  key={`${link.href}${hash ? `#${hash}` : ""}`}
                   to={link.href}
+                  hash={hash}
                   className={cn(
                     "chip px-3 py-2 text-sm font-medium no-underline transition-colors",
                     active
@@ -151,26 +149,17 @@ export function SiteChrome({
                 </a>
               </li>
               <li>
-                <a
-                  href="/api/agents/curriculum"
-                  className="text-muted hover:text-fg"
-                >
+                <a href="/api/agents/curriculum" className="text-muted hover:text-fg">
                   Curriculum API
                 </a>
               </li>
               <li>
-                <a
-                  href="/api/agents/site"
-                  className="text-muted hover:text-fg"
-                >
+                <a href="/api/agents/site" className="text-muted hover:text-fg">
                   Catalog JSON
                 </a>
               </li>
               <li>
-                <a
-                  href="/.well-known/agent-card.json"
-                  className="text-muted hover:text-fg"
-                >
+                <a href="/.well-known/agent-card.json" className="text-muted hover:text-fg">
                   agent-card.json
                 </a>
               </li>

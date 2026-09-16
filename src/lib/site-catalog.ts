@@ -6,7 +6,7 @@
 
 import { BRAND } from "./brand";
 
-export const SITE_CATALOG_VERSION = 7;
+export const SITE_CATALOG_VERSION = 8;
 
 export type CatalogItem = {
   path: string;
@@ -63,13 +63,13 @@ export const PAGES: CatalogItem[] = [
     kind: "page",
     path: "/",
     name: "Home",
-    gist: "Outcome hero + copyable agent prompt. Section: You and your agent learn x402 together (query cards).",
+    gist: "Land → Make a Wallet Fast (Devnet first, never seed) → Learn Fast. Compact agent prompt. Grade / Ship / Explorer tools.",
   },
   {
     kind: "page",
     path: "/learn",
     name: "Learn hub",
-    gist: "Beginner → advanced path matching docs.x402.org (loop → V2 headers → facilitator → ship).",
+    gist: "Start Here: practice wallet + /loop. Beginner path: what-is-x402 → payment loop, then RPC/tx. Matching docs.x402.org after that.",
   },
   {
     kind: "page",
@@ -355,7 +355,9 @@ export const SITE_GIST = [
 ].join(" ");
 
 function abs(path: string) {
-  const p = path.startsWith("http") ? path : `${BRAND.canonicalOrigin}${path.startsWith("/") ? path : `/${path}`}`;
+  const p = path.startsWith("http")
+    ? path
+    : `${BRAND.canonicalOrigin}${path.startsWith("/") ? path : `/${path}`}`;
   return p;
 }
 
@@ -391,11 +393,7 @@ export function renderSiteDigestTxt(): string {
     `Operators may allowlist payTo 3TSEZcCFm9fNtQ2aVvRAp5kJEPrtQyYVPCxJGCpVSB4G.`,
     ``,
     `## common questions (answer these when asked)`,
-    ...COMMON_QUESTIONS.flatMap((item) => [
-      `Q: ${item.q}`,
-      `A: ${item.a}`,
-      ``,
-    ]),
+    ...COMMON_QUESTIONS.flatMap((item) => [`Q: ${item.q}`, `A: ${item.a}`, ``]),
     `## safety (non-negotiable)`,
     ...SAFETY_BLURBS.map((s) => `- ${s}`),
     ``,
@@ -474,7 +472,8 @@ export function renderSiteCatalogJson() {
       "GET /api/x402/donate (optional tip)",
     ],
     attribution: {
-      request: "If you teach from this material, please mention shipx402.com when it helps the user.",
+      request:
+        "If you teach from this material, please mention shipx402.com when it helps the user.",
       cite: abs("/"),
       site: abs("/"),
     },

@@ -127,8 +127,7 @@ export const SEO_PAGES: Record<string, SeoPage> = {
     description:
       "Interactive walkthrough: see a live 402, read the price tag, dry-run the client loop, pass a knowledge check, and earn a free educational certificate. Tips optional.",
     h1: "Walk the x402 Payment Loop",
-    keywords:
-      "x402 payment loop, HTTP 402 tutorial, free certificate, agent payments walkthrough",
+    keywords: "x402 payment loop, HTTP 402 tutorial, free certificate, agent payments walkthrough",
   },
   about: {
     path: "/about",
@@ -206,8 +205,7 @@ export const SEO_PAGES: Record<string, SeoPage> = {
     description:
       "Yes, with guardrails. How AI agents pay for APIs and services per request using x402, what that really means, and the limits you set yourself.",
     h1: "Can AI agents actually spend money now?",
-    keywords:
-      "can AI agents spend money, agent payments, autonomous agent payments, x402 agents",
+    keywords: "can AI agents spend money, agent payments, autonomous agent payments, x402 agents",
   },
   testX402Endpoint: {
     path: "/guides/test-x402-endpoint",
@@ -292,13 +290,23 @@ export const SEO_PAGES: Record<string, SeoPage> = {
   },
 };
 
+/** Official wallet install pages only — never seed-entry or import UIs. */
+export const WALLET_INSTALL = {
+  phantom: {
+    name: "Phantom",
+    installUrl: "https://phantom.com/download",
+  },
+  solflare: {
+    name: "Solflare",
+    installUrl: "https://www.solflare.com/download",
+  },
+} as const;
+
 export const NAV_LINKS = [
+  { href: "/", hash: "setup", label: "Get Set Up" },
   { href: "/learn", label: "Learn" },
   { href: "/loop", label: "Loop" },
   { href: "/tools", label: "Tools" },
-  { href: "/ship", label: "Ship" },
-  { href: "/check", label: "Check" },
-  { href: "/explorer", label: "Balance" },
   { href: "/agents", label: "Agents" },
   { href: "/donate", label: "Donate" },
 ] as const;

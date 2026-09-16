@@ -8,18 +8,14 @@ import {
   Rocket,
   Wallet,
 } from "lucide-react";
+import { ContinueLearningChip } from "@/components/continue-learning";
 import { SiteChrome } from "@/components/site-chrome";
 import { SEO_PAGES } from "@/lib/brand";
 import { pageHead, breadcrumbJsonLd, learningResourceJsonLd } from "@/lib/seo";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { X402_TUTORIAL_STEPS } from "@/lib/x402";
-import {
-  LEARNING_PATH,
-  LEVEL_META,
-  type GuideLevel,
-  type LearningItem,
-} from "@/lib/learning-path";
+import { LEARNING_PATH, LEVEL_META, type GuideLevel, type LearningItem } from "@/lib/learning-path";
 import { cn } from "@/lib/utils";
 
 export const Route = createFileRoute("/learn")({
@@ -47,23 +43,58 @@ function LearnPage() {
     <SiteChrome activePath="/learn">
       <div className="space-y-12 animate-fade-up">
         <header className="max-w-2xl space-y-3">
-          <p className="font-mono text-xs uppercase tracking-[0.14em] text-primary">
-            Learn
-          </p>
+          <p className="font-mono text-xs uppercase tracking-[0.14em] text-primary">Learn</p>
           <h1 className="text-balance text-3xl font-semibold tracking-tight text-fg sm:text-4xl">
             {SEO_PAGES.learn.h1}
           </h1>
+          <ContinueLearningChip hideIfPath="/learn" />
           <p className="text-lg leading-relaxed text-muted">
-            One path from first concepts to agent-safe production, matching the
-            official docs.x402.org flow: what x402 is → buyer payment loop → wallet →
-            V2 headers / CAIP-2 → facilitators → ship a paid route.
+            One path from first concepts to agent-safe production, matching the official
+            docs.x402.org flow: what x402 is → buyer payment loop → wallet → V2 headers / CAIP-2 →
+            facilitators → ship a paid route.
           </p>
         </header>
 
-        <nav
-          className="flex flex-wrap gap-2"
-          aria-label="Jump to section"
-        >
+        <section className="space-y-3">
+          <h2 className="flex items-center gap-2 text-xl font-semibold tracking-tight text-fg">
+            <Wallet className="size-5 text-primary" aria-hidden />
+            Start Here
+          </h2>
+          <div className="grid gap-4 sm:grid-cols-2">
+            <Link
+              to="/app"
+              className="flex flex-col rounded-[var(--radius-xl)] border border-border bg-surface p-5 no-underline transition-colors hover:border-border-strong"
+            >
+              <h3 className="flex items-center gap-2 text-lg font-semibold text-fg">
+                Make a Wallet Fast
+              </h3>
+              <p className="mt-2 flex-1 text-sm leading-relaxed text-muted">
+                Practice on Devnet. We never ask for your seed.
+              </p>
+              <span className="link-readable mt-3 inline-flex items-center gap-1 text-sm font-medium">
+                Open Practice Wallet
+                <ArrowRight className="size-3.5" />
+              </span>
+            </Link>
+            <Link
+              to="/loop"
+              className="flex flex-col rounded-[var(--radius-xl)] border border-border bg-surface p-5 no-underline transition-colors hover:border-border-strong"
+            >
+              <h3 className="flex items-center gap-2 text-lg font-semibold text-fg">
+                Payment Loop
+              </h3>
+              <p className="mt-2 flex-1 text-sm leading-relaxed text-muted">
+                Walk the live 402. Free educational cert.
+              </p>
+              <span className="link-readable mt-3 inline-flex items-center gap-1 text-sm font-medium">
+                Walk the Loop
+                <ArrowRight className="size-3.5" />
+              </span>
+            </Link>
+          </div>
+        </section>
+
+        <nav className="flex flex-wrap gap-2" aria-label="Jump to section">
           {[
             { href: "#path", label: "Full Path" },
             { href: "#payment-loop", label: "Payment Loop" },
@@ -86,12 +117,10 @@ function LearnPage() {
           </span>
           <div className="flex flex-wrap items-end justify-between gap-3">
             <div>
-              <h2 className="text-2xl font-semibold tracking-tight text-fg">
-                Full Learning Path
-              </h2>
+              <h2 className="text-2xl font-semibold tracking-tight text-fg">Full Learning Path</h2>
               <p className="mt-1 text-base text-muted">
-                Follow the order within each tier. Skip ahead only if you already know
-                the earlier material.
+                Follow the order within each tier. Skip ahead only if you already know the earlier
+                material.
               </p>
             </div>
             <Badge variant="learn">Updated Sep 2026</Badge>
@@ -110,12 +139,9 @@ function LearnPage() {
                   <span
                     className={cn(
                       "chip inline-flex items-center gap-2 border px-3 py-1 text-xs font-semibold uppercase tracking-wide",
-                      level === "beginner" &&
-                        "border-learn/30 bg-learn-bg text-learn",
-                      level === "intermediate" &&
-                        "border-primary/30 bg-primary/10 text-primary",
-                      level === "advanced" &&
-                        "border-ember/30 bg-real-bg text-ember",
+                      level === "beginner" && "border-learn/30 bg-learn-bg text-learn",
+                      level === "intermediate" && "border-primary/30 bg-primary/10 text-primary",
+                      level === "advanced" && "border-ember/30 bg-real-bg text-ember",
                     )}
                   >
                     {level === "beginner" && <GraduationCap className="size-3.5" />}
@@ -156,12 +182,10 @@ function LearnPage() {
                   The Payment Loop
                 </h2>
                 <p className="max-w-xl text-base leading-relaxed text-muted">
-                  x402 makes HTTP{" "}
-                  <strong className="text-fg">402 Payment Required</strong> useful.
-                  V2 puts the price in{" "}
-                  <code className="text-fg">PAYMENT-REQUIRED</code>, the retry in{" "}
-                  <code className="text-fg">PAYMENT-SIGNATURE</code>, and settlement
-                  in <code className="text-fg">PAYMENT-RESPONSE</code>. Five steps.
+                  x402 makes HTTP <strong className="text-fg">402 Payment Required</strong> useful.
+                  V2 puts the price in <code className="text-fg">PAYMENT-REQUIRED</code>, the retry
+                  in <code className="text-fg">PAYMENT-SIGNATURE</code>, and settlement in{" "}
+                  <code className="text-fg">PAYMENT-RESPONSE</code>. Five steps.
                 </p>
               </div>
               <Button asChild>
@@ -187,9 +211,7 @@ function LearnPage() {
                   {step.title}
                 </h3>
                 <div className="mt-1.5 space-y-1.5 pl-[calc(2.5rem+0.75rem)]">
-                  <p className="text-sm leading-relaxed text-muted sm:text-base">
-                    {step.plain}
-                  </p>
+                  <p className="text-sm leading-relaxed text-muted sm:text-base">{step.plain}</p>
                   <p className="text-sm text-subtle">
                     <span className="font-medium text-muted">Why: </span>
                     {step.why}
@@ -209,9 +231,8 @@ function LearnPage() {
               Solana Wallets in Plain English
             </h2>
             <p className="mt-2 text-base leading-relaxed text-muted">
-              A wallet is a <strong className="text-fg">key pair</strong>. Public =
-              share to receive. Private = never share. Ship x402 creates keys only in
-              your browser.
+              A wallet is a <strong className="text-fg">key pair</strong>. Public = share to
+              receive. Private = never share. Ship x402 creates keys only in your browser.
             </p>
             <div className="mt-4 flex flex-wrap gap-3">
               <Link
@@ -240,12 +261,12 @@ function LearnPage() {
             </h2>
             <ul className="mt-3 space-y-2 text-base text-muted">
               <li>
-                <strong className="text-fg">Learn / Devnet:</strong> free practice SOL,
-                break things safely.
+                <strong className="text-fg">Learn / Devnet:</strong> free practice SOL, break things
+                safely.
               </li>
               <li>
-                <strong className="text-fg">Real / Mainnet:</strong> real value. Small
-                amounts in-browser; hardware for savings.
+                <strong className="text-fg">Real / Mainnet:</strong> real value. Small amounts
+                in-browser; hardware for savings.
               </li>
             </ul>
           </div>
@@ -322,8 +343,7 @@ function LearningPathLink({ item, idx }: { item: LearningItem; idx: number }) {
       <ArrowRight className="mt-1 size-4 shrink-0 text-subtle" />
     </>
   );
-  const className =
-    "flex gap-4 px-5 py-4 no-underline transition-colors hover:bg-bg/50 sm:px-6";
+  const className = "flex gap-4 px-5 py-4 no-underline transition-colors hover:bg-bg/50 sm:px-6";
 
   if (item.path.startsWith("http") || item.path.includes("#")) {
     return (
