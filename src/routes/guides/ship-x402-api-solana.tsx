@@ -42,12 +42,17 @@ function GuidePage() {
         <ol>
           <li>Client hits your route.</li>
           <li>
-            You return <strong>HTTP 402</strong> with price and payment details.
+            You return <strong>HTTP 402</strong> with{" "}
+            <code>PAYMENT-REQUIRED</code> (canonical V2 header).
           </li>
           <li>Client pays on Solana.</li>
-          <li>Client retries with payment proof.</li>
           <li>
-            You verify and return <strong>200</strong>.
+            Client retries with <code>PAYMENT-SIGNATURE</code> (legacy alias:{" "}
+            <code>X-PAYMENT</code>).
+          </li>
+          <li>
+            You verify and return <strong>200</strong> plus{" "}
+            <code>PAYMENT-RESPONSE</code>.
           </li>
         </ol>
 
@@ -65,6 +70,28 @@ function GuidePage() {
           <li>
             Mainnet network ID:{" "}
             <code>solana:5eykt4UsFv8P8NJdTREpY1vzqKqZKvdp</code>
+          </li>
+        </ul>
+        <p>
+          Production Solana x402 uses scheme <code>exact</code> (not{" "}
+          <code>upto</code> or <code>batch-settlement</code> — those are EVM). Default
+          dollar-string USDC mints from{" "}
+          <a
+            href="https://docs.x402.org/core-concepts/network-and-token-support"
+            className="link-readable"
+          >
+            docs.x402.org
+          </a>
+          :
+        </p>
+        <ul>
+          <li>
+            Mainnet USDC: <code>EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v</code> (6
+            decimals)
+          </li>
+          <li>
+            Devnet USDC: <code>4zMMC9srt5Ri5X14GAgXhaHii3GnPAEERYPJgZJDncDU</code> (6
+            decimals)
           </li>
         </ul>
 

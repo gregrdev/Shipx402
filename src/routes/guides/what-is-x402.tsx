@@ -46,13 +46,29 @@ function GuidePage() {
         <h2>How it works</h2>
         <ol>
           <li>You ask for something (an API call).</li>
-          <li>The server replies: “This costs money,” and includes the price and where to pay.</li>
-          <li>You pay from a crypto wallet (often a stablecoin like USDC).</li>
-          <li>You ask again, this time with proof of payment.</li>
-          <li>The server unlocks the response.</li>
+          <li>
+            The server replies HTTP <strong>402</strong> with{" "}
+            <code>PAYMENT-REQUIRED</code> — the canonical V2 header that carries the
+            price, network (CAIP-2), asset, and payTo. A JSON body is a convenience;
+            official docs treat the header as the wire location.
+          </li>
+          <li>You pay from a crypto wallet (on Solana, typically USDC with scheme <code>exact</code>).</li>
+          <li>
+            You ask again with <code>PAYMENT-SIGNATURE</code> (the V2 retry header).
+            Older tutorials show <code>X-PAYMENT</code> — that is the legacy V1 name.
+          </li>
+          <li>
+            The server unlocks the response and may send{" "}
+            <code>PAYMENT-RESPONSE</code> with settlement details.
+          </li>
         </ol>
         <p>
           Think of it like a vending machine on the internet. Request, pay, receive.
+          See{" "}
+          <a href="https://docs.x402.org/core-concepts/http-402" className="link-readable">
+            docs.x402.org — HTTP 402
+          </a>
+          .
         </p>
 
         <h2>Why it matters now</h2>

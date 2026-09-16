@@ -14,6 +14,12 @@ import {
   donationThankYouCopy,
   isDonationAddressConfigured,
 } from "@/lib/donate";
+import {
+  X402_CORS_ALLOW_HEADERS,
+  X402_CORS_EXPOSE_HEADERS,
+  X402_HEADER,
+  getPaymentSignatureHeader,
+} from "@/lib/x402-headers";
 
 /**
  * Real x402-style donation endpoint.
@@ -26,7 +32,8 @@ import {
  * Flow for agents:
  *   1. GET /api/x402/donate            -> HTTP 402 + requirements (payTo, min)
  *   2. Send >= minimum SOL to payTo on Solana mainnet (any wallet/SDK)
- *   3. Retry with header X-PAYMENT: base64(JSON proof, see 402 body `extra`)
+ *   3. Retry with header PAYMENT-SIGNATURE: base64(JSON proof, see 402 body `extra`)
+ *      (legacy V1 alias X-PAYMENT is still accepted)
  *   4. Server verifies the tx on-chain -> 200 + receipt
  *
  * To upgrade to spec-standard x402 v2 with USDC + a facilitator later, see the
@@ -80,8 +87,8 @@ function json(data: unknown, status = 200, headers?: Record<string, string>) {
     headers: {
       "content-type": "application/json; charset=utf-8",
       "access-control-allow-origin": "*",
-      "access-control-allow-headers": "Content-Type, X-PAYMENT, PAYMENT-SIGNATURE",
-      "access-control-expose-headers": "X-PAYMENT-RESPONSE, PAYMENT-RESPONSE",
+      "access-control-allow-headers": X402_CORS_ALLOW_HEADERS,
+      "access-control-expose-headers": X402_CORS_EXPOSE_HEADERS,
       ...headers,
     },
   });
@@ -129,7 +136,7 @@ function buildRequirements() {
           tipSuggestedSol: [...DONATION_TIP_SUGGESTED_SOL],
           customaryTipSol: DONATION_CUSTOMARY_TIP_SOL,
           generousAboveSol: DONATION_GENEROUS_THRESHOLD_SOL,
-          how: `Transfer >= ${DONATION_MIN_SOL} SOL to payTo on Solana mainnet, then retry this URL with header X-PAYMENT: base64 of {"x402Version":2,"scheme":"onchain-sol","network":"${SOLANA_MAINNET_CAIP2}","payload":{"signature":"<tx signature>","payer":"<your pubkey>"}}`,
+          how: `Transfer >= ${DONATION_MIN_SOL} SOL to payTo on Solana mainnet, then retry this URL with header PAYMENT-SIGNATURE (canonical V2; legacy X-PAYMENT also accepted): base64 of {"x402Version":2,"scheme":"onchain-sol","network":"${SOLANA_MAINNET_CAIP2}","payload":{"signature":"<tx signature>","payer":"<your pubkey>"}}`,
           note: "Settlement is the transfer itself — the server verifies your transaction on-chain. Tips are optional. Suggested range: 0.01–0.25 SOL; amounts above 0.25 SOL receive a special thank-you recognition. Custom scheme (not the standard 'exact' facilitator flow); legacy network id 'solana' and x402Version 1 are also accepted on the proof for compatibility.",
         },
       },
@@ -209,8 +216,7 @@ export const Route = createFileRoute("/api/x402/donate")({
           headers: {
             "access-control-allow-origin": "*",
             "access-control-allow-methods": "GET, OPTIONS",
-            "access-control-allow-headers":
-              "Content-Type, X-PAYMENT, PAYMENT-SIGNATURE",
+            "access-control-allow-headers": X402_CORS_ALLOW_HEADERS,
           },
         }),
 
@@ -225,15 +231,11 @@ export const Route = createFileRoute("/api/x402/donate")({
           );
         }
 
-        const paymentHeader =
-          request.headers.get("X-PAYMENT") ??
-          request.headers.get("payment-signature") ??
-          request.headers.get("PAYMENT-SIGNATURE") ??
-          request.headers.get("x-payment");
+        const paymentHeader = getPaymentSignatureHeader(request);
 
         if (!paymentHeader) {
           return json(buildRequirements(), 402, {
-            "PAYMENT-REQUIRED": Buffer.from(
+            [X402_HEADER.required]: Buffer.from(
               JSON.stringify(buildRequirements()),
               "utf8",
             ).toString("base64"),
@@ -248,7 +250,7 @@ export const Route = createFileRoute("/api/x402/donate")({
               : Buffer.from(paymentHeader, "base64").toString("utf8");
           proof = JSON.parse(raw) as DonationProof;
         } catch {
-          return json({ error: "Malformed X-PAYMENT header" }, 400);
+          return json({ error: "Malformed PAYMENT-SIGNATURE header" }, 400);
         }
 
         if (
@@ -316,7 +318,7 @@ export const Route = createFileRoute("/api/x402/donate")({
           const receipt = {
             success: true,
             scheme: "onchain-sol",
-            network: "solana",
+            network: SOLANA_MAINNET_CAIP2,
             signature,
             payer: proof.payload.payer ?? result.payer,
             amountSol,
@@ -336,7 +338,11 @@ export const Route = createFileRoute("/api/x402/donate")({
             },
             200,
             {
-              "X-PAYMENT-RESPONSE": Buffer.from(
+              [X402_HEADER.response]: Buffer.from(
+                JSON.stringify(receipt),
+                "utf8",
+              ).toString("base64"),
+              [X402_HEADER.responseLegacy]: Buffer.from(
                 JSON.stringify(receipt),
                 "utf8",
               ).toString("base64"),

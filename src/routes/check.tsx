@@ -32,8 +32,17 @@ function CheckPage() {
             {SEO_PAGES.check.h1}
           </h1>
           <p className="text-lg text-muted">
-            Paste an API URL. We fetch once over HTTPS (with SSRF protection) and grade the
-            402 body for agent readiness. Free, no accounts — screenshot an A.
+            Paste an API URL. We fetch once over HTTPS (with SSRF protection) and grade
+            the 402 against current x402 V2: <code>PAYMENT-REQUIRED</code> header,
+            CAIP-2 <code>network</code>, <code>scheme</code>, and accepts[] fields. Free,
+            no accounts — screenshot an A. Source of truth:{" "}
+            <a
+              href="https://docs.x402.org/core-concepts/http-402"
+              className="link-readable"
+            >
+              docs.x402.org
+            </a>
+            .
           </p>
           <p className="text-sm text-subtle">
             Tip: try this site's live tip endpoint{" "}

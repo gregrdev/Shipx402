@@ -45,7 +45,7 @@ export function Check402Panel({ defaultUrl = "" }: { defaultUrl?: string }) {
   };
 
   const shareGrade = async (report: GradeReport) => {
-    const text = `My x402 endpoint scored ${report.grade} on shipx402.com/check\n${url.trim() || "endpoint"}\n\nGrade your 402: https://shipx402.com/check`;
+    const text = `My x402 endpoint scored ${report.grade} on www.shipx402.com/check\n${url.trim() || "endpoint"}\n\nGrade your 402: https://www.shipx402.com/check`;
     await copyText(text);
     toast.success("Share text copied — paste it anywhere");
   };

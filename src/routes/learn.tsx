@@ -18,6 +18,7 @@ import {
   LEARNING_PATH,
   LEVEL_META,
   type GuideLevel,
+  type LearningItem,
 } from "@/lib/learning-path";
 import { cn } from "@/lib/utils";
 
@@ -53,8 +54,9 @@ function LearnPage() {
             {SEO_PAGES.learn.h1}
           </h1>
           <p className="text-lg leading-relaxed text-muted">
-            One path from first concepts to agent-safe production. Guides are ordered
-            beginner → intermediate → advanced. Tools sit at the end of each stage.
+            One path from first concepts to agent-safe production, matching the
+            official docs.x402.org flow: what x402 is → buyer payment loop → wallet →
+            V2 headers / CAIP-2 → facilitators → ship a paid route.
           </p>
         </header>
 
@@ -79,6 +81,9 @@ function LearnPage() {
         </nav>
 
         <section id="path" className="scroll-mt-28 space-y-8">
+          <span id="learn-x402" className="sr-only">
+            Learn x402 path
+          </span>
           <div className="flex flex-wrap items-end justify-between gap-3">
             <div>
               <h2 className="text-2xl font-semibold tracking-tight text-fg">
@@ -89,7 +94,7 @@ function LearnPage() {
                 the earlier material.
               </p>
             </div>
-            <Badge variant="learn">Updated Aug 2026</Badge>
+            <Badge variant="learn">Updated Sep 2026</Badge>
           </div>
 
           {LEVELS.map((level) => {
@@ -123,58 +128,7 @@ function LearnPage() {
                 <ol className="divide-y divide-border/50">
                   {items.map((item, idx) => (
                     <li key={item.path + item.title}>
-                      {item.path.startsWith("/guides/") ||
-                      item.path === "/learn#payment-loop" ? (
-                        item.path.startsWith("/guides/") ? (
-                          <Link
-                            to={item.path}
-                            className="flex gap-4 px-5 py-4 no-underline transition-colors hover:bg-bg/50 sm:px-6"
-                          >
-                            <span className="flex size-8 shrink-0 items-center justify-center rounded-full bg-surface-2 font-mono text-xs font-semibold text-primary">
-                              {idx + 1}
-                            </span>
-                            <span className="min-w-0 flex-1">
-                              <span className="font-semibold text-fg">
-                                {item.title}
-                              </span>
-                              <span className="mt-0.5 block text-sm text-muted">
-                                {item.blurb}
-                              </span>
-                            </span>
-                            <ArrowRight className="mt-1 size-4 shrink-0 text-subtle" />
-                          </Link>
-                        ) : (
-                          <a
-                            href={item.path}
-                            className="flex gap-4 px-5 py-4 no-underline transition-colors hover:bg-bg/50 sm:px-6"
-                          >
-                            <span className="flex size-8 shrink-0 items-center justify-center rounded-full bg-surface-2 font-mono text-xs font-semibold text-primary">
-                              {idx + 1}
-                            </span>
-                            <span className="min-w-0 flex-1">
-                              <span className="font-semibold text-fg">
-                                {item.title}
-                              </span>
-                              <span className="mt-0.5 block text-sm text-muted">
-                                {item.blurb}
-                              </span>
-                            </span>
-                            <ArrowRight className="mt-1 size-4 shrink-0 text-subtle" />
-                          </a>
-                        )
-                      ) : (
-                        <div className="flex gap-4 px-5 py-4 sm:px-6">
-                          <span className="flex size-8 shrink-0 items-center justify-center rounded-full bg-surface-2 font-mono text-xs font-semibold text-primary">
-                            {idx + 1}
-                          </span>
-                          <span>
-                            <span className="font-semibold text-fg">{item.title}</span>
-                            <span className="mt-0.5 block text-sm text-muted">
-                              {item.blurb}
-                            </span>
-                          </span>
-                        </div>
-                      )}
+                      <LearningPathLink item={item} idx={idx} />
                     </li>
                   ))}
                 </ol>
@@ -199,8 +153,11 @@ function LearnPage() {
                 </h2>
                 <p className="max-w-xl text-base leading-relaxed text-muted">
                   x402 makes HTTP{" "}
-                  <strong className="text-fg">402 Payment Required</strong> useful:
-                  machine-readable price, pay, retry with proof, unlock. Five steps.
+                  <strong className="text-fg">402 Payment Required</strong> useful.
+                  V2 puts the price in{" "}
+                  <code className="text-fg">PAYMENT-REQUIRED</code>, the retry in{" "}
+                  <code className="text-fg">PAYMENT-SIGNATURE</code>, and settlement
+                  in <code className="text-fg">PAYMENT-RESPONSE</code>. Five steps.
                 </p>
               </div>
               <Button asChild>
@@ -345,5 +302,36 @@ function LearnPage() {
         </section>
       </div>
     </SiteChrome>
+  );
+}
+
+function LearningPathLink({ item, idx }: { item: LearningItem; idx: number }) {
+  const inner = (
+    <>
+      <span className="flex size-8 shrink-0 items-center justify-center rounded-full bg-surface-2 font-mono text-xs font-semibold text-primary">
+        {idx + 1}
+      </span>
+      <span className="min-w-0 flex-1">
+        <span className="font-semibold text-fg">{item.title}</span>
+        <span className="mt-0.5 block text-sm text-muted">{item.blurb}</span>
+      </span>
+      <ArrowRight className="mt-1 size-4 shrink-0 text-subtle" />
+    </>
+  );
+  const className =
+    "flex gap-4 px-5 py-4 no-underline transition-colors hover:bg-bg/50 sm:px-6";
+
+  if (item.path.startsWith("http") || item.path.includes("#")) {
+    return (
+      <a href={item.path} className={className}>
+        {inner}
+      </a>
+    );
+  }
+
+  return (
+    <Link to={item.path} className={className}>
+      {inner}
+    </Link>
   );
 }

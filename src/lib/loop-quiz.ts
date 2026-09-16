@@ -40,7 +40,7 @@ export const LOOP_QUIZ: readonly QuizQuestion[] = [
     ],
     answer: 1,
     explain:
-      "Request → 402 with requirements → client pays → client retries with a payment header → server unlocks the resource.",
+      "Request → 402 with PAYMENT-REQUIRED → client pays → client retries with PAYMENT-SIGNATURE → server unlocks (PAYMENT-RESPONSE). X-PAYMENT is the legacy V1 name.",
   },
   {
     id: "q3",
@@ -73,13 +73,26 @@ export const LOOP_QUIZ: readonly QuizQuestion[] = [
     prompt: "Which field style does x402 v2 prefer for network identity?",
     choices: [
       "Only the string “solana”",
-      "CAIP-2 network ids (e.g. solana:…)",
+      "CAIP-2 network ids (e.g. solana:… / eip155:…)",
       "IP addresses of validators",
       "Twitter handles",
     ],
     answer: 1,
     explain:
-      "v2 uses CAIP-2 network identifiers. Good servers keep legacy mirrors so older clients still work.",
+      "v2 uses CAIP-2. Solana mainnet is solana:5eykt4UsFv8P8NJdTREpY1vzqKqZKvdp; Devnet is solana:EtWTRABZaYq6iMfeYKouRu166VU2xqa1.",
+  },
+  {
+    id: "q5b",
+    prompt: "What is the canonical V2 header for a client retry after a 402?",
+    choices: [
+      "X-PAYMENT (that is the legacy V1 name)",
+      "PAYMENT-SIGNATURE",
+      "Authorization: Bearer",
+      "X-API-KEY",
+    ],
+    answer: 1,
+    explain:
+      "docs.x402.org: PAYMENT-REQUIRED on the 402, PAYMENT-SIGNATURE on the retry, PAYMENT-RESPONSE on settlement. X-PAYMENT is V1.",
   },
   {
     id: "q6",

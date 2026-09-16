@@ -37,13 +37,26 @@ function GuidePage() {
         <pre className="not-prose overflow-x-auto rounded-[var(--radius-lg)] border border-border bg-surface p-4 text-sm">
           <code>curl -i https://your-api.example/api/premium</code>
         </pre>
-        <p>A healthy x402 endpoint answers with:</p>
+        <p>A healthy x402 V2 endpoint answers with:</p>
         <ul>
           <li>Status <strong>402</strong>, not 200</li>
-          <li>Readable payment details in the body</li>
-          <li>A clear price</li>
-          <li>A valid <code>payTo</code> address</li>
-          <li>The correct network</li>
+          <li>
+            Header <code>PAYMENT-REQUIRED</code> — base64 JSON PaymentRequired
+            (canonical wire location per{" "}
+            <a href="https://docs.x402.org/core-concepts/http-402" className="link-readable">
+              docs.x402.org
+            </a>
+            )
+          </li>
+          <li>
+            Readable payment details (often also in the JSON body): amount, CAIP-2{" "}
+            <code>network</code>, <code>asset</code>, <code>payTo</code>,{" "}
+            <code>scheme</code>
+          </li>
+          <li>
+            Production Solana: <code>scheme: "exact"</code> and USDC mint{" "}
+            <code>EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v</code> (6 decimals)
+          </li>
         </ul>
 
         <h2>How to read the response</h2>
@@ -81,9 +94,11 @@ function GuidePage() {
 
         <h2>After a real payment</h2>
         <p>
-          Once payment works, test the retry: call the same URL again with the payment
-          proof attached, and confirm you get a 200 with the resource. Then try reusing
-          the same proof a second time. If replay protection is working, the reused proof
+          Once payment works, test the retry: call the same URL again with{" "}
+          <code>PAYMENT-SIGNATURE</code> (canonical V2; legacy name{" "}
+          <code>X-PAYMENT</code>) and confirm you get a 200 with the resource and
+          typically a <code>PAYMENT-RESPONSE</code> header. Then try reusing the same
+          proof a second time. If replay protection is working, the reused proof
           should be rejected. That check matters, because it is what stops one payment
           from unlocking a resource forever.
         </p>

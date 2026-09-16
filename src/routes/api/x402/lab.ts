@@ -7,6 +7,12 @@ import {
   PREMIUM_FACTS,
   verifyLabPayment,
 } from "@/lib/x402";
+import {
+  X402_CORS_ALLOW_HEADERS,
+  X402_CORS_EXPOSE_HEADERS,
+  X402_HEADER,
+  getPaymentSignatureHeader,
+} from "@/lib/x402-headers";
 
 /**
  * Example merchant wallet for the lab (valid base58 pubkey).
@@ -36,9 +42,8 @@ function json(data: unknown, status = 200, headers?: Record<string, string>) {
     headers: {
       "content-type": "application/json; charset=utf-8",
       "access-control-allow-origin": "*",
-      "access-control-allow-headers":
-        "Content-Type, X-PAYMENT, PAYMENT-SIGNATURE",
-      "access-control-expose-headers": "X-PAYMENT-RESPONSE, PAYMENT-RESPONSE",
+      "access-control-allow-headers": X402_CORS_ALLOW_HEADERS,
+      "access-control-expose-headers": X402_CORS_EXPOSE_HEADERS,
       ...headers,
     },
   });
@@ -56,17 +61,12 @@ export const Route = createFileRoute("/api/x402/lab")({
           headers: {
             "access-control-allow-origin": "*",
             "access-control-allow-methods": "GET, OPTIONS",
-            "access-control-allow-headers":
-              "Content-Type, X-PAYMENT, PAYMENT-SIGNATURE",
+            "access-control-allow-headers": X402_CORS_ALLOW_HEADERS,
           },
         }),
 
       GET: async ({ request }) => {
-        const paymentHeader =
-          request.headers.get("x-payment") ??
-          request.headers.get("X-PAYMENT") ??
-          request.headers.get("payment-signature") ??
-          request.headers.get("PAYMENT-SIGNATURE");
+        const paymentHeader = getPaymentSignatureHeader(request);
 
         if (!paymentHeader) {
           const requirements = createPaymentRequirements(LAB_PAY_TO);
@@ -81,12 +81,16 @@ export const Route = createFileRoute("/api/x402/lab")({
               },
             };
           }
-          return json(requirements, 402, {
-            "PAYMENT-REQUIRED": Buffer.from(
-              JSON.stringify(requirements),
-              "utf8",
-            ).toString("base64"),
-          });
+          return json(
+            requirements,
+            402,
+            {
+              [X402_HEADER.required]: Buffer.from(
+                JSON.stringify(requirements),
+                "utf8",
+              ).toString("base64"),
+            },
+          );
         }
 
         try {
@@ -143,16 +147,16 @@ export const Route = createFileRoute("/api/x402/lab")({
               title: "Premium unlock successful",
               fact,
               whyYouGotThis:
-                "You completed the x402 loop: 402 challenge → signed payment → retry with proof → 200 resource.",
+                "You completed the x402 loop: 402 + PAYMENT-REQUIRED → signed payment → retry with PAYMENT-SIGNATURE → 200 + PAYMENT-RESPONSE.",
               payment: paymentResponse,
             },
             200,
             {
-              "X-PAYMENT-RESPONSE": Buffer.from(
+              [X402_HEADER.response]: Buffer.from(
                 JSON.stringify(paymentResponse),
                 "utf8",
               ).toString("base64"),
-              "PAYMENT-RESPONSE": Buffer.from(
+              [X402_HEADER.responseLegacy]: Buffer.from(
                 JSON.stringify(paymentResponse),
                 "utf8",
               ).toString("base64"),
@@ -161,7 +165,7 @@ export const Route = createFileRoute("/api/x402/lab")({
         } catch (err) {
           const message =
             err instanceof Error ? err.message : "Invalid payment header";
-          return json({ error: "Malformed X-PAYMENT header", message }, 400);
+          return json({ error: "Malformed PAYMENT-SIGNATURE header", message }, 400);
         }
       },
     },

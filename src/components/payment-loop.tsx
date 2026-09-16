@@ -214,8 +214,9 @@ export function PaymentLoop() {
             Call{" "}
             <code className="text-fg">{X402_RESOURCE_PATH}</code> without a
             payment header. A correct educational endpoint answers{" "}
-            <strong className="text-fg">HTTP 402</strong> with machine-readable
-            requirements — not a login page.
+            <strong className="text-fg">HTTP 402</strong> with{" "}
+            <code className="text-fg">PAYMENT-REQUIRED</code> (canonical V2) and
+            machine-readable requirements — not a login page.
           </p>
           <Button disabled={busy} onClick={() => void fetchLab()}>
             {busy ? (
@@ -299,7 +300,7 @@ export function PaymentLoop() {
             {(
               [
                 ["amount", "I see the amount"],
-                ["network", "I see the network (CAIP-2 or legacy)"],
+                ["network", "I see the CAIP-2 network (solana:…)"],
                 ["asset", "I see the asset"],
                 ["payTo", "I see payTo"],
               ] as const
@@ -348,7 +349,7 @@ export function PaymentLoop() {
               [
                 ["request", "1. Client requests a protected resource"],
                 ["pay", "2. Client pays only after showing amount/network/asset/payTo"],
-                ["retry", "3. Client retries with payment proof header"],
+                ["retry", "3. Client retries with PAYMENT-SIGNATURE (legacy: X-PAYMENT)"],
                 ["unlock", "4. Server verifies and returns the resource"],
               ] as const
             ).map(([key, label]) => (

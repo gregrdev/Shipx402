@@ -36,6 +36,15 @@ function GuidePage() {
         <ul>
           <li>
             <strong>
+              <a href="/site.txt" className="link-readable">
+                /site.txt
+              </a>
+            </strong>{" "}
+            — first fetch for agents: full public digest (tools, guides, APIs, V2
+            headers).
+          </li>
+          <li>
+            <strong>
               <a href="/llms.txt" className="link-readable">
                 /llms.txt
               </a>
@@ -58,9 +67,13 @@ function GuidePage() {
           </li>
           <li>
             <strong>
-              <code>/.well-known/x402</code>
+              <a href="/.well-known/x402" className="link-readable">
+                /.well-known/x402
+              </a>
             </strong>{" "}
-            — list payable resources for x402-aware crawlers.
+            — JSON capability manifest (<code>application/json</code>). Alias:{" "}
+            <code>/.well-known/x402.json</code>. Lists payable resources for
+            x402-aware crawlers.
           </li>
           <li>
             <strong>Live 402 endpoints</strong> — e.g. lab and donate — so agents can

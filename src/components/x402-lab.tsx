@@ -115,7 +115,7 @@ export function X402Lab({
         step: 2,
         label: "Server returned Payment Required",
         detail:
-          "HTTP 402 with v2 envelope (top-level resource, CAIP-2 network, amount) + legacy mirrors.",
+          "HTTP 402 with PAYMENT-REQUIRED (canonical V2) plus v2 JSON envelope (top-level resource, CAIP-2 network, amount).",
         status: unpaid.status,
         body: unpaidJson,
       });
@@ -146,7 +146,7 @@ export function X402Lab({
       push({
         step: 4,
         label: "Retry with proof",
-        detail: "GET same URL with X-PAYMENT + PAYMENT-SIGNATURE headers (base64 proof).",
+        detail: "GET same URL with PAYMENT-SIGNATURE (canonical V2). Also send legacy X-PAYMENT so older servers still unlock.",
       });
       setLiveStep(4);
       await delay(350);
@@ -154,8 +154,8 @@ export function X402Lab({
       const paid = await fetch(X402_RESOURCE_PATH, {
         method: "GET",
         headers: {
-          "X-PAYMENT": paymentHeader,
           "PAYMENT-SIGNATURE": paymentHeader,
+          "X-PAYMENT": paymentHeader,
         },
       });
       const paidJson = (await paid.json()) as {

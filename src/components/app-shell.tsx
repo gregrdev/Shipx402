@@ -26,7 +26,7 @@ export function AppShell() {
             <BrandMark showDomain size="md" />
           </Link>
           <nav className="flex flex-wrap items-center gap-3 text-sm">
-            <Link to="/learn" hash="learn-x402" className="text-muted hover:text-fg">
+            <Link to="/learn" hash="path" className="text-muted hover:text-fg">
               Learn x402
             </Link>
             <Link to="/agents" className="text-muted hover:text-fg">
@@ -57,7 +57,7 @@ export function AppShell() {
             <Link to="/" className="text-muted hover:text-fg">
               {BRAND.domain}
             </Link>
-            <Link to="/learn" hash="learn-x402" className="text-muted hover:text-fg">
+            <Link to="/learn" hash="path" className="text-muted hover:text-fg">
               Learn x402
             </Link>
             <a href="/llms.txt" className="text-muted hover:text-fg">

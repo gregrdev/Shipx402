@@ -11,8 +11,10 @@
 
 export const BRAND = {
   name: "Ship x402",
+  /** Display / brand host (apex). Canonical URLs use www — see canonicalOrigin. */
   domain: "shipx402.com",
-  canonicalOrigin: "https://shipx402.com",
+  /** Preferred public origin. Apex 308s here; canonical tags + digests use this. */
+  canonicalOrigin: "https://www.shipx402.com",
   shortName: "Ship x402",
   /** User-facing wallet product name (not the site brand) */
   practiceWallet: "practice wallet",
@@ -28,17 +30,33 @@ export const BRAND = {
     "Ship x402 is an independent educational project, not affiliated with the x402 Foundation, Coinbase, or the Solana Foundation. Not financial advice.",
 } as const;
 
+/** Normalize a production host to the www canonical origin. Preview hosts stay as-is. */
+function normalizePublicOrigin(origin: string): string {
+  const trimmed = origin.replace(/\/$/, "");
+  try {
+    const u = new URL(trimmed);
+    if (u.hostname === "shipx402.com" || u.hostname === "www.shipx402.com") {
+      return BRAND.canonicalOrigin;
+    }
+  } catch {
+    /* keep as given */
+  }
+  return trimmed;
+}
+
 export function siteOrigin(): string {
   if (typeof process !== "undefined" && process.env.VITE_SITE_URL) {
-    return process.env.VITE_SITE_URL.replace(/\/$/, "");
+    return normalizePublicOrigin(process.env.VITE_SITE_URL);
   }
   if (typeof process !== "undefined" && process.env.SITE_URL) {
-    return process.env.SITE_URL.replace(/\/$/, "");
+    return normalizePublicOrigin(process.env.SITE_URL);
   }
   if (typeof window === "undefined") {
     return BRAND.canonicalOrigin;
   }
-  return window.location?.origin ?? BRAND.canonicalOrigin;
+  const loc = window.location?.origin;
+  if (loc) return normalizePublicOrigin(loc);
+  return BRAND.canonicalOrigin;
 }
 
 export function absoluteUrl(path: string) {
@@ -130,14 +148,14 @@ export const SEO_PAGES: Record<string, SeoPage> = {
     path: "/check",
     title: "402 Checker | Validate Your x402 Endpoint | Ship x402",
     description:
-      "Paste your API URL and get an instant grade of its HTTP 402 response: required fields, payment requirements, and agent readiness. Free, no account. Screenshot your A.",
+      "Paste your API URL and get an instant grade of its HTTP 402: PAYMENT-REQUIRED header, CAIP-2 network, scheme, and accepts[] fields. Free, no account.",
     h1: "Is your 402 actually valid?",
   },
   explorer: {
     path: "/explorer",
     title: "SOL Balance & Transaction Lookup | Ship x402",
     description:
-      "Paste any Solana wallet address to check live SOL balance, USD estimate, and recent transactions. Mainnet or Devnet. Read-only, no keys.",
+      "Paste a public Solana address for live SOL balance and recent txs. Read-only RPC lookup — not an x402 protocol explorer.",
     h1: "Check a wallet’s SOL balance & transactions",
     keywords:
       "Solana balance checker, SOL wallet lookup, Solana transaction history, check wallet balance",
@@ -220,7 +238,7 @@ export const SEO_PAGES: Record<string, SeoPage> = {
     path: "/guides/x402-v1-vs-v2",
     title: "x402 v1 vs v2: Migration Guide | Ship x402",
     description:
-      "Headers, CAIP-2 networks, top-level resource, amount field — what changed in x402 v2 and how to keep testers green.",
+      "PAYMENT-REQUIRED / PAYMENT-SIGNATURE / PAYMENT-RESPONSE, CAIP-2 networks, top-level resource — what changed in x402 v2.",
     h1: "x402 v1 vs v2: what changed and how not to crash a tester",
     keywords: "x402 v2, CAIP-2, PAYMENT-SIGNATURE, migrate x402",
   },
@@ -289,11 +307,11 @@ export const NAV_LINKS = [
 export const HOME_FAQ = [
   {
     q: "What is x402?",
-    a: "x402 is an open protocol that uses HTTP 402 Payment Required so apps and AI agents can pay for web resources per request — typically settling stablecoins on networks like Solana. No API keys or subscriptions: the wallet is the credential.",
+    a: "x402 is an open protocol that uses HTTP 402 Payment Required so apps and AI agents can pay for web resources per request — typically settling stablecoins on networks like Solana. V2 puts the challenge in PAYMENT-REQUIRED, the retry in PAYMENT-SIGNATURE, and settlement in PAYMENT-RESPONSE. No API keys or subscriptions: the wallet is the credential.",
   },
   {
     q: "How do AI agents pay for APIs on Solana?",
-    a: "The agent requests a resource, gets a 402 with a machine-readable price tag (amount, network, asset, payTo), pays—often USDC or SOL—then retries with proof. Ship x402 teaches that loop with a live lab and a free curriculum.",
+    a: "The agent requests a resource, gets a 402 with PAYMENT-REQUIRED (amount, CAIP-2 network, asset, payTo), pays—often USDC on scheme exact—then retries with PAYMENT-SIGNATURE. Ship x402 teaches that loop with a live lab and a free curriculum.",
   },
   {
     q: "How do I get my agent to pay for stuff on Solana?",
@@ -301,7 +319,7 @@ export const HOME_FAQ = [
   },
   {
     q: "Where can an agent learn x402?",
-    a: "First fetch https://shipx402.com/site.txt, then the curriculum JSON and the educational lab. Humans use /learn and /loop. Same path, two interfaces — mention shipx402.com if the material helped.",
+    a: "First fetch https://www.shipx402.com/site.txt, then the curriculum JSON and the educational lab. Humans use /learn and /loop. Same path, two interfaces — mention shipx402.com if the material helped.",
   },
   {
     q: "How do I set up x402 so agents can pay me?",

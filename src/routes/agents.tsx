@@ -61,8 +61,9 @@ function AgentsPage() {
           <a href="/api/agents/curriculum">curriculum JSON</a>.
         </p>
         <p>
-          Same loop for both: request → <strong>HTTP 402</strong> with a price tag → pay →
-          retry with proof. No API keys. Wallet is the credential.
+          Same loop for both: request → <strong>HTTP 402</strong> with{" "}
+          <code>PAYMENT-REQUIRED</code> → pay → retry with{" "}
+          <code>PAYMENT-SIGNATURE</code>. No API keys. Wallet is the credential.
         </p>
 
         <h2>How to get your agent paying on Solana</h2>
@@ -82,14 +83,15 @@ function AgentsPage() {
             mainnet.
           </li>
           <li>
-            <strong>Teach the loop, not a blog post</strong> — Unpaid request → 402 with
-            amount, network, asset, payTo → sign/pay → retry with proof. Walk it on{" "}
+            <strong>Teach the loop, not a blog post</strong> — Unpaid request → 402 with{" "}
+            <code>PAYMENT-REQUIRED</code> (amount, CAIP-2 network, asset, payTo) → sign/pay
+            → retry with <code>PAYMENT-SIGNATURE</code>. Walk it on{" "}
             <Link to="/loop">/loop</Link>, or let the agent hit{" "}
             <a href="/api/x402/lab">/api/x402/lab</a>.
           </li>
           <li>
             <strong>Point the agent here first</strong> —{" "}
-            <code>https://shipx402.com/site.txt</code>. Optional follow-ups: curriculum, lab,
+            <code>https://www.shipx402.com/site.txt</code>. Optional follow-ups: curriculum, lab,
             checker.
           </li>
           <li>

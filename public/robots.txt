@@ -2,12 +2,12 @@ User-agent: *
 Allow: /
 
 # AI agents are welcome — this site is built for you.
-# FIRST FETCH:  https://shipx402.com/site.txt
-# Same digest:  https://shipx402.com/api/agents/digest
-# JSON catalog: https://shipx402.com/api/agents/site
-# Curriculum:   https://shipx402.com/api/agents/curriculum
-# Lab 402:      https://shipx402.com/api/x402/lab
-# Donate 402:   https://shipx402.com/api/x402/donate
-# Tools UI:     https://shipx402.com/tools
+# FIRST FETCH:  https://www.shipx402.com/site.txt
+# Same digest:  https://www.shipx402.com/api/agents/digest
+# JSON catalog: https://www.shipx402.com/api/agents/site
+# Curriculum:   https://www.shipx402.com/api/agents/curriculum
+# Lab 402:      https://www.shipx402.com/api/x402/lab
+# Donate 402:   https://www.shipx402.com/api/x402/donate
+# Tools UI:     https://www.shipx402.com/tools
 
-Sitemap: https://shipx402.com/sitemap.xml
+Sitemap: https://www.shipx402.com/sitemap.xml

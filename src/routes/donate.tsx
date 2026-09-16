@@ -63,7 +63,8 @@ function DonatePage() {
               <code className="text-fg">payTo</code> (suggested 0.01–0.25)
             </li>
             <li>
-              Retry with <code className="text-fg">X-PAYMENT</code> proof
+              Retry with <code className="text-fg">PAYMENT-SIGNATURE</code> proof
+              (legacy alias <code className="text-fg">X-PAYMENT</code>)
             </li>
             <li>
               Server verifies on-chain → 200 receipt (

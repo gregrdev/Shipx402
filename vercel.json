@@ -16,6 +16,45 @@
         },
         { "key": "Cross-Origin-Opener-Policy", "value": "same-origin" }
       ]
+    },
+    {
+      "source": "/.well-known/x402",
+      "headers": [
+        { "key": "Content-Type", "value": "application/json; charset=utf-8" },
+        { "key": "Access-Control-Allow-Origin", "value": "*" },
+        { "key": "Cache-Control", "value": "public, max-age=300" }
+      ]
+    },
+    {
+      "source": "/.well-known/x402.json",
+      "headers": [
+        { "key": "Content-Type", "value": "application/json; charset=utf-8" },
+        { "key": "Access-Control-Allow-Origin", "value": "*" },
+        { "key": "Cache-Control", "value": "public, max-age=300" }
+      ]
+    }
+  ],
+  "redirects": [
+    {
+      "source": "/:path*",
+      "has": [{ "type": "host", "value": "shipx402.com" }],
+      "destination": "https://www.shipx402.com/:path*",
+      "permanent": true
+    },
+    { "source": "/docs", "destination": "/learn", "permanent": true },
+    { "source": "/docs/:path*", "destination": "/guides/:path*", "permanent": true },
+    { "source": "/llms", "destination": "/llms.txt", "permanent": true },
+    { "source": "/site", "destination": "/site.txt", "permanent": true },
+    {
+      "source": "/api/agents/digest.txt",
+      "destination": "/api/agents/digest",
+      "permanent": true
+    }
+  ],
+  "rewrites": [
+    {
+      "source": "/.well-known/x402",
+      "destination": "/.well-known/x402.json"
     }
   ]
 }

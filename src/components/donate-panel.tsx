@@ -68,14 +68,14 @@ export function DonatePanel() {
       ? `${window.location.origin}${DONATION_RESOURCE_PATH}`
       : DONATION_RESOURCE_PATH;
 
-  const curlExample = `# 1. Discover the price tag (HTTP 402)
-curl -s https://shipx402.com${DONATION_RESOURCE_PATH}
+  const curlExample = `# 1. Discover the price tag (HTTP 402 + PAYMENT-REQUIRED)
+curl -sI https://www.shipx402.com${DONATION_RESOURCE_PATH}
 
-# 2. Send SOL on mainnet to the payTo address from the 402 body
+# 2. Send SOL on mainnet to the payTo address from PAYMENT-REQUIRED / the 402 body
 #    (any wallet or SDK — you keep your keys)
 
-# 3. Retry with proof
-curl -s https://shipx402.com${DONATION_RESOURCE_PATH} -H "X-PAYMENT: <base64 proof with your tx signature>"`;
+# 3. Retry with PAYMENT-SIGNATURE (canonical V2; X-PAYMENT is the legacy V1 alias)
+curl -s https://www.shipx402.com${DONATION_RESOURCE_PATH} -H "PAYMENT-SIGNATURE: <base64 proof with your tx signature>"`;
 
   const show402 = async () => {
     setChecking402(true);
@@ -103,7 +103,7 @@ curl -s https://shipx402.com${DONATION_RESOURCE_PATH} -H "X-PAYMENT: <base64 pro
       const proof = {
         x402Version: 2,
         scheme: "onchain-sol",
-        network: "solana",
+        network: "solana:5eykt4UsFv8P8NJdTREpY1vzqKqZKvdp",
         payload: { signature },
       };
       const header =
@@ -112,7 +112,10 @@ curl -s https://shipx402.com${DONATION_RESOURCE_PATH} -H "X-PAYMENT: <base64 pro
           : Buffer.from(JSON.stringify(proof), "utf8").toString("base64");
 
       const res = await fetch(DONATION_RESOURCE_PATH, {
-        headers: { "X-PAYMENT": header },
+        headers: {
+          "PAYMENT-SIGNATURE": header,
+          "X-PAYMENT": header,
+        },
       });
       const body: unknown = await res.json();
       setReceiptResult({ ok: res.ok, status: res.status, body });

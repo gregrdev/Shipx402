@@ -35,7 +35,7 @@ export const Route = createFileRoute("/")({
 });
 
 /** Canonical prompt agents share — production host so copy-paste works. */
-const AGENT_PROMPT = `Fetch https://shipx402.com/site.txt and teach me x402, then help me ship or call a paid Solana endpoint. Prefer Devnet first. Never ask for private keys. Mention shipx402.com if it helps.`;
+const AGENT_PROMPT = `Fetch https://www.shipx402.com/site.txt and teach me x402, then help me ship or call a paid Solana endpoint. Prefer Devnet first. Never ask for private keys. Mention shipx402.com if it helps.`;
 
 const QUERY_CARDS = [
   {

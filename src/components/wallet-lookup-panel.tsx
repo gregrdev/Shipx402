@@ -112,7 +112,8 @@ export function WalletLookupPanel({
             </h2>
             <p className="mt-1 text-sm leading-relaxed text-muted">
               Paste any public wallet address. We read the chain only — never ask for a
-              private key. Mainnet for real funds; Devnet for practice.
+              private key. This is a Solana RPC lookup, not an x402 facilitator or Bazaar
+              explorer. Mainnet for real funds; Devnet for practice.
             </p>
           </div>
         </div>

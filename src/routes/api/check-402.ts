@@ -18,7 +18,7 @@ const RATE_WINDOW_MS = 60_000;
 const MAX_BODY = 256 * 1024;
 const TIMEOUT_MS = 10_000;
 const MAX_REDIRECTS = 2;
-const UA = "ShipX402-Checker/1.0 (+https://shipx402.com/check)";
+const UA = "ShipX402-Checker/1.0 (+https://www.shipx402.com/check)";
 
 function clientIp(request: Request) {
   return (
