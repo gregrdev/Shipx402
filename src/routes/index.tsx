@@ -123,7 +123,7 @@ function HomePage() {
               <Copy className="size-4" />
               {copied ? "Copied" : "Copy agent prompt"}
             </Button>
-            <Button asChild size="lg" variant="outline">
+            <Button asChild size="lg" variant="secondary">
               <a
                 href="https://www.shipx402.com/site.txt"
                 target="_blank"
