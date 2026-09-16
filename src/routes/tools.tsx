@@ -294,7 +294,7 @@ function ToolsPage() {
           </div>
         </Section>
       </div>
-        <SupportNudge className="mt-10" quiet />
+        <SupportNudge className="mt-10" compact />
     </SiteChrome>
   );
 }

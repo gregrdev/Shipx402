@@ -9,12 +9,9 @@ import { cn } from "@/lib/utils";
 export function SupportNudge({
   className,
   compact = false,
-  quiet = false,
 }: {
   className?: string;
   compact?: boolean;
-  /** Tools/Home-style: border-border surface, outline CTA — not filled primary. */
-  quiet?: boolean;
 }) {
   if (compact) {
     return (
@@ -39,21 +36,13 @@ export function SupportNudge({
   return (
     <aside
       className={cn(
-        "not-prose rounded-[var(--radius-xl)] p-5 sm:p-6",
-        quiet
-          ? "border border-border bg-surface"
-          : "border border-primary/20 bg-primary/5",
+        "not-prose rounded-[var(--radius-xl)] border border-primary/20 bg-primary/5 p-5 sm:p-6",
         className,
       )}
       aria-label="Optional support"
     >
       <div className="flex items-start gap-3">
-        <div
-          className={cn(
-            "mt-0.5 flex size-9 shrink-0 items-center justify-center rounded-[var(--radius-sm)]",
-            quiet ? "bg-surface-2 text-muted" : "bg-primary/15 text-primary",
-          )}
-        >
+        <div className="mt-0.5 flex size-9 shrink-0 items-center justify-center rounded-[var(--radius-sm)] bg-primary/15 text-primary">
           <Heart className="size-4" aria-hidden />
         </div>
         <div className="min-w-0 space-y-2">
@@ -67,12 +56,7 @@ export function SupportNudge({
           </p>
           <Link
             to="/donate"
-            className={cn(
-              "chip inline-flex items-center gap-2 px-4 py-2 text-sm font-semibold no-underline transition-colors",
-              quiet
-                ? "border border-border bg-surface text-fg hover:border-border-strong hover:bg-surface-2"
-                : "bg-primary text-primary-fg shadow-[0_0_18px_-8px_color-mix(in_oklab,var(--color-rgb-g)_55%,transparent)] hover:bg-primary/90",
-            )}
+            className="chip inline-flex items-center gap-2 bg-primary px-4 py-2 text-sm font-semibold text-primary-fg no-underline shadow-[0_0_18px_-8px_color-mix(in_oklab,var(--color-rgb-g)_55%,transparent)] transition-colors hover:bg-primary/90"
           >
             <Heart className="size-3.5" aria-hidden />
             Tip what it's worth
