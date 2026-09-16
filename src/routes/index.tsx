@@ -1,14 +1,18 @@
+import { useState } from "react";
 import { createFileRoute, Link } from "@tanstack/react-router";
 import {
   ArrowRight,
+  Copy,
   Rocket,
   Search,
   Wrench,
 } from "lucide-react";
+import { toast } from "sonner";
 import { SiteChrome } from "@/components/site-chrome";
 import { WalletFast } from "@/components/wallet-fast";
 import { ContinueChip } from "@/components/continue-chip";
 import { HOME_FAQ, SEO_PAGES } from "@/lib/brand";
+import { AGENT_PROMPT } from "@/lib/learn-progress";
 import {
   pageHead,
   orgJsonLd,
@@ -16,6 +20,8 @@ import {
   softwareAppJsonLd,
   faqPageJsonLd,
 } from "@/lib/seo";
+import { Button } from "@/components/ui/button";
+import { copyText } from "@/lib/utils";
 
 export const Route = createFileRoute("/")({
   component: HomePage,
@@ -27,10 +33,19 @@ export const Route = createFileRoute("/")({
 });
 
 function HomePage() {
+  const [copied, setCopied] = useState(false);
+
+  const copyPrompt = async () => {
+    await copyText(AGENT_PROMPT);
+    setCopied(true);
+    toast.success("Agent prompt copied — paste it into Claude, Grok, or Cursor");
+    window.setTimeout(() => setCopied(false), 2000);
+  };
+
   return (
     <SiteChrome activePath="/">
       <div className="space-y-8 animate-fade-up">
-        <section className="mx-auto max-w-2xl space-y-3 py-2 text-center">
+        <section className="mx-auto max-w-4xl space-y-3 py-2 text-center">
           <h1 className="text-balance text-3xl font-semibold tracking-tight text-fg sm:text-4xl sm:leading-[1.15]">
             {SEO_PAGES.home.h1}
           </h1>
@@ -52,11 +67,22 @@ function HomePage() {
 
         <WalletFast />
 
-        <p className="text-center">
-          <a href="#wallet-fast" className="link-readable text-sm font-medium">
-            Open the agent path
-          </a>
-        </p>
+        <div className="flex flex-wrap items-center gap-2">
+          <Button size="sm" variant="secondary" onClick={() => void copyPrompt()}>
+            <Copy className="size-3.5" />
+            {copied ? "Copied" : "Copy agent prompt"}
+          </Button>
+          <Button asChild size="sm" variant="outline">
+            <a
+              href="https://www.shipx402.com/site.txt"
+              target="_blank"
+              rel="noreferrer"
+            >
+              Open site.txt
+              <ArrowRight className="size-3.5" />
+            </a>
+          </Button>
+        </div>
 
         <section
           id="learn-fast"
@@ -76,7 +102,7 @@ function HomePage() {
               1. What Is x402
             </Link>
             <Link to="/loop" className="link-readable text-sm font-medium">
-              2. Walk the loop
+              2. Walk the Loop
             </Link>
             <Link to="/learn" className="text-sm text-subtle hover:text-muted">
               Full

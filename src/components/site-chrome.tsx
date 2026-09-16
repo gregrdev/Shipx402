@@ -40,8 +40,6 @@ export function SiteChrome({
         </div>
       </div>
 
-      <div className="rgb-nav-hairline" aria-hidden="true" />
-
       <div className="relative">
         <div
           className="pointer-events-none absolute inset-0 z-0 overflow-hidden"
@@ -53,7 +51,7 @@ export function SiteChrome({
           </div>
         </div>
 
-      <header className="sticky top-0 z-40 border-b border-border/70 bg-bg/85 backdrop-blur-md">
+      <header className="sticky top-0 z-40 bg-bg/85 backdrop-blur-md">
         <div className="mx-auto flex max-w-6xl flex-wrap items-center justify-between gap-3 px-4 py-3.5 sm:px-6">
           <Link to="/" className="no-underline" aria-label="Ship x402 home">
             <BrandMark showDomain size="md" />
@@ -91,6 +89,7 @@ export function SiteChrome({
             </Link>
           </nav>
         </div>
+        <div className="rgb-nav-hairline" aria-hidden="true" />
       </header>
 
       <main
