@@ -267,7 +267,7 @@ function AgentsPage() {
 
         <div className="not-prose mt-8 flex flex-wrap gap-3">
           <Button asChild>
-            <a href="/site.txt">Open site.txt</a>
+            <a href="https://www.shipx402.com/site.txt">Open site.txt</a>
           </Button>
           <Button asChild variant="secondary">
             <a href="/api/agents/curriculum">Open curriculum JSON</a>

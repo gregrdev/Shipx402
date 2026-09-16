@@ -41,27 +41,25 @@ function GuidePage() {
           Read headers first, then the body. Headers carry the machine contract; the body
           should match.
         </p>
-        <p>A healthy unpaid 402 answers with:</p>
+        <p>Unpaid 402 — endpoint answers with:</p>
         <ul>
-          <li>Status <strong>402</strong>, not 200</li>
+          <li>Status 402, not 200</li>
           <li>
-            Header <code>PAYMENT-REQUIRED</code> — base64 JSON PaymentRequired
-            (canonical wire location per{" "}
-            <a href="https://docs.x402.org/core-concepts/http-402" className="link-readable">
-              docs.x402.org
-            </a>
-            )
+            Header: <code>PAYMENT-REQUIRED</code> (V2; may mirror older shapes)
           </li>
-          <li>
-            Readable payment details (often also in the JSON body): amount, CAIP-2{" "}
-            <code>network</code>, <code>asset</code>, <code>payTo</code>,{" "}
-            <code>scheme</code>
-          </li>
-          <li>
-            Production Solana: <code>scheme: "exact"</code> and USDC mint{" "}
-            <code>EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v</code> (6 decimals)
-          </li>
+          <li>Body: clear price, valid payTo, correct network</li>
         </ul>
+        <p>
+          Canonical V2: <code>PAYMENT-REQUIRED</code> is base64 JSON PaymentRequired (
+          <a href="https://docs.x402.org/core-concepts/http-402" className="link-readable">
+            docs.x402.org
+          </a>
+          ). Body fields should match the header: amount, CAIP-2{" "}
+          <code>network</code>, <code>asset</code>, <code>payTo</code>,{" "}
+          <code>scheme</code>. Production Solana uses <code>scheme: "exact"</code> and
+          USDC mint <code>EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v</code> (6
+          decimals).
+        </p>
 
         <h2>How to read the response</h2>
         <p>When it is not 402, the status code is a clue:</p>
@@ -98,26 +96,23 @@ function GuidePage() {
 
         <h2>After a real payment</h2>
         <p>
-          Once payment works, test the retry on the same URL. A healthy after-pay
-          response looks like this:
+          Once payment works, test the retry on the same URL. After pay (client retry /
+          success — not under “answers with”):
         </p>
         <ul>
           <li>
-            Client retry header <code>PAYMENT-SIGNATURE</code> (canonical V2; legacy
-            name <code>X-PAYMENT</code>)
+            Client sends proof in <code>PAYMENT-SIGNATURE</code> (accept legacy{" "}
+            <code>X-PAYMENT</code> during migration)
           </li>
           <li>
-            Status <strong>200</strong> with the resource
-          </li>
-          <li>
-            Typically a <code>PAYMENT-RESPONSE</code> settlement header
-          </li>
-          <li>
-            Reusing the same proof a second time should be rejected if replay
-            protection is working — that check stops one payment from unlocking a
-            resource forever
+            Server may return <code>PAYMENT-RESPONSE</code> on success
           </li>
         </ul>
+        <p>
+          A successful retry is typically status <strong>200</strong> with the resource.
+          Reusing the same proof a second time should be rejected if replay protection
+          is working — that check stops one payment from unlocking a resource forever.
+        </p>
 
         <h2>Test on Devnet first</h2>
         <p>

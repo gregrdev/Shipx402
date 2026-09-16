@@ -56,7 +56,7 @@ function LearnPage() {
           </h1>
           <p className="text-lg leading-relaxed text-muted">
             One path from first concepts to agent-safe production, matching the
-            official docs.x402.org flow: what x402 is → buyer payment loop → wallet →
+            official docs.x402.org flow: what x402 is → first wallet → payment loop →
             V2 headers / CAIP-2 → facilitators → ship a paid route.
           </p>
           <ContinueChip />

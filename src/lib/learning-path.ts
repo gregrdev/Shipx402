@@ -1,6 +1,6 @@
 /**
  * Canonical beginner → advanced map for Ship x402.
- * Order matches docs.x402.org: intro → HTTP 402 / buyer loop → wallet →
+ * Beginner: intro → first wallet → payment loop (before RPC/tx) →
  * V2 headers & CAIP-2 → facilitator → seller path → agent safety.
  */
 
@@ -16,7 +16,7 @@ export type LearningItem = {
 };
 
 export const LEARNING_PATH: LearningItem[] = [
-  // Beginner — official intro + buyer quickstart + wallet
+  // Beginner — intro → wallet → payment loop (before RPC/tx)
   {
     level: "beginner",
     title: "What Is x402?",
@@ -25,15 +25,15 @@ export const LEARNING_PATH: LearningItem[] = [
   },
   {
     level: "beginner",
-    title: "The Payment Loop (Interactive)",
-    path: "/loop",
-    blurb: "Live 402 → PAYMENT-REQUIRED → pay → PAYMENT-SIGNATURE retry.",
-  },
-  {
-    level: "beginner",
     title: "Your First Solana Wallet",
     path: "/guides/first-solana-wallet",
     blurb: "Public vs private keys on Devnet — zero real risk.",
+  },
+  {
+    level: "beginner",
+    title: "The Payment Loop (Interactive)",
+    path: "/loop",
+    blurb: "Live 402 → PAYMENT-REQUIRED → pay → PAYMENT-SIGNATURE retry.",
   },
   {
     level: "beginner",
@@ -123,7 +123,7 @@ export const LEVEL_META: Record<
 > = {
   beginner: {
     label: "Beginner",
-    description: "What Is x402, the Payment Loop, then a practice wallet.",
+    description: "What Is x402, a practice wallet, then the Payment Loop.",
   },
   intermediate: {
     label: "Intermediate",

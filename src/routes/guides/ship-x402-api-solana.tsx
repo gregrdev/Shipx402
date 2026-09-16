@@ -163,21 +163,21 @@ app.listen(3000);`}</pre>
         <ol>
           <li>Switch to the mainnet network ID.</li>
           <li>
-            Switch to a production facilitator (for example{" "}
+            Switch to a production facilitator (for example Coinbase CDP at{" "}
             <a
-              href="https://docs.cdp.coinbase.com/x402"
+              href="https://api.cdp.coinbase.com/platform/v2/x402"
               className="link-readable"
             >
-              Coinbase CDP
+              https://api.cdp.coinbase.com/platform/v2/x402
             </a>{" "}
-            or{" "}
+            or PayAI at{" "}
             <a
               href="https://facilitator.payai.network"
               className="link-readable"
             >
-              PayAI
-            </a>
-            ).
+              https://facilitator.payai.network
+            </a>{" "}
+            — confirm both in current docs before production).
           </li>
           <li>Use your real receiving address.</li>
           <li>Test with a tiny amount first.</li>

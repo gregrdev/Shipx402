@@ -75,12 +75,12 @@ function GuidePage() {
             .
           </li>
           <li>
-            <strong>PayAI Facilitator:</strong>{" "}
+            <strong>PayAI Facilitator:</strong> a public facilitator popular for Solana
+            production traffic. Facilitator base URL:{" "}
             <a href="https://facilitator.payai.network" className="link-readable">
               https://facilitator.payai.network
             </a>{" "}
-            — multi-network, no API key required. Listed on the official facilitators
-            page.
+            — confirm in current PayAI docs before production.
           </li>
           <li>
             <strong>Others on the official list</strong> (examples: Corbits, Dexter,
