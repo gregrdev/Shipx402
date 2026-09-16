@@ -82,7 +82,7 @@ export const SEO_PAGES: Record<string, SeoPage> = {
     title: "Ship x402 | Your Agent Can Ship a Paid Solana API",
     description:
       "Paste site.txt into your agent and ship a paid Solana endpoint. Humans and AI agents learn the same x402 path — payment loop, 402 Checker, practice wallet, free curriculum.",
-    h1: "Your Agent Can Ship a Paid Solana API",
+    h1: "Your agent can ship a paid Solana API",
     keywords:
       "x402, Ship x402, Solana, pay per request, HTTP 402, agent payments, AI agent pay for APIs, site.txt, learn x402",
   },

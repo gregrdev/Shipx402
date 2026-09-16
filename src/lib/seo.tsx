@@ -55,7 +55,7 @@ export function orgJsonLd() {
     "@type": "Organization",
     name: BRAND.name,
     url: absoluteUrl("/"),
-    description: BRAND.tagline,
+    description: BRAND.closer,
   };
 }
 

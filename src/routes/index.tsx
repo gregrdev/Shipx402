@@ -116,7 +116,7 @@ function HomePage() {
             {
               icon: Wrench,
               title: "Grade Your 402",
-              body: "Free · no account.",
+              body: "Paste any API URL. Get an A–F grade for agent readiness. Free · no account.",
               to: "/check" as const,
               cta: "402 Checker",
             },
