@@ -22,7 +22,7 @@ export const WALLET_FAST_COPY = {
 
 function DevnetChip() {
   return (
-    <span className="chip inline-flex items-center border border-primary/35 bg-bg/70 px-2.5 py-0.5 font-mono text-[11px] font-semibold uppercase tracking-[0.12em] text-primary">
+    <span className="chip inline-flex items-center border border-primary/35 bg-bg/70 px-2.5 py-0.5 text-[11px] font-semibold tracking-wide text-primary">
       {WALLET_FAST_COPY.devnetChip}
     </span>
   );
