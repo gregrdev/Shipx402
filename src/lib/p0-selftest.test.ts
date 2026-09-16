@@ -19,6 +19,7 @@ import {
 } from "./verify-onchain-sol";
 import { signLabPayment, verifyLabPayment, X402_LAB_SCHEME } from "./x402";
 import { claimDonationSignatureOnce } from "./credited-sig-store";
+import { X402_CORS_EXPOSE_HEADERS } from "./http";
 
 const PAY_TO = DONATION_ADDRESS;
 const PAYER = generateWallet().publicKey;
@@ -274,4 +275,11 @@ test("claimDonationSignatureOnce is durable single-use on filesystem", async () 
     else process.env.UPSTASH_REDIS_REST_URL = prevUpstash;
     rmSync(dir, { recursive: true, force: true });
   }
+});
+
+test("CORS expose list includes Payment-Required twins so browser JS can read 402 challenge", () => {
+  assert.match(X402_CORS_EXPOSE_HEADERS, /\bPAYMENT-REQUIRED\b/);
+  assert.match(X402_CORS_EXPOSE_HEADERS, /\bPayment-Required\b/);
+  assert.match(X402_CORS_EXPOSE_HEADERS, /\bX-PAYMENT-RESPONSE\b/);
+  assert.match(X402_CORS_EXPOSE_HEADERS, /\bPAYMENT-RESPONSE\b/);
 });

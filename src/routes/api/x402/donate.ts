@@ -1,7 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { Connection, LAMPORTS_PER_SOL, clusterApiUrl } from "@solana/web3.js";
 import bs58 from "bs58";
-import { rejectMethods } from "@/lib/http";
+import { rejectMethods, X402_CORS_EXPOSE_HEADERS } from "@/lib/http";
 import {
   DONATION_ADDRESS,
   DONATION_CUSTOMARY_TIP_SOL,
@@ -74,7 +74,7 @@ function json(data: unknown, status = 200, headers?: Record<string, string>) {
       "content-type": "application/json; charset=utf-8",
       "access-control-allow-origin": "*",
       "access-control-allow-headers": "Content-Type, X-PAYMENT, PAYMENT-SIGNATURE",
-      "access-control-expose-headers": "X-PAYMENT-RESPONSE, PAYMENT-RESPONSE",
+      "access-control-expose-headers": X402_CORS_EXPOSE_HEADERS,
       ...headers,
     },
   });
@@ -178,6 +178,7 @@ export const Route = createFileRoute("/api/x402/donate")({
             "access-control-allow-methods": "GET, OPTIONS",
             "access-control-allow-headers":
               "Content-Type, X-PAYMENT, PAYMENT-SIGNATURE",
+            "access-control-expose-headers": X402_CORS_EXPOSE_HEADERS,
           },
         }),
 

@@ -7,6 +7,7 @@ import {
   PREMIUM_FACTS,
   verifyLabPayment,
 } from "@/lib/x402";
+import { rejectMethods, X402_CORS_EXPOSE_HEADERS } from "@/lib/http";
 
 /**
  * Example merchant wallet for the lab (valid base58 pubkey).
@@ -38,13 +39,11 @@ function json(data: unknown, status = 200, headers?: Record<string, string>) {
       "access-control-allow-origin": "*",
       "access-control-allow-headers":
         "Content-Type, X-PAYMENT, PAYMENT-SIGNATURE",
-      "access-control-expose-headers": "X-PAYMENT-RESPONSE, PAYMENT-RESPONSE",
+      "access-control-expose-headers": X402_CORS_EXPOSE_HEADERS,
       ...headers,
     },
   });
 }
-
-import { rejectMethods } from "@/lib/http";
 
 export const Route = createFileRoute("/api/x402/lab")({
   server: {
@@ -58,6 +57,7 @@ export const Route = createFileRoute("/api/x402/lab")({
             "access-control-allow-methods": "GET, OPTIONS",
             "access-control-allow-headers":
               "Content-Type, X-PAYMENT, PAYMENT-SIGNATURE",
+            "access-control-expose-headers": X402_CORS_EXPOSE_HEADERS,
           },
         }),
 
