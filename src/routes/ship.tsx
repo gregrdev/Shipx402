@@ -36,9 +36,24 @@ function ShipPage() {
             price, paste payTo, copy install + middleware. Nothing you type leaves the
             browser.
           </p>
+          <p className="flex flex-wrap items-center gap-2 text-sm text-muted">
+            <a
+              href="https://www.shipx402.com/guides/first-solana-wallet"
+              className="chip border border-border bg-bg px-2.5 py-1 text-xs font-medium text-muted no-underline hover:text-fg"
+            >
+              Devnet · practice network · free test money
+            </a>
+            <span>
+              Facilitator — Helper that verifies and settles x402 payments. Not a bank
+              — never needs your private key.
+            </span>
+          </p>
           <p className="text-sm text-muted">
-            Devnet is the practice chain with free test SOL — no real money. A
-            facilitator verifies and settles 402 payments (not the RPC, not the paywall).
+            <Link to="/guides/facilitators-explained" className="link-readable">
+              Test facilitator
+            </Link>{" "}
+            <code className="text-fg">https://x402.org/facilitator</code> = testnets
+            only. CDP / PayAI = production options we teach (not partners).
           </p>
           <Button asChild variant="secondary" size="sm">
             <Link to="/check">Have a URL? Run 402 Checker →</Link>

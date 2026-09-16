@@ -171,9 +171,14 @@ export function Welcome() {
             </div>
             <CardTitle className="text-xl">New wallet · Learn</CardTitle>
             <CardDescription className="text-base leading-relaxed">
-              Free Devnet practice (practice chain, free test SOL — no real money) with
-              full write-down ceremony and safety locks.
+              Free Devnet practice with full write-down ceremony and safety locks.
             </CardDescription>
+            <a
+              href="https://www.shipx402.com/guides/first-solana-wallet"
+              className="chip mt-2 inline-flex w-fit border border-border bg-bg px-2.5 py-1 text-xs font-medium text-muted no-underline hover:text-fg"
+            >
+              Devnet · practice network · free test money
+            </a>
           </CardHeader>
           <Button className="w-full" size="lg" onClick={() => start("devnet")}>
             Start learning

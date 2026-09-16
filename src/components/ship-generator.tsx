@@ -27,7 +27,11 @@ const FRAMEWORKS: { id: ShipFramework; label: string }[] = [
 
 const NETWORKS: { id: ShipNetwork; label: string; note?: string }[] = [
   { id: "solana-devnet", label: "Solana Devnet", note: "Free test money" },
-  { id: "solana", label: "Solana Mainnet" },
+  {
+    id: "solana",
+    label: "Solana Mainnet",
+    note: "Mainnet · real money · mistakes can’t be undone",
+  },
   { id: "base-sepolia", label: "Base Sepolia", note: "Optional" },
   { id: "base", label: "Base Mainnet", note: "Optional" },
 ];
@@ -172,7 +176,9 @@ export function ShipGenerator() {
         </div>
 
         <div>
-          <Label>Receiving wallet (payTo)</Label>
+          <Label htmlFor="ship-payto">
+            Receiving wallet (payTo) — address that receives the payment
+          </Label>
           <Input
             value={form.payTo}
             onChange={(e) => setForm((s) => ({ ...s, payTo: e.target.value }))}
@@ -182,6 +188,7 @@ export function ShipGenerator() {
                 ? "Solana base58 address"
                 : "0x… EVM address"
             }
+            id="ship-payto"
             spellCheck={false}
           />
           {form.payTo && payErr && (
@@ -275,10 +282,33 @@ export function ShipGenerator() {
           </Button>
         </div>
         <p className="text-xs text-subtle">
-          Templates use @x402/* v2 (routes + x402ResourceServer, CAIP-2 networks). Packages:
-          @x402/express, @x402/next, @x402/hono. Verify signatures against docs.x402.org before
-          production.
+          Templates use @x402/* v2 (routes + x402ResourceServer).{" "}
+          <Link to="/guides/x402-v1-vs-v2" className="link-readable">
+            CAIP-2 (standard network id — genesis-hash form)
+          </Link>
+          . Packages: @x402/express, @x402/next, @x402/hono. Verify signatures against
+          docs.x402.org before production.
         </p>
+        {tab === "prod" ? (
+          <p className="text-xs leading-relaxed text-muted">
+            Test facilitator{" "}
+            <a href="https://x402.org/facilitator" className="link-readable">
+              https://x402.org/facilitator
+            </a>{" "}
+            = testnets only. Production options we teach (not partners): CDP{" "}
+            <a
+              href="https://api.cdp.coinbase.com/platform/v2/x402"
+              className="link-readable"
+            >
+              https://api.cdp.coinbase.com/platform/v2/x402
+            </a>{" "}
+            · PayAI{" "}
+            <a href="https://facilitator.payai.network" className="link-readable">
+              https://facilitator.payai.network
+            </a>
+            — confirm docs. Never needs your or the buyer’s private key.
+          </p>
+        ) : null}
       </div>
     </div>
   );

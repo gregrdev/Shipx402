@@ -63,8 +63,20 @@ function HomePage() {
             share private keys.
           </p>
           <p className="text-sm text-muted">
-            x402 — pay-per-request over HTTP 402; the wallet is the credential.
-            Solana — chain we teach first for these payments.
+            <Link to="/guides/what-is-x402" className="link-readable">
+              x402 · pay-per-request over HTTP 402
+            </Link>
+            .{" "}
+            <Link to="/learn" className="link-readable">
+              Solana · chain we teach first for these payments
+            </Link>
+            .
+          </p>
+          <p className="text-sm text-muted">
+            <Link to="/app" className="link-readable">
+              practice wallet — browser wallet; keys never leave your device ·
+              never paste into chat/agents
+            </Link>
           </p>
           <div className="flex flex-wrap items-center justify-center gap-x-5 gap-y-2 pt-1">
             <a href="#wallet-fast" className="link-readable text-sm font-medium">
@@ -90,9 +102,12 @@ function HomePage() {
                   {chip}
                 </span>
                 {chip === "Devnet-first" ? (
-                  <span className="text-sm text-muted">
-                    practice network · free test money
-                  </span>
+                  <a
+                    href="https://www.shipx402.com/guides/first-solana-wallet"
+                    className="chip border border-border bg-bg px-3 py-1.5 text-sm font-medium text-muted no-underline hover:text-fg"
+                  >
+                    Devnet · practice network · free test money
+                  </a>
                 ) : null}
               </li>
             ))}
@@ -120,8 +135,14 @@ function HomePage() {
             </Button>
           </div>
           <p className="text-sm text-muted">
-            Devnet · practice network · free test money
+            site.txt — one-file start for agents
           </p>
+          <a
+            href="https://www.shipx402.com/guides/first-solana-wallet"
+            className="chip border border-border bg-bg px-3 py-1.5 text-sm font-medium text-muted no-underline hover:text-fg"
+          >
+            Devnet · practice network · free test money
+          </a>
         </div>
 
         <section
@@ -148,6 +169,11 @@ function HomePage() {
               Full
             </Link>
           </nav>
+          <p className="mt-3 text-sm text-muted">
+            <Link to="/loop" className="link-readable">
+              Payment loop — request → 402 price → pay → retry with proof
+            </Link>
+          </p>
         </section>
 
         <section className="grid gap-3 sm:grid-cols-3">
@@ -155,14 +181,14 @@ function HomePage() {
             {
               icon: Wrench,
               title: "Grade your 402",
-              body: "Paste a URL. A–F grade on the 402 (headers first). Free · no account.",
+              body: "402 Checker — paste a URL; A–F grade on the 402 (headers first)",
               to: "/check" as const,
               cta: "402 Checker",
             },
             {
               icon: Rocket,
               title: "Ship a Paid Endpoint",
-              body: "Generate paste-ready middleware for Express, Next.js, or Hono.",
+              body: "Ship generator — paste-ready middleware for Express, Next.js, or Hono",
               to: "/ship" as const,
               cta: "Ship Generator",
             },

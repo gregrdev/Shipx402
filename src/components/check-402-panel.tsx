@@ -56,7 +56,7 @@ export function Check402Panel({ defaultUrl = "" }: { defaultUrl?: string }) {
         <div className="mb-3 flex flex-wrap items-center gap-2">
           <Badge variant="default">Free · no account</Badge>
           <span className="text-sm text-muted">
-            Paste a URL → get an A–F grade.
+            Paste a URL → A–F grade on the 402 (headers first).
           </span>
         </div>
         <Label>API URL to check</Label>
@@ -91,7 +91,8 @@ export function Check402Panel({ defaultUrl = "" }: { defaultUrl?: string }) {
             }
           >
             /api/x402/donate
-          </button>
+          </button>{" "}
+          (returns a Solana payTo — the receiving wallet address).
         </p>
       </div>
 

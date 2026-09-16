@@ -6,19 +6,20 @@
 
 import { BRAND } from "./brand";
 
-export const SITE_CATALOG_VERSION = 11;
+export const SITE_CATALOG_VERSION = 12;
 
 /** Agent UX first-mention bank — same facts as /learn. Never “fake chain.” */
 export const SITE_GLOSS = [
   "## gloss (same facts as /learn)",
-  "x402 — pay-per-request over HTTP 402; the wallet is the credential (no API keys).",
-  "Solana — settlement network we teach first (fast/cheap).",
-  "Devnet — practice chain with free test SOL; no real money. Mainnet — real funds; only with explicit human consent.",
-  "Wallet — public address is shareable; private key/seed never leaves the human’s device and must never be pasted into chat, email, Discord, or an agent. Practice wallet (/app) is browser-only.",
+  "x402 — Pay-per-request over HTTP 402. Open protocol: an API can charge per request; pay (often USDC), then retry with proof. Wallet is the credential (no API keys).",
+  "Solana — Chain we teach first for these payments (most Ship examples).",
+  "Devnet — Practice network · free test money. Mainnet — real money · mistakes can’t be undone. Prefer Devnet until the loop feels routine. Never “fake chain.”",
+  "Wallet / keys — Keys never leave the owner’s device. Never paste private key or seed into chat, agents, or forms. Practice wallet (/app) is browser-only.",
   "USDC — USD stablecoin often used in 402 price tags.",
-  "Facilitator — service that verifies/settles 402 payments (≠ RPC ≠ paywall).",
-  "  • Test facilitator (x402.org/facilitator): Devnet/testnets only — never for real money.",
-  "  • CDP / PayAI / self-host: production options we teach; naming ≠ affiliation or endorsement.",
+  "Facilitator — Helper that verifies and settles x402 payments. Not a bank — never needs your or the buyer’s private key.",
+  "  • Testnets only: https://x402.org/facilitator (not for mainnet/real money).",
+  "  • Production options we teach (not partners/affiliation): CDP https://api.cdp.coinbase.com/platform/v2/x402 · PayAI https://facilitator.payai.network — confirm docs. Independence/NFA.",
+  "402 Checker — Free tool: paste a public API URL → A–F grade on the 402 (headers first, then body).",
 ].join("\n");
 
 export type CatalogItem = {
@@ -37,7 +38,7 @@ export const TOOLS: CatalogItem[] = [
     kind: "tool",
     path: "/loop",
     name: "Payment loop",
-    gist: "See a live 402, read the tag, dry-run, quiz, free educational certificate.",
+    gist: "Payment loop — request → 402 price → pay → retry with proof. Live 402, dry-run, quiz, free educational certificate.",
   },
   {
     kind: "tool",
@@ -49,7 +50,7 @@ export const TOOLS: CatalogItem[] = [
     kind: "tool",
     path: "/check",
     name: "402 Checker",
-    gist: "Paste a URL; A–F grade on the 402 (headers first).",
+    gist: "402 Checker — paste a URL; A–F grade on the 402 (headers first).",
   },
   {
     kind: "tool",

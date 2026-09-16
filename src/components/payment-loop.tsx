@@ -214,7 +214,10 @@ export function PaymentLoop() {
             <Badge variant="learn">Lab · no real money</Badge>
           </div>
           <p className="text-sm leading-relaxed text-muted">
-            Call{" "}
+            <Link to="/guides/what-is-x402" className="link-readable">
+              402 — payment required with a machine-readable price
+            </Link>
+            . Call{" "}
             <code className="text-fg">{X402_RESOURCE_PATH}</code> without a
             payment header. A correct educational endpoint answers{" "}
             <strong className="text-fg">HTTP 402</strong> with{" "}

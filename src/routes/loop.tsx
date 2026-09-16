@@ -35,9 +35,14 @@ function LoopPage() {
           <p className="text-lg leading-relaxed text-muted">
             {SEO_PAGES.loop.description}
           </p>
-          <p className="text-sm text-muted">
-            Practice on Devnet — free test SOL, no real money. Mainnet is real funds;
-            only with explicit human consent.
+          <p className="flex flex-wrap items-center gap-2 text-sm text-muted">
+            <a
+              href="https://www.shipx402.com/guides/first-solana-wallet"
+              className="chip border border-border bg-bg px-2.5 py-1 text-xs font-medium text-muted no-underline hover:text-fg"
+            >
+              Devnet · practice network · free test money
+            </a>
+            <span>Mainnet is real funds; only with explicit human consent.</span>
           </p>
           <div className="flex flex-wrap gap-2 pt-1">
             <Button asChild variant="secondary" size="sm">

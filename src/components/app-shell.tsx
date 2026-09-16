@@ -50,7 +50,14 @@ export function AppShell() {
         <div className="mx-auto max-w-5xl space-y-2 px-4 text-center text-sm text-muted sm:px-6">
           <p>
             Ship x402 wallet app — keys generated and signed only on your device. Practice
-            on Devnet (practice chain, free test SOL — no real money) before real funds.
+            on Devnet (
+            <a
+              href="https://www.shipx402.com/guides/first-solana-wallet"
+              className="text-muted underline decoration-primary/80 underline-offset-2 hover:text-fg"
+            >
+              Devnet · practice network · free test money
+            </a>
+            ) before real funds.
           </p>
           <p className="text-xs leading-relaxed text-fg/90">{BRAND.independence}</p>
           <p className="flex flex-wrap justify-center gap-3 text-xs">
