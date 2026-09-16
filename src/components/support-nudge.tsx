@@ -56,7 +56,7 @@ export function SupportNudge({
           </p>
           <Link
             to="/donate"
-            className="chip inline-flex items-center gap-2 bg-primary px-4 py-2 text-sm font-semibold text-primary-fg no-underline shadow-[0_0_18px_-8px_color-mix(in_oklab,var(--color-rgb-g)_55%,transparent)] transition-colors hover:bg-primary/90"
+            className="chip inline-flex items-center gap-2 bg-primary px-4 py-2 text-sm font-semibold text-primary-fg no-underline transition-colors hover:bg-primary/90"
           >
             <Heart className="size-3.5" aria-hidden />
             Tip what it's worth
