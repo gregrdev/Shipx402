@@ -55,7 +55,11 @@ function AboutPage() {
           <a href={`https://x.com/${BRAND.twitter.replace("@", "")}`}>
             {BRAND.twitter}
           </a>
-          . Source repository link can be added here once published.
+          . Source:{" "}
+          <a href="https://github.com/gregrdev/Shipx402">
+            github.com/gregrdev/Shipx402
+          </a>
+          .
         </p>
       </Prose>
     </SiteChrome>
