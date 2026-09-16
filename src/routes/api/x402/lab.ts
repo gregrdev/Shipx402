@@ -15,7 +15,7 @@ import {
  */
 const LAB_PAY_TO = "DEUuczkZU3Mj9Jf62LTLKSKi54WvBSFwiYmEnKyJszvu";
 
-/** Teach replay protection: one nonce may unlock only once per server process. */
+/** Teach replay protection: one nonce may unlock only once per server process (process-local, not durable). */
 const seenNonces = new Set<string>();
 const NONCE_CAP = 5000;
 
@@ -94,6 +94,7 @@ export const Route = createFileRoute("/api/x402/lab")({
           const result = verifyLabPayment(proof, {
             resource: X402_RESOURCE_PATH,
             amount: X402_LAB_AMOUNT,
+            payTo: LAB_PAY_TO,
           });
 
           if (!result.ok) {
@@ -133,7 +134,7 @@ export const Route = createFileRoute("/api/x402/lab")({
             settledAt: new Date().toISOString(),
             mode: "lab-signature",
             x402Version: proof.x402Version,
-            note: "Lab settlement is a verified signed intent (no on-chain USDC). Nonce is single-use (replay protection). Challenge is v2-shaped (CAIP-2 + top-level resource).",
+            note: "Lab settlement is exact-lab: a verified signed intent (no on-chain USDC, not facilitator exact). Nonce is single-use in this process only. Challenge is v2-shaped (CAIP-2 + top-level resource). payTo is bound in the signed message.",
           };
 
           return json(

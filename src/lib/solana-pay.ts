@@ -1,7 +1,12 @@
 import QRCode from "qrcode";
 import { Keypair } from "@solana/web3.js";
 import bs58 from "bs58";
-import { USDC_MINT_DEVNET, USDC_MINT_MAINNET, type NetworkMode } from "./solana";
+import {
+  USDC_MINT_DEVNET,
+  USDC_MINT_MAINNET,
+  parseCanonicalPublicKey,
+  type NetworkMode,
+} from "./solana";
 
 export type PaymentToken = "SOL" | "USDC";
 
@@ -21,6 +26,9 @@ export function createReference() {
 }
 
 export function encodeSolanaPayUrl(fields: PaymentRequestFields) {
+  if (!parseCanonicalPublicKey(fields.recipient)) {
+    throw new Error("Solana Pay recipient is not a valid public key");
+  }
   const params = new URLSearchParams();
 
   if (fields.amount !== undefined && fields.amount > 0) {

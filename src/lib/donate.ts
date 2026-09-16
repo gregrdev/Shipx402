@@ -6,6 +6,8 @@
  * cannot drift from payTo.
  */
 
+import { isOnCurveWalletAddress } from "./solana";
+
 export const DONATION_ADDRESS =
   "3TSEZcCFm9fNtQ2aVvRAp5kJEPrtQyYVPCxJGCpVSB4G";
 
@@ -83,9 +85,17 @@ export const DONATION_DEFAULT_SOL =
 
 export const DONATION_RESOURCE_PATH = "/api/x402/donate";
 
-/** Structural + on-curve check via length/charset; full check in DonationQr. */
+/**
+ * Configured for donations when DONATION_ADDRESS is a canonical on-curve
+ * wallet pubkey (not regex-only, not a PDA). Same policy as QR + donate API.
+ */
 export function isDonationAddressConfigured(address = DONATION_ADDRESS) {
-  return /^[1-9A-HJ-NP-Za-km-z]{32,44}$/.test(address);
+  return isOnCurveWalletAddress(address);
+}
+
+/** Alias used by the donation QR — same on-curve + canonical helper. */
+export function assertDonationAddressValid(address = DONATION_ADDRESS): boolean {
+  return isOnCurveWalletAddress(address);
 }
 
 /** True when on-chain amount is above the suggested max preset. */

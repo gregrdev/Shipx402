@@ -14,14 +14,20 @@ import {
   donationThankYouCopy,
   isDonationAddressConfigured,
 } from "@/lib/donate";
+import { claimDonationSignatureOnce } from "@/lib/credited-sig-store";
+import {
+  creditFromParsedTx,
+  resolveReceiptPayer,
+} from "@/lib/verify-onchain-sol";
 
 /**
  * Real x402-style donation endpoint.
  *
- * Unlike the lab (signed intent, no money moves), this endpoint verifies an
- * ACTUAL mainnet SOL transfer to DONATION_ADDRESS before returning the thanks
- * receipt. Scheme "onchain-sol": the payer settles the transfer themselves and
- * submits the transaction signature as proof — no facilitator needed.
+ * Unlike the lab (`exact-lab` signed intent, no money moves), this endpoint
+ * verifies an ACTUAL mainnet SOL SystemProgram transfer to DONATION_ADDRESS
+ * before returning the thanks receipt. Scheme "onchain-sol": the payer settles
+ * the transfer themselves and submits the transaction signature as proof —
+ * no facilitator, not USDC `exact`.
  *
  * Flow for agents:
  *   1. GET /api/x402/donate            -> HTTP 402 + requirements (payTo, min)
@@ -53,26 +59,13 @@ type DonationProof = {
   payload: {
     /** Base58 transaction signature of the on-chain SOL transfer. */
     signature: string;
-    /** Optional: payer public key, echoed back in the receipt. */
+    /**
+     * Optional claimed payer. Ignored for credit; if present must equal the
+     * on-chain fee payer or the proof is rejected.
+     */
     payer?: string;
   };
 };
-
-/**
- * Replay guard: signatures already credited this server session.
- * In-memory on purpose (donations receipts are low-stakes); swap for a DB row
- * if you ever gate real content behind this endpoint.
- */
-const creditedSignatures = new Map<string, number>();
-const CREDITED_CAP = 5000;
-
-function pruneCredited() {
-  if (creditedSignatures.size <= CREDITED_CAP) return;
-  const cutoff = Date.now() - 24 * 60 * 60 * 1000;
-  for (const [sig, at] of creditedSignatures) {
-    if (at < cutoff) creditedSignatures.delete(sig);
-  }
-}
 
 function json(data: unknown, status = 200, headers?: Record<string, string>) {
   return new Response(JSON.stringify(data, null, 2), {
@@ -129,8 +122,8 @@ function buildRequirements() {
           tipSuggestedSol: [...DONATION_TIP_SUGGESTED_SOL],
           customaryTipSol: DONATION_CUSTOMARY_TIP_SOL,
           generousAboveSol: DONATION_GENEROUS_THRESHOLD_SOL,
-          how: `Transfer >= ${DONATION_MIN_SOL} SOL to payTo on Solana mainnet, then retry this URL with header X-PAYMENT: base64 of {"x402Version":2,"scheme":"onchain-sol","network":"${SOLANA_MAINNET_CAIP2}","payload":{"signature":"<tx signature>","payer":"<your pubkey>"}}`,
-          note: "Settlement is the transfer itself — the server verifies your transaction on-chain. Tips are optional. Suggested range: 0.01–0.25 SOL; amounts above 0.25 SOL receive a special thank-you recognition. Custom scheme (not the standard 'exact' facilitator flow); legacy network id 'solana' and x402Version 1 are also accepted on the proof for compatibility.",
+          how: `Transfer >= ${DONATION_MIN_SOL} SOL to payTo on Solana mainnet (native SOL SystemProgram transfer), then retry this URL with header X-PAYMENT: base64 of {"x402Version":2,"scheme":"onchain-sol","network":"${SOLANA_MAINNET_CAIP2}","payload":{"signature":"<tx signature>"}}`,
+          note: "Settlement is the transfer itself — the server verifies a SystemProgram transfer to payTo on-chain. USDC / SPL is not receipt-eligible. Tips are optional. Suggested range: 0.01–0.25 SOL; amounts above 0.25 SOL receive a special thank-you recognition. Custom scheme (not the standard 'exact' facilitator flow); legacy network id 'solana' and x402Version 1 are also accepted on the proof for compatibility.",
         },
       },
     ],
@@ -140,10 +133,9 @@ function buildRequirements() {
 }
 
 async function verifyOnChain(signature: string): Promise<
-  | { ok: true; lamports: number; payer: string | null }
+  | { ok: true; lamports: number; payer: string }
   | { ok: false; reason: string }
 > {
-  // Base58 sanity: Solana signatures are 64 bytes.
   let sigBytes: Uint8Array;
   try {
     sigBytes = bs58.decode(signature);
@@ -167,36 +159,11 @@ async function verifyOnChain(signature: string): Promise<
         "Transaction not found (not yet confirmed, wrong network, or bad signature). Wait a few seconds and retry.",
     };
   }
-  if (tx.meta?.err) {
-    return { ok: false, reason: "Transaction failed on-chain" };
-  }
-  if (
-    typeof tx.blockTime === "number" &&
-    Date.now() / 1000 - tx.blockTime > DONATION_MAX_AGE_SECONDS
-  ) {
-    return { ok: false, reason: "Transaction is too old to credit" };
-  }
 
-  const keys = tx.transaction.message.accountKeys;
-  const donationIndex = keys.findIndex(
-    (k) => k.pubkey.toBase58() === DONATION_ADDRESS,
-  );
-  if (donationIndex === -1 || !tx.meta) {
-    return { ok: false, reason: "Transaction does not touch the donation address" };
-  }
-
-  const pre = tx.meta.preBalances[donationIndex] ?? 0;
-  const post = tx.meta.postBalances[donationIndex] ?? 0;
-  const received = post - pre;
-  if (received < DONATION_MIN_LAMPORTS) {
-    return {
-      ok: false,
-      reason: `Donation address received ${received} lamports; minimum is ${DONATION_MIN_LAMPORTS}`,
-    };
-  }
-
-  const payer = keys.find((k) => k.signer)?.pubkey.toBase58() ?? null;
-  return { ok: true, lamports: received, payer };
+  return creditFromParsedTx(tx, DONATION_ADDRESS, {
+    minLamports: DONATION_MIN_LAMPORTS,
+    maxAgeSeconds: DONATION_MAX_AGE_SECONDS,
+  });
 }
 
 export const Route = createFileRoute("/api/x402/donate")({
@@ -219,7 +186,7 @@ export const Route = createFileRoute("/api/x402/donate")({
           return json(
             {
               error: "Donation address not configured",
-              hint: "Site owner: set DONATION_ADDRESS in src/lib/donate.ts to your mainnet public address.",
+              hint: "Site owner: set DONATION_ADDRESS in src/lib/donate.ts to a canonical on-curve mainnet public address.",
             },
             503,
           );
@@ -251,10 +218,7 @@ export const Route = createFileRoute("/api/x402/donate")({
           return json({ error: "Malformed X-PAYMENT header" }, 400);
         }
 
-        if (
-          proof.x402Version !== 2 &&
-          proof.x402Version !== 1
-        ) {
+        if (proof.x402Version !== 2 && proof.x402Version !== 1) {
           return json(
             {
               error: "Payment verification failed",
@@ -264,8 +228,6 @@ export const Route = createFileRoute("/api/x402/donate")({
           );
         }
 
-        // Accept the custom scheme, and either the legacy "solana" network id
-        // or the CAIP-2 form advertised in the v2 challenge.
         const networkOk =
           proof.network === "solana" || proof.network === SOLANA_MAINNET_CAIP2;
         if (proof.scheme !== "onchain-sol" || !networkOk) {
@@ -284,15 +246,6 @@ export const Route = createFileRoute("/api/x402/donate")({
             402,
           );
         }
-        if (creditedSignatures.has(signature)) {
-          return json(
-            {
-              error: "Payment verification failed",
-              reason: "This transaction was already credited",
-            },
-            402,
-          );
-        }
 
         try {
           const result = await verifyOnChain(signature);
@@ -301,14 +254,50 @@ export const Route = createFileRoute("/api/x402/donate")({
               {
                 error: "Payment verification failed",
                 reason: result.reason,
-                hint: "Confirm the transfer landed on mainnet to the payTo address, then retry.",
+                hint: "Confirm a native SOL SystemProgram transfer landed on mainnet to the payTo address, then retry.",
               },
               402,
             );
           }
 
-          creditedSignatures.set(signature, Date.now());
-          pruneCredited();
+          const payerResolved = resolveReceiptPayer(
+            result.payer,
+            proof.payload.payer,
+          );
+          if (!payerResolved.ok) {
+            return json(
+              {
+                error: "Payment verification failed",
+                reason: payerResolved.reason,
+              },
+              402,
+            );
+          }
+
+          let claim: "ok" | "duplicate";
+          try {
+            claim = await claimDonationSignatureOnce(signature);
+          } catch (err) {
+            const message =
+              err instanceof Error ? err.message : "Replay store unavailable";
+            return json(
+              {
+                error: "Could not record donation receipt",
+                reason: message,
+                hint: "Durable single-use signature store is required. Set KV_REST_API_URL + KV_REST_API_TOKEN (Upstash / Vercel KV) on the host, or ensure the filesystem store at data/credited-donation-sigs is writable.",
+              },
+              503,
+            );
+          }
+          if (claim === "duplicate") {
+            return json(
+              {
+                error: "Payment verification failed",
+                reason: "This transaction was already credited",
+              },
+              402,
+            );
+          }
 
           const amountSol = result.lamports / LAMPORTS_PER_SOL;
           const thanks = donationThankYouCopy(amountSol);
@@ -318,7 +307,7 @@ export const Route = createFileRoute("/api/x402/donate")({
             scheme: "onchain-sol",
             network: "solana",
             signature,
-            payer: proof.payload.payer ?? result.payer,
+            payer: payerResolved.payer,
             amountSol,
             settledAt: new Date().toISOString(),
             mode: "onchain-verified",

@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 import QRCode from "qrcode";
-import { PublicKey } from "@solana/web3.js";
-import { DONATION_ADDRESS } from "@/lib/donate";
+import { DONATION_ADDRESS, assertDonationAddressValid } from "@/lib/donate";
 import { cn } from "@/lib/utils";
 
 /**
@@ -11,16 +10,6 @@ import { cn } from "@/lib/utils";
  */
 export function donationPayUri(address = DONATION_ADDRESS) {
   return `solana:${address.trim()}`;
-}
-
-export function assertDonationAddressValid(address = DONATION_ADDRESS): boolean {
-  try {
-    // Throws if not a valid on-curve Solana public key encoding
-    const pk = new PublicKey(address);
-    return pk.toBase58() === address;
-  } catch {
-    return false;
-  }
 }
 
 export function DonationQr({

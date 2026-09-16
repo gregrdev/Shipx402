@@ -29,7 +29,7 @@ export const Route = createFileRoute("/donate")({
 function DonatePage() {
   return (
     <SiteChrome activePath="/donate">
-      <div className="space-y-10 animate-fade-up">
+      <div className="min-w-0 space-y-10 animate-fade-up">
         <header className="max-w-2xl space-y-3">
           <p className="inline-flex items-center gap-2 font-mono text-xs uppercase tracking-[0.14em] text-primary">
             <Heart className="size-3.5" />

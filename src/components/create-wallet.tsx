@@ -67,7 +67,7 @@ export function CreateWallet() {
   );
 
   const secretConfirmed =
-    !!secretKey && confirmTail.trim().toLowerCase() === secretTail.toLowerCase();
+    !!secretKey && confirmTail.trim() === secretTail;
 
   const canLeaveSecretStep =
     secretConfirmed && ackWrite && ackShare && ackDevice && !!publicKey && !!secretKey;
@@ -517,6 +517,9 @@ export function CreateWallet() {
                 spellCheck={false}
                 maxLength={6}
               />
+              <p className="mt-1 text-xs text-subtle">
+                Base58 is case-sensitive — match the last 6 characters exactly.
+              </p>
               {confirmTail.length > 0 && (
                 <p
                   className={cn(

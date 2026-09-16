@@ -17,3 +17,4 @@ artifacts/
 uploads/
 *.zip
 .vite/
+data/credited-donation-sigs/
