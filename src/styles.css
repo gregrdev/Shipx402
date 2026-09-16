@@ -32,6 +32,7 @@
   --color-rgb-r: #ff6b9a;
   --color-rgb-g: #3ee8b0;
   --color-rgb-b: #5b9dff;
+  --cyber-rail-glow: 0.9;
 
   /* Near-rect — sharper than the first restyle (~2–4px) */
   --radius-sm: 0.125rem;
@@ -252,14 +253,11 @@
 }
 
 /**
- * Unlayered so Vite/LightningCSS + Tailwind keep these in the production
- * stylesheet. Do NOT use mask-composite for the rotating border — when the
- * mask fails the conic-gradient floods the card (rainbow splash).
+ * Unlayered so Vite/LightningCSS keeps these in the production stylesheet.
+ * RGB lives on LINES only (page `.cyber-columns` + thin `.rgb-frame-soft`
+ * hairline). Never mask-composite a conic onto a card fill.
  *
- * --rgb-angle needs @property so browsers interpolate <angle>. Rails animate
- * `top` (always interpolatable) so the RGB travel still ships if @property
- * is dropped. prefers-reduced-motion pauses motion but keeps the static
- * rails + thin border visible.
+ * prefers-reduced-motion: pause motion; keep static rails + hairline visible.
  */
 @property --rgb-angle {
   syntax: "<angle>";
@@ -267,7 +265,7 @@
   initial-value: 0deg;
 }
 
-.rgb-frame {
+.rgb-frame-soft {
   --rgb-angle: 0deg;
   position: relative;
   isolation: isolate;
@@ -277,14 +275,14 @@
     linear-gradient(var(--color-surface), var(--color-surface)),
     conic-gradient(
       from var(--rgb-angle),
-      var(--color-rgb-r),
-      var(--color-rgb-g),
-      var(--color-rgb-b),
-      var(--color-rgb-r)
+      color-mix(in oklab, var(--color-rgb-r) 50%, transparent),
+      color-mix(in oklab, var(--color-rgb-g) 55%, transparent),
+      color-mix(in oklab, var(--color-rgb-b) 60%, transparent),
+      color-mix(in oklab, var(--color-rgb-r) 50%, transparent)
     );
   background-origin: padding-box, border-box;
   background-clip: padding-box, border-box;
-  animation: rgb-spin 8s linear infinite;
+  animation: rgb-spin 10s linear infinite;
 }
 
 @keyframes rgb-spin {
@@ -296,43 +294,43 @@
   }
 }
 
-.cyber-rails {
+.cyber-columns {
   pointer-events: none;
-  position: absolute;
-  inset: 0;
-  z-index: 3;
+  position: relative;
+  height: 100%;
 }
 
-.cyber-rail {
+.cyber-columns-rail {
   position: absolute;
-  top: 10px;
-  bottom: 10px;
+  top: 0;
+  bottom: 0;
   width: 2px;
   border-radius: 1px;
-  background: color-mix(in oklab, var(--color-rgb-b) 55%, var(--color-border));
+  opacity: var(--cyber-rail-glow);
+  background: color-mix(in oklab, var(--color-rgb-b) 50%, var(--color-border));
   box-shadow:
-    0 0 6px var(--color-rgb-g),
-    0 0 12px color-mix(in oklab, var(--color-rgb-b) 70%, transparent);
+    0 0 8px color-mix(in oklab, var(--color-rgb-g) 80%, transparent),
+    0 0 14px color-mix(in oklab, var(--color-rgb-b) 55%, transparent);
 }
 
-.cyber-rail-l {
-  left: 7px;
+.cyber-columns-l {
+  left: 0.35rem;
 }
 
-.cyber-rail-r {
-  right: 7px;
+.cyber-columns-r {
+  right: 0.35rem;
 }
 
-.cyber-rail::after {
+.cyber-columns-rail::after {
   content: "";
   position: absolute;
   left: 50%;
-  top: -22%;
+  top: 100%;
   width: 4px;
   height: 22%;
   transform: translateX(-50%);
   background: linear-gradient(
-    180deg,
+    0deg,
     transparent 0%,
     var(--color-rgb-r) 20%,
     var(--color-rgb-g) 50%,
@@ -340,32 +338,32 @@
     transparent 100%
   );
   filter: blur(0.4px);
-  animation: cyber-rail-bead 3.4s linear infinite;
+  animation: cyber-columns-glow-up 3.6s linear infinite;
 }
 
-.cyber-rail-r::after {
-  animation-delay: -1.7s;
+.cyber-columns-r::after {
+  animation-delay: -1.8s;
 }
 
-@keyframes cyber-rail-bead {
+@keyframes cyber-columns-glow-up {
   from {
-    top: -22%;
+    top: 100%;
   }
   to {
-    top: 100%;
+    top: -22%;
   }
 }
 
 @media (prefers-reduced-motion: reduce) {
   .animate-fade-up,
   .animate-pulse-glow,
-  .rgb-frame,
-  .cyber-rail::after {
+  .rgb-frame-soft,
+  .cyber-columns-rail::after {
     animation: none;
   }
 
-  .cyber-rail::after {
-    top: 28%;
+  .cyber-columns-rail::after {
+    top: 12%;
     opacity: 0.9;
   }
 }

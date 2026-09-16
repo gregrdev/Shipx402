@@ -127,8 +127,7 @@ export function Welcome() {
 
   return (
     <div className="mx-auto w-full max-w-3xl space-y-9 animate-fade-up">
-      <div className="relative overflow-hidden rounded-[var(--radius-2xl)] border border-border hearth-panel hearth-glow">
-        <div className="pointer-events-none absolute inset-0 scan-grid opacity-70" />
+      <div className="relative overflow-hidden rounded-[var(--radius-2xl)] border border-border bg-surface">
         <div className="relative space-y-5 p-6 sm:p-8">
           <div className="chip inline-flex items-center gap-2 border border-primary/25 bg-bg/50 px-3.5 py-1.5 text-sm font-medium text-muted backdrop-blur-sm">
             <span className="relative flex size-2">

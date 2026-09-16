@@ -9,6 +9,7 @@ import {
   Wallet,
 } from "lucide-react";
 import { SiteChrome } from "@/components/site-chrome";
+import { ContinueChip } from "@/components/continue-chip";
 import { SEO_PAGES } from "@/lib/brand";
 import { pageHead, breadcrumbJsonLd, learningResourceJsonLd } from "@/lib/seo";
 import { Button } from "@/components/ui/button";
@@ -58,7 +59,28 @@ function LearnPage() {
             official docs.x402.org flow: what x402 is → buyer payment loop → wallet →
             V2 headers / CAIP-2 → facilitators → ship a paid route.
           </p>
+          <ContinueChip />
         </header>
+
+        <section className="rounded-[var(--radius-xl)] border border-border bg-surface p-4 sm:p-5">
+          <p className="font-mono text-xs uppercase tracking-[0.12em] text-primary">
+            Start Here
+          </p>
+          <div className="mt-2 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+            <div>
+              <h2 className="text-lg font-semibold text-fg">What Is x402?</h2>
+              <p className="mt-1 max-w-xl text-sm text-muted">
+                Plain-English idea first, then a Devnet wallet, then the payment loop.
+              </p>
+            </div>
+            <Button asChild>
+              <Link to="/guides/what-is-x402">
+                Begin
+                <ArrowRight className="size-4" />
+              </Link>
+            </Button>
+          </div>
+        </section>
 
         <nav
           className="flex flex-wrap gap-2"
@@ -139,13 +161,9 @@ function LearnPage() {
 
         <section
           id="payment-loop"
-          className="relative scroll-mt-28 overflow-hidden rounded-[var(--radius-2xl)] bg-surface rgb-frame"
+          className="scroll-mt-28 overflow-hidden rounded-[var(--radius-2xl)] border border-border bg-surface"
         >
-          <div className="cyber-rails" aria-hidden="true">
-            <span className="cyber-rail cyber-rail-l" />
-            <span className="cyber-rail cyber-rail-r" />
-          </div>
-          <div className="relative z-10 border-b border-border/60 bg-bg/40 px-5 py-5 sm:px-8 sm:py-6">
+          <div className="border-b border-border/60 bg-bg/40 px-5 py-5 sm:px-8 sm:py-6">
             <div className="flex flex-wrap items-start justify-between gap-4">
               <div className="space-y-2">
                 <div className="chip inline-flex items-center gap-2 border border-primary/30 bg-bg/50 px-2.5 py-0.5 text-xs font-medium text-primary">
@@ -173,7 +191,7 @@ function LearnPage() {
             </div>
           </div>
 
-          <ol className="relative z-10 grid gap-0">
+          <ol className="grid gap-0">
             {X402_TUTORIAL_STEPS.map((step, i) => (
               <li
                 key={step.id}
@@ -201,7 +219,7 @@ function LearnPage() {
         </section>
 
         <section id="wallets" className="scroll-mt-28 grid gap-4 lg:grid-cols-2">
-          <div className="rounded-[var(--radius-xl)] border border-border bg-surface p-6 cyber-edge">
+          <div className="rounded-[var(--radius-xl)] border border-border bg-surface p-6">
             <h2 className="flex items-center gap-3 text-xl font-semibold text-fg">
               <span className="flex size-10 shrink-0 items-center justify-center rounded-[var(--radius-md)] bg-primary/10 text-primary">
                 <Wallet className="size-5" />

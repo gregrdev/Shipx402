@@ -40,6 +40,17 @@ export function SiteChrome({
         </div>
       </div>
 
+      <div className="relative">
+        <div
+          className="pointer-events-none absolute inset-0 z-0 overflow-hidden"
+          aria-hidden="true"
+        >
+          <div className="cyber-columns mx-auto max-w-6xl">
+            <span className="cyber-columns-rail cyber-columns-l" />
+            <span className="cyber-columns-rail cyber-columns-r" />
+          </div>
+        </div>
+
       <header className="sticky top-0 z-40 border-b border-border/70 bg-bg/85 backdrop-blur-md">
         <div className="mx-auto flex max-w-6xl flex-wrap items-center justify-between gap-3 px-4 py-3.5 sm:px-6">
           <Link to="/" className="no-underline" aria-label="Ship x402 home">
@@ -72,7 +83,7 @@ export function SiteChrome({
             })}
             <Link
               to="/app"
-              className="chip ml-1 bg-primary px-3.5 py-2 text-sm font-semibold text-primary-fg no-underline shadow-[0_0_18px_-8px_color-mix(in_oklab,var(--color-rgb-g)_55%,transparent)] hover:bg-primary/90"
+              className="chip ml-1 bg-primary px-3.5 py-2 text-sm font-semibold text-primary-fg no-underline hover:bg-primary/90"
             >
               Open app
             </Link>
@@ -82,13 +93,13 @@ export function SiteChrome({
 
       <main
         id="main-content"
-        className="mx-auto max-w-6xl px-4 py-10 sm:px-6 sm:py-14"
+        className="relative z-10 mx-auto max-w-6xl px-4 py-8 sm:px-6 sm:py-10"
         tabIndex={-1}
       >
         {children}
       </main>
 
-      <footer className="mt-8 border-t border-border/50 bg-surface/30 py-10">
+      <footer className="relative z-10 mt-8 border-t border-border/50 bg-surface/30 py-10">
         <div className="mx-auto grid max-w-6xl gap-8 px-4 sm:grid-cols-2 lg:grid-cols-4 sm:px-6">
           <div className="space-y-3 sm:col-span-2 lg:col-span-1">
             <BrandMark showDomain size="sm" />
@@ -199,6 +210,7 @@ export function SiteChrome({
           </p>
         </div>
       </footer>
+      </div>
     </div>
   );
 }

@@ -21,6 +21,7 @@ import {
   scoreQuiz,
 } from "@/lib/loop-quiz";
 import { X402_RESOURCE_PATH } from "@/lib/x402";
+import { saveLearnProgress } from "@/lib/learn-progress";
 import { cn } from "@/lib/utils";
 
 type StepId = "see" | "read" | "dry" | "quiz" | "cert";
@@ -135,6 +136,7 @@ export function PaymentLoop() {
       }
       setLabBody(pretty);
       if (res.status === 402) {
+        saveLearnProgress("/loop", "Walk the Loop");
         toast.success("Got HTTP 402 — payment required");
       } else {
         toast.message(`Unexpected status ${res.status}`);
@@ -162,6 +164,7 @@ export function PaymentLoop() {
       date: at.toISOString().slice(0, 10),
     });
     setStep("cert");
+    saveLearnProgress("/loop", "Walk the Loop");
     toast.success("Certificate ready — free, educational only");
   };
 
