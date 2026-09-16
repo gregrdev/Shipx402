@@ -24,7 +24,7 @@ export const BRAND = {
   dualAudience: "You and your agent learn x402 together",
   /** Agent-search line — /agents H1, machine surfaces */
   agentsLearn: "Where agents learn x402 on Solana",
-  themeColor: "#1a1d24",
+  themeColor: "#12151b",
   twitter: "@shipx402",
   independence:
     "Ship x402 is an independent educational project, not affiliated with the x402 Foundation, Coinbase, or the Solana Foundation. Not financial advice.",
@@ -79,7 +79,7 @@ export const SEO_PAGES: Record<string, SeoPage> = {
     title: "Ship x402 | Your Agent Can Ship a Paid Solana API",
     description:
       "Paste site.txt into your agent and ship a paid Solana endpoint. Humans and AI agents learn the same x402 path — interactive lab, 402 checker, practice wallet, free curriculum.",
-    h1: "Your agent can ship a paid Solana API from one prompt",
+    h1: "Your Agent Can Ship a Paid Solana API from One Prompt",
     keywords:
       "x402, Ship x402, Solana, pay per request, HTTP 402, agent payments, AI agent pay for APIs, site.txt, learn x402",
   },
@@ -95,7 +95,7 @@ export const SEO_PAGES: Record<string, SeoPage> = {
     title: "Learn x402 | Beginner to Advanced Path | Ship x402",
     description:
       "Structured learning path for x402: beginner concepts, intermediate build/test, advanced agent safety. Free, in-browser, Solana-first.",
-    h1: "Learn x402 from beginner to advanced",
+    h1: "Learn x402 from Beginner to Advanced",
     keywords: "learn x402, x402 tutorial, HTTP 402 lab, agent payments course",
   },
   wallet: {

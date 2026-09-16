@@ -25,13 +25,13 @@ export const LEARNING_PATH: LearningItem[] = [
   },
   {
     level: "beginner",
-    title: "The payment loop (interactive)",
+    title: "The Payment Loop (Interactive)",
     path: "/loop",
     blurb: "Live 402 → PAYMENT-REQUIRED → pay → PAYMENT-SIGNATURE retry.",
   },
   {
     level: "beginner",
-    title: "Your first Solana wallet",
+    title: "Your First Solana Wallet",
     path: "/guides/first-solana-wallet",
     blurb: "Public vs private keys on Devnet — zero real risk.",
   },
@@ -43,7 +43,7 @@ export const LEARNING_PATH: LearningItem[] = [
   },
   {
     level: "beginner",
-    title: "Reading a Solana transaction",
+    title: "Reading a Solana Transaction",
     path: "/guides/reading-solana-tx",
     blurb: "Open a transfer on Solscan and understand the fields.",
   },
@@ -56,13 +56,13 @@ export const LEARNING_PATH: LearningItem[] = [
   },
   {
     level: "intermediate",
-    title: "Facilitators explained",
+    title: "Facilitators Explained",
     path: "/guides/facilitators-explained",
     blurb: "x402.org testnet, CDP, PayAI, self-host — when to pick which.",
   },
   {
     level: "intermediate",
-    title: "Test an x402 endpoint",
+    title: "Test an x402 Endpoint",
     path: "/guides/test-x402-endpoint",
     blurb: "Read PAYMENT-REQUIRED + the 402 body; fix common setup mistakes.",
   },
@@ -80,38 +80,38 @@ export const LEARNING_PATH: LearningItem[] = [
   },
   {
     level: "intermediate",
-    title: "The blind-transfer problem",
+    title: "The Blind-Transfer Problem",
     path: "/guides/blind-transfer-problem",
     blurb: "When someone wants to pay but you have no 402.",
   },
   // Advanced
   {
     level: "advanced",
-    title: "Can AI agents spend money?",
+    title: "Can AI Agents Spend Money?",
     path: "/guides/can-ai-agents-spend-money",
     blurb: "Yes — inside spend limits and allowlists you set.",
   },
   {
     level: "advanced",
-    title: "x402 vs token-gating",
+    title: "x402 vs Token-Gating",
     path: "/guides/x402-vs-token-gating",
     blurb: "Server-side 402 paywall vs on-chain token checks.",
   },
   {
     level: "advanced",
-    title: "Give an agent a wallet safely",
+    title: "Give an Agent a Wallet Safely",
     path: "/guides/agent-wallet-safely",
     blurb: "Caps, allowlists, dry-run, never the main key.",
   },
   {
     level: "advanced",
-    title: "Why agent-readable matters",
+    title: "Why Agent-Readable Matters",
     path: "/guides/agent-readable",
     blurb: "site.txt, llms.txt, curriculum JSON, well-known x402.",
   },
   {
     level: "advanced",
-    title: "HTTP 402: 30 years dormant",
+    title: "HTTP 402: 30 Years Dormant",
     path: "/guides/http-402-history",
     blurb: "Story of the status code that became agent payments.",
   },
@@ -130,7 +130,7 @@ export const LEVEL_META: Record<
     description: "V2 headers and CAIP-2, then facilitators, then ship a paid route.",
   },
   advanced: {
-    label: "Advanced / agents",
+    label: "Advanced / Agents",
     description: "Agent wallets, paywall design, and machine-readable surfaces.",
   },
 };

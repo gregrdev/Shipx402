@@ -65,8 +65,8 @@ function LearnPage() {
           aria-label="Jump to section"
         >
           {[
-            { href: "#path", label: "Full path" },
-            { href: "#payment-loop", label: "Payment loop" },
+            { href: "#path", label: "Full Path" },
+            { href: "#payment-loop", label: "Payment Loop" },
             { href: "#wallets", label: "Wallets" },
             { href: "#tools", label: "Tools" },
           ].map((j) => (
@@ -87,7 +87,7 @@ function LearnPage() {
           <div className="flex flex-wrap items-end justify-between gap-3">
             <div>
               <h2 className="text-2xl font-semibold tracking-tight text-fg">
-                Full learning path
+                Full Learning Path
               </h2>
               <p className="mt-1 text-base text-muted">
                 Follow the order within each tier. Skip ahead only if you already know
@@ -139,17 +139,17 @@ function LearnPage() {
 
         <section
           id="payment-loop"
-          className="scroll-mt-28 overflow-hidden rounded-[var(--radius-2xl)] border border-primary/30 hearth-panel hearth-glow"
+          className="scroll-mt-28 overflow-hidden rounded-[var(--radius-2xl)] border border-transparent hearth-panel rgb-frame"
         >
           <div className="border-b border-border/60 bg-primary/5 px-5 py-5 sm:px-8 sm:py-6">
             <div className="flex flex-wrap items-start justify-between gap-4">
               <div className="space-y-2">
                 <div className="chip inline-flex items-center gap-2 border border-primary/30 bg-bg/50 px-2.5 py-0.5 text-xs font-medium text-primary">
                   <FlaskConical className="size-3.5" />
-                  Core idea · v2 lab
+                  Core Idea · V2 Lab
                 </div>
                 <h2 className="text-2xl font-semibold tracking-tight text-fg sm:text-3xl">
-                  The payment loop
+                  The Payment Loop
                 </h2>
                 <p className="max-w-xl text-base leading-relaxed text-muted">
                   x402 makes HTTP{" "}
@@ -162,7 +162,7 @@ function LearnPage() {
               </div>
               <Button asChild>
                 <Link to="/app">
-                  Try lab in app
+                  Try Lab in App
                   <ArrowRight className="size-4" />
                 </Link>
               </Button>
@@ -174,17 +174,17 @@ function LearnPage() {
               <li
                 key={step.id}
                 className={cn(
-                  "flex gap-4 border-t border-border/50 px-5 py-5 sm:gap-5 sm:px-8",
+                  "border-t border-border/50 px-5 py-5 sm:px-8",
                   i === 0 && "border-t-0",
                 )}
               >
-                <span className="chip flex size-9 shrink-0 items-center justify-center bg-primary/15 font-mono text-sm font-semibold text-primary">
-                  {step.id}
-                </span>
-                <div className="min-w-0 space-y-1.5">
-                  <h3 className="text-base font-semibold text-fg sm:text-lg">
-                    {step.title}
-                  </h3>
+                <h3 className="flex items-center gap-3 text-base font-semibold text-fg sm:text-lg">
+                  <span className="step-num">
+                    {step.id}
+                  </span>
+                  {step.title}
+                </h3>
+                <div className="mt-1.5 space-y-1.5 pl-[calc(2.5rem+0.75rem)]">
                   <p className="text-sm leading-relaxed text-muted sm:text-base">
                     {step.plain}
                   </p>
@@ -200,11 +200,11 @@ function LearnPage() {
 
         <section id="wallets" className="scroll-mt-28 grid gap-4 lg:grid-cols-2">
           <div className="rounded-[var(--radius-xl)] border border-border bg-surface p-6 cyber-edge">
-            <div className="mb-3 flex size-10 items-center justify-center rounded-[var(--radius-md)] bg-primary/10 text-primary">
-              <Wallet className="size-5" />
-            </div>
-            <h2 className="text-xl font-semibold text-fg">
-              Solana wallets in plain English
+            <h2 className="flex items-center gap-3 text-xl font-semibold text-fg">
+              <span className="flex size-10 shrink-0 items-center justify-center rounded-[var(--radius-md)] bg-primary/10 text-primary">
+                <Wallet className="size-5" />
+              </span>
+              Solana Wallets in Plain English
             </h2>
             <p className="mt-2 text-base leading-relaxed text-muted">
               A wallet is a <strong className="text-fg">key pair</strong>. Public =
@@ -216,24 +216,26 @@ function LearnPage() {
                 to="/wallet"
                 className="link-readable inline-flex items-center gap-1 text-sm font-medium"
               >
-                How the wallet works
+                How the Wallet Works
                 <ArrowRight className="size-3.5" />
               </Link>
               <Link
                 to="/app"
                 className="link-readable inline-flex items-center gap-1 text-sm font-medium"
               >
-                Open practice wallet
+                Open Practice Wallet
                 <ArrowRight className="size-3.5" />
               </Link>
             </div>
           </div>
 
           <div className="scroll-mt-28 rounded-[var(--radius-xl)] border border-border bg-surface p-6">
-            <div className="mb-3 flex size-10 items-center justify-center rounded-[var(--radius-md)] bg-learn/15 text-learn">
-              <GraduationCap className="size-5" />
-            </div>
-            <h2 className="text-xl font-semibold text-fg">Devnet vs mainnet</h2>
+            <h2 className="flex items-center gap-3 text-xl font-semibold text-fg">
+              <span className="flex size-10 shrink-0 items-center justify-center rounded-[var(--radius-md)] bg-learn/15 text-learn">
+                <GraduationCap className="size-5" />
+              </span>
+              Devnet vs Mainnet
+            </h2>
             <ul className="mt-3 space-y-2 text-base text-muted">
               <li>
                 <strong className="text-fg">Learn / Devnet:</strong> free practice SOL,
@@ -253,13 +255,13 @@ function LearnPage() {
         >
           <div className="flex flex-wrap items-center gap-2 text-primary">
             <BookOpen className="size-5" />
-            <h2 className="text-xl font-semibold text-fg">Tools when you are ready</h2>
+            <h2 className="text-xl font-semibold text-fg">Tools When You Are Ready</h2>
           </div>
           <div className="mt-4 grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
             {[
               {
                 to: "/ship" as const,
-                title: "Ship generator",
+                title: "Ship Generator",
                 body: "Paste-ready Express / Next / Hono v2 middleware.",
               },
               {
@@ -269,12 +271,12 @@ function LearnPage() {
               },
               {
                 to: "/explorer" as const,
-                title: "Balance explorer",
+                title: "Balance Explorer",
                 body: "Look up any wallet’s SOL balance and recent txs.",
               },
               {
                 to: "/agents" as const,
-                title: "Agent classroom",
+                title: "Agent Classroom",
                 body: "Curriculum + safety rules machines can fetch.",
               },
             ].map((t) => (
@@ -291,7 +293,7 @@ function LearnPage() {
           <div className="mt-6 flex flex-wrap gap-3">
             <Button asChild size="lg">
               <Link to="/app">
-                Open practice wallet
+                Open Practice Wallet
                 <ArrowRight className="size-4" />
               </Link>
             </Button>

@@ -246,14 +246,14 @@ export function verifyLabPayment(
 export const X402_TUTORIAL_STEPS = [
   {
     id: 1,
-    title: "You ask for a paid resource",
+    title: "You Ask for a Paid Resource",
     plain: "Your app (or an AI agent) does a normal HTTP request — same as loading any API.",
     why: "No special payment channel. Money rides on the same web request/response loop the internet already uses.",
     technical: "GET /api/x402/lab with no payment headers.",
   },
   {
     id: 2,
-    title: "Server answers 402 Payment Required",
+    title: "Server Answers 402 Payment Required",
     plain: "Instead of 200 OK or 401 Login, you get 402: 'Pay this amount, on this network, to this address, for this resource.'",
     why: "HTTP already reserved 402 for payments. x402 finally defines the machine-readable details so software can pay without humans filling forms.",
     technical:
@@ -261,7 +261,7 @@ export const X402_TUTORIAL_STEPS = [
   },
   {
     id: 3,
-    title: "Client builds a payment",
+    title: "Client Builds a Payment",
     plain: "Your wallet signs a payment that matches the requirements — amount, destination, resource.",
     why: "Only the key holder can authorize spend. Signing proves intent without handing the server your private key.",
     technical:
@@ -269,7 +269,7 @@ export const X402_TUTORIAL_STEPS = [
   },
   {
     id: 4,
-    title: "Retry the same request with proof",
+    title: "Retry the Same Request with Proof",
     plain: "You call the same URL again, this time attaching the payment proof in a header.",
     why: "One protocol for humans, bots, and agents: request → price → pay → unlock. No account signup required.",
     technical:
@@ -277,7 +277,7 @@ export const X402_TUTORIAL_STEPS = [
   },
   {
     id: 5,
-    title: "Server verifies / settles, then delivers",
+    title: "Server Verifies / Settles, Then Delivers",
     plain: "The server checks the proof (itself or via a facilitator), settles on-chain if needed, and returns 200 + the goods.",
     why: "Sellers get paid per call. Buyers only pay when they need the resource. Micropayments become practical on fast, cheap chains like Solana.",
     technical: "Verify signature/tx → optional facilitator settle → reject replays (nonce/sig) → 200 + PAYMENT-RESPONSE header.",

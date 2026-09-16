@@ -80,24 +80,24 @@ function HomePage() {
   return (
     <SiteChrome activePath="/">
       <div className="space-y-16 animate-fade-up">
-        <section className="relative overflow-hidden rounded-[var(--radius-2xl)] border border-border hearth-panel hearth-glow">
-          <div className="pointer-events-none absolute inset-0 scan-grid opacity-50" />
-          <div className="relative space-y-6 p-6 sm:p-10 lg:p-12">
+        <section className="relative overflow-hidden rounded-[var(--radius-2xl)] border border-transparent hearth-panel rgb-frame">
+          <div className="pointer-events-none absolute inset-0 z-0 scan-grid opacity-50" />
+          <div className="relative z-10 mx-auto flex max-w-3xl flex-col items-center space-y-6 p-6 text-center sm:p-10 lg:p-12">
             <p className="chip inline-flex items-center gap-2 border border-primary/30 bg-bg/60 px-3 py-1 font-mono text-xs uppercase tracking-[0.12em] text-primary">
               {BRAND.domain} · humans + agents
             </p>
-            <h1 className="max-w-3xl text-balance text-3xl font-semibold tracking-tight text-fg sm:text-5xl sm:leading-[1.1]">
+            <h1 className="text-balance text-3xl font-semibold tracking-tight text-fg sm:text-5xl sm:leading-[1.1]">
               {SEO_PAGES.home.h1}
             </h1>
-            <p className="max-w-2xl text-lg leading-relaxed text-muted">
+            <p className="text-lg leading-relaxed text-muted">
               {SEO_PAGES.home.description}
             </p>
 
             {/* Atomic shareable unit: prompt + site.txt */}
-            <div className="max-w-2xl rounded-[var(--radius-xl)] border border-primary/35 bg-bg/70 p-4 sm:p-5">
+            <div className="w-full rounded-[var(--radius-xl)] border border-primary/35 bg-bg/70 p-4 text-left sm:p-5">
               <div className="mb-2 flex items-center gap-2 text-sm font-semibold text-fg">
                 <Terminal className="size-4 text-primary" />
-                Paste this into your agent
+                Paste This into Your Agent
               </div>
               <p className="mb-3 text-sm text-muted">
                 Your agent fetches{" "}
@@ -113,7 +113,7 @@ function HomePage() {
               <div className="flex flex-wrap gap-2">
                 <Button size="lg" onClick={() => void copyPrompt()}>
                   <Copy className="size-4" />
-                  {copied ? "Copied" : "Copy agent prompt"}
+                  {copied ? "Copied" : "Copy Agent Prompt"}
                 </Button>
                 <Button asChild size="lg" variant="secondary">
                   <a href="/site.txt" target="_blank" rel="noreferrer">
@@ -124,7 +124,7 @@ function HomePage() {
               </div>
             </div>
 
-            <div className="flex flex-wrap gap-3">
+            <div className="flex flex-wrap justify-center gap-3">
               <Button asChild size="lg" variant="outline">
                 <Link to="/check">
                   Grade a 402
@@ -133,19 +133,19 @@ function HomePage() {
               </Button>
               <Button asChild size="lg" variant="outline">
                 <Link to="/loop">
-                  Walk the payment loop
+                  Walk the Payment Loop
                   <Rocket className="size-4" />
                 </Link>
               </Button>
               <Button asChild size="lg" variant="outline">
                 <Link to="/learn">
-                  Learn path
+                  Learn Path
                   <BookOpen className="size-4" />
                 </Link>
               </Button>
               <Button asChild size="lg" variant="outline">
                 <Link to="/app">
-                  Practice wallet
+                  Practice Wallet
                   <ArrowRight className="size-4" />
                 </Link>
               </Button>
@@ -157,39 +157,41 @@ function HomePage() {
           {[
             {
               icon: Wrench,
-              title: "Grade your 402",
+              title: "Grade Your 402",
               body: "Paste any API URL. Get an A–F grade for agent readiness. Screenshot-worthy.",
               to: "/check" as const,
               cta: "402 Checker",
             },
-            {
+              {
               icon: Rocket,
-              title: "Ship a paid endpoint",
+              title: "Ship a Paid Endpoint",
               body: "Generate paste-ready middleware for Express, Next.js, or Hono.",
               to: "/ship" as const,
-              cta: "Ship generator",
+              cta: "Ship Generator",
             },
-            {
+              {
               icon: BookOpen,
-              title: "Walk the loop",
+              title: "Walk the Loop",
               body: "Live 402, dry-run, quiz, free educational certificate. Tips optional.",
               to: "/loop" as const,
-              cta: "Payment loop",
+              cta: "Payment Loop",
             },
-            {
+              {
               icon: Wallet,
-              title: "Check a wallet",
+              title: "Check a Wallet",
               body: "Paste any address for live SOL balance, USD estimate, and recent txs.",
               to: "/explorer" as const,
-              cta: "Balance explorer",
+              cta: "Balance Explorer",
             },
           ].map((item) => (
             <div
               key={item.title}
-              className="flex flex-col rounded-[var(--radius-xl)] border border-border bg-surface p-5"
+              className="flex flex-col rounded-[var(--radius-xl)] border border-transparent bg-surface p-5 rgb-frame rgb-frame-soft"
             >
-              <item.icon className="mb-3 size-5 text-primary" />
-              <h2 className="text-lg font-semibold text-fg">{item.title}</h2>
+              <h2 className="flex items-center gap-2.5 text-lg font-semibold text-fg">
+                <item.icon className="size-5 shrink-0 text-primary" />
+                {item.title}
+              </h2>
               <p className="mt-2 flex-1 text-sm leading-relaxed text-muted">{item.body}</p>
               <Link
                 to={item.to}
@@ -209,7 +211,7 @@ function HomePage() {
               Humans + agents · same path
             </p>
             <h2 className="text-balance text-2xl font-semibold tracking-tight text-fg sm:text-3xl">
-              {BRAND.dualAudience}
+              You and Your Agent Learn x402 Together
             </h2>
             <p className="text-base leading-relaxed text-muted sm:text-lg">
               x402 lets software pay for HTTP: request →{" "}
@@ -262,7 +264,7 @@ function HomePage() {
 
           <div className="rounded-[var(--radius-xl)] border border-primary/25 bg-bg/50 p-4 sm:p-5">
             <p className="text-sm leading-relaxed text-muted">
-              <span className="font-semibold text-fg">Copy into your agent: </span>
+              <span className="font-semibold text-fg">Copy into Your Agent: </span>
               <code className="mt-1 block whitespace-pre-wrap break-words font-mono text-xs text-fg/90 sm:mt-0 sm:inline">
                 {AGENT_PROMPT}
               </code>
@@ -286,17 +288,17 @@ function HomePage() {
           {[
             {
               icon: Shield,
-              title: "Practice wallet",
+              title: "Practice Wallet",
               body: "Client-side keys, write-downs, encrypted backups. Never cloud custody.",
             },
             {
               icon: CheckCircle2,
-              title: "Live 402 lab",
+              title: "Live 402 Lab",
               body: "Sign a payment intent, retry, unlock. Replay protection included.",
             },
             {
               icon: Bot,
-              title: "Readable by people and AI",
+              title: "Readable by People and AI",
               body: "site.txt, llms.txt, curriculum JSON, agent-card — agents are a distribution channel.",
             },
           ].map((item) => (
@@ -304,8 +306,10 @@ function HomePage() {
               key={item.title}
               className="rounded-[var(--radius-xl)] border border-border bg-surface p-5"
             >
-              <item.icon className="mb-3 size-5 text-primary" />
-              <h2 className="text-lg font-semibold text-fg">{item.title}</h2>
+              <h2 className="flex items-center gap-2.5 text-lg font-semibold text-fg">
+                <item.icon className="size-5 shrink-0 text-primary" />
+                {item.title}
+              </h2>
               <p className="mt-2 text-sm leading-relaxed text-muted">{item.body}</p>
             </div>
           ))}

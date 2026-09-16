@@ -2,10 +2,10 @@
 @import "tw-animate-css";
 
 @theme {
-  /* Lifted charcoal / slate — not pure black. Off-white text, not harsh white. */
-  --color-bg: #1a1d24;
-  --color-surface: #232832;
-  --color-surface-2: #2c323e;
+  /* Charcoal / slate — a touch darker than the first restyle preview. */
+  --color-bg: #12151b;
+  --color-surface: #1c212a;
+  --color-surface-2: #252b36;
   --color-fg: #e4e8f0;
   --color-muted: #a8b0be;
   --color-subtle: #7c8494;
@@ -33,12 +33,12 @@
   --color-rgb-g: #3ee8b0;
   --color-rgb-b: #5b9dff;
 
-  /* Near-rect / small radius — chips, cards, panels (~4–8px) */
-  --radius-sm: 0.25rem;
-  --radius-md: 0.375rem;
-  --radius-lg: 0.5rem;
-  --radius-xl: 0.5rem;
-  --radius-2xl: 0.5rem;
+  /* Near-rect — sharper than the first restyle (~2–4px) */
+  --radius-sm: 0.125rem;
+  --radius-md: 0.1875rem;
+  --radius-lg: 0.25rem;
+  --radius-xl: 0.25rem;
+  --radius-2xl: 0.25rem;
 
   --font-sans: "DM Sans", "Segoe UI", system-ui, -apple-system, sans-serif;
   --font-mono: "JetBrains Mono", ui-monospace, "SF Mono", Menlo, Consolas, monospace;
@@ -80,7 +80,7 @@
       linear-gradient(248deg, color-mix(in oklab, var(--color-rgb-g) 10%, transparent) 6%, transparent 34%),
       linear-gradient(180deg, color-mix(in oklab, var(--color-rgb-b) 12%, transparent) 0%, transparent 38%),
       radial-gradient(ellipse 80% 50% at 50% -12%, color-mix(in oklab, var(--color-rgb-b) 14%, transparent), transparent 58%),
-      linear-gradient(180deg, #1d2129 0%, #1a1d24 42%, #1c2028 100%);
+      linear-gradient(180deg, #151820 0%, #12151b 42%, #14171e 100%);
     color: var(--color-fg);
     font-family: var(--font-sans);
     font-size: 1.0625rem;
@@ -210,6 +210,67 @@
     border-bottom-right-radius: inherit;
   }
 
+  /* Payment Loop / similar: number sits on the title row */
+  .step-num {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 2.5rem;
+    height: 2.5rem;
+    flex-shrink: 0;
+    border-radius: var(--radius-sm);
+    background: color-mix(in oklab, var(--color-primary) 16%, transparent);
+    color: var(--color-primary);
+    font-family: var(--font-mono);
+    font-size: 1.125rem;
+    font-weight: 600;
+    line-height: 1;
+  }
+
+  /* Rotating RGB hairline + soft glow on hero / key cards */
+  .rgb-frame {
+    position: relative;
+    isolation: isolate;
+    box-shadow:
+      0 0 18px -8px color-mix(in oklab, var(--color-rgb-g) 42%, transparent),
+      0 0 32px -12px color-mix(in oklab, var(--color-rgb-b) 30%, transparent),
+      0 0 28px -14px color-mix(in oklab, var(--color-rgb-r) 18%, transparent);
+  }
+  .rgb-frame::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: 2;
+    border-radius: inherit;
+    padding: 1px;
+    pointer-events: none;
+    background: conic-gradient(
+      from var(--rgb-angle),
+      color-mix(in oklab, var(--color-rgb-r) 70%, transparent),
+      color-mix(in oklab, var(--color-rgb-g) 75%, transparent),
+      color-mix(in oklab, var(--color-rgb-b) 80%, transparent),
+      color-mix(in oklab, var(--color-rgb-r) 70%, transparent)
+    );
+    mask:
+      linear-gradient(#000 0 0) content-box,
+      linear-gradient(#000 0 0);
+    mask-composite: exclude;
+    -webkit-mask:
+      linear-gradient(#000 0 0) content-box,
+      linear-gradient(#000 0 0);
+    -webkit-mask-composite: xor;
+    animation: rgb-spin 9s linear infinite;
+    opacity: 0.72;
+  }
+  .rgb-frame-soft {
+    box-shadow:
+      0 0 14px -10px color-mix(in oklab, var(--color-rgb-g) 28%, transparent),
+      0 0 20px -12px color-mix(in oklab, var(--color-rgb-b) 22%, transparent);
+  }
+  .rgb-frame-soft::before {
+    opacity: 0.42;
+  }
+
   .scan-grid {
     background-image:
       linear-gradient(color-mix(in oklab, var(--color-rgb-b) 8%, transparent) 1px, transparent 1px),
@@ -248,9 +309,22 @@
   }
 }
 
+@property --rgb-angle {
+  syntax: "<angle>";
+  inherits: false;
+  initial-value: 0deg;
+}
+
+@keyframes rgb-spin {
+  to {
+    --rgb-angle: 360deg;
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   .animate-fade-up,
-  .animate-pulse-glow {
+  .animate-pulse-glow,
+  .rgb-frame::before {
     animation: none;
   }
 }
