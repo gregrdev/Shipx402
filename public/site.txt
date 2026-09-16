@@ -67,11 +67,11 @@ A: Learning tools and the educational lab are free. Tips are optional (suggested
   Independence notice, what we are / are not, no financial advice.
 
 ## guides · beginner
-- What is x402? | https://www.shipx402.com/guides/what-is-x402
+- What Is x402? | https://www.shipx402.com/guides/what-is-x402
   HTTP 402 pay-per-request in plain English.
 - First Solana wallet | https://www.shipx402.com/guides/first-solana-wallet
   Devnet practice keys, public vs private, no real funds.
-- What is an RPC? | https://www.shipx402.com/guides/what-is-an-rpc
+- What Is an RPC? | https://www.shipx402.com/guides/what-is-an-rpc
   RPC ≠ paywall ≠ facilitator — mental model for builders.
 - Reading a Solana tx | https://www.shipx402.com/guides/reading-solana-tx
   Signatures, Solscan, balance changes as payment proof.

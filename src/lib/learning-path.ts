@@ -19,7 +19,7 @@ export const LEARNING_PATH: LearningItem[] = [
   // Beginner — official intro + buyer quickstart + wallet
   {
     level: "beginner",
-    title: "What is x402?",
+    title: "What Is x402?",
     path: "/guides/what-is-x402",
     blurb: "Plain-English idea: pay-per-request over HTTP 402.",
   },
@@ -37,7 +37,7 @@ export const LEARNING_PATH: LearningItem[] = [
   },
   {
     level: "beginner",
-    title: "What is an RPC?",
+    title: "What Is an RPC?",
     path: "/guides/what-is-an-rpc",
     blurb: "Blockchain reader vs the paywall. Why endpoints need one.",
   },

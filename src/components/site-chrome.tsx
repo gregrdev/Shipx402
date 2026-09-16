@@ -26,9 +26,9 @@ export function SiteChrome({
       </a>
 
       <div className="border-b border-border/60 bg-surface/40">
-        <div className="mx-auto flex max-w-6xl items-center justify-between gap-3 px-4 py-1.5 text-xs text-subtle sm:px-6">
-          <span className="font-mono tracking-wide">{BRAND.domain}</span>
-          <span className="hidden sm:inline">
+        <div className="mx-auto flex max-w-6xl items-center justify-between gap-3 px-4 py-1.5 text-xs text-muted sm:px-6">
+          <span className="font-mono tracking-wide text-fg">{BRAND.domain}</span>
+          <span className="hidden text-fg sm:inline">
             Independent · client-side keys · agent-readable
           </span>
           <Link
@@ -40,7 +40,7 @@ export function SiteChrome({
         </div>
       </div>
 
-      <header className="sticky top-0 z-40 border-b border-border/70 bg-bg/85 backdrop-blur-md rgb-hairline">
+      <header className="sticky top-0 z-40 border-b border-border/70 bg-bg/85 backdrop-blur-md">
         <div className="mx-auto flex max-w-6xl flex-wrap items-center justify-between gap-3 px-4 py-3.5 sm:px-6">
           <Link to="/" className="no-underline" aria-label="Ship x402 home">
             <BrandMark showDomain size="md" />
@@ -192,8 +192,8 @@ export function SiteChrome({
             </ul>
           </div>
         </div>
-        <div className="mx-auto mt-8 max-w-6xl space-y-2 border-t border-border/40 px-4 pt-6 text-center text-xs leading-relaxed text-subtle sm:px-6">
-          <p>{BRAND.independence}</p>
+        <div className="mx-auto mt-8 max-w-6xl space-y-2 border-t border-border/40 px-4 pt-6 text-center text-xs leading-relaxed text-muted sm:px-6">
+          <p className="text-fg/90">{BRAND.independence}</p>
           <p>
             © {new Date().getFullYear()} {BRAND.name} · {BRAND.domain}
           </p>

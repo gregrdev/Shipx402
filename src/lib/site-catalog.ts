@@ -102,7 +102,7 @@ export const GUIDES: CatalogItem[] = [
     kind: "guide",
     tier: "beginner",
     path: "/guides/what-is-x402",
-    name: "What is x402?",
+    name: "What Is x402?",
     gist: "HTTP 402 pay-per-request in plain English.",
   },
   {
@@ -116,7 +116,7 @@ export const GUIDES: CatalogItem[] = [
     kind: "guide",
     tier: "beginner",
     path: "/guides/what-is-an-rpc",
-    name: "What is an RPC?",
+    name: "What Is an RPC?",
     gist: "RPC ≠ paywall ≠ facilitator — mental model for builders.",
   },
   {

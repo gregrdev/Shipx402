@@ -126,7 +126,7 @@ export const SEO_PAGES: Record<string, SeoPage> = {
     title: "x402 Payment Loop Walkthrough + Free Certificate | Ship x402",
     description:
       "Interactive walkthrough: see a live 402, read the price tag, dry-run the client loop, pass a knowledge check, and earn a free educational certificate. Tips optional.",
-    h1: "Walk the x402 payment loop",
+    h1: "Walk the x402 Payment Loop",
     keywords:
       "x402 payment loop, HTTP 402 tutorial, free certificate, agent payments walkthrough",
   },
@@ -185,10 +185,10 @@ export const SEO_PAGES: Record<string, SeoPage> = {
   },
   whatIsX402: {
     path: "/guides/what-is-x402",
-    title: "What is x402? A plain-English guide | Ship x402",
+    title: "What Is x402? A Plain-English Guide | Ship x402",
     description:
       "x402 lets an API charge a small payment before it returns data. A plain-English guide for people who are not crypto experts.",
-    h1: "What is x402?",
+    h1: "What Is x402?",
     keywords: "what is x402, HTTP 402 Payment Required, agent payments explained",
   },
   firstSolanaWallet: {
@@ -228,10 +228,10 @@ export const SEO_PAGES: Record<string, SeoPage> = {
   },
   whatIsAnRpc: {
     path: "/guides/what-is-an-rpc",
-    title: "What is an RPC? Why Your x402 Endpoint Needs One | Ship x402",
+    title: "What Is an RPC? Why Your x402 Endpoint Needs One | Ship x402",
     description:
       "RPC is the blockchain reader/writer — not the paywall and not the facilitator. Clear mental model for x402 builders.",
-    h1: "What is an RPC, and why your x402 endpoint needs one",
+    h1: "What Is an RPC, and Why Your x402 Endpoint Needs One",
     keywords: "Solana RPC, Helius, x402 RPC, blockchain RPC explained",
   },
   x402V1VsV2: {
@@ -306,7 +306,7 @@ export const NAV_LINKS = [
 /** Query-shaped FAQ — H2/schema answers for search + answer engines. Keep 40–80 word answers. */
 export const HOME_FAQ = [
   {
-    q: "What is x402?",
+    q: "What Is x402?",
     a: "x402 is an open protocol that uses HTTP 402 Payment Required so apps and AI agents can pay for web resources per request — typically settling stablecoins on networks like Solana. V2 puts the challenge in PAYMENT-REQUIRED, the retry in PAYMENT-SIGNATURE, and settlement in PAYMENT-RESPONSE. No API keys or subscriptions: the wallet is the credential.",
   },
   {

@@ -127,7 +127,7 @@ function GuidePage() {
             <Link to="/guides/first-solana-wallet">First wallet guide</Link>
           </Button>
           <Button asChild variant="outline">
-            <Link to="/guides/what-is-an-rpc">What is an RPC?</Link>
+            <Link to="/guides/what-is-an-rpc">What Is an RPC?</Link>
           </Button>
         </div>
 

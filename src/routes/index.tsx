@@ -82,7 +82,7 @@ function HomePage() {
       <div className="space-y-16 animate-fade-up">
         <section className="relative overflow-hidden rounded-[var(--radius-2xl)] border border-transparent hearth-panel rgb-frame">
           <div className="pointer-events-none absolute inset-0 z-0 scan-grid opacity-50" />
-          <div className="relative z-10 mx-auto flex max-w-3xl flex-col items-center space-y-6 p-6 text-center sm:p-10 lg:p-12">
+          <div className="relative z-10 mx-auto flex w-full max-w-3xl flex-col items-center justify-center space-y-6 p-6 text-center sm:p-10 lg:p-12">
             <p className="chip inline-flex items-center gap-2 border border-primary/30 bg-bg/60 px-3 py-1 font-mono text-xs uppercase tracking-[0.12em] text-primary">
               {BRAND.domain} · humans + agents
             </p>
@@ -186,12 +186,12 @@ function HomePage() {
           ].map((item) => (
             <div
               key={item.title}
-              className="flex flex-col rounded-[var(--radius-xl)] border border-transparent bg-surface p-5 rgb-frame rgb-frame-soft"
+              className="flex flex-col rounded-[var(--radius-xl)] border border-border bg-surface p-5"
             >
-              <h2 className="flex items-center gap-2.5 text-lg font-semibold text-fg">
-                <item.icon className="size-5 shrink-0 text-primary" />
-                {item.title}
-              </h2>
+              <div className="flex flex-row items-center gap-2.5">
+                <item.icon className="size-5 shrink-0 text-primary" aria-hidden />
+                <h2 className="text-lg font-semibold text-fg">{item.title}</h2>
+              </div>
               <p className="mt-2 flex-1 text-sm leading-relaxed text-muted">{item.body}</p>
               <Link
                 to={item.to}
@@ -206,7 +206,7 @@ function HomePage() {
 
         {/* Dual-audience: query-shaped cards for search + AEO */}
         <section className="space-y-6">
-          <div className="max-w-3xl space-y-3">
+          <div className="mx-auto max-w-3xl space-y-3 text-center">
             <p className="font-mono text-xs uppercase tracking-[0.12em] text-primary">
               Humans + agents · same path
             </p>
@@ -306,10 +306,10 @@ function HomePage() {
               key={item.title}
               className="rounded-[var(--radius-xl)] border border-border bg-surface p-5"
             >
-              <h2 className="flex items-center gap-2.5 text-lg font-semibold text-fg">
-                <item.icon className="size-5 shrink-0 text-primary" />
-                {item.title}
-              </h2>
+              <div className="flex flex-row items-center gap-2.5">
+                <item.icon className="size-5 shrink-0 text-primary" aria-hidden />
+                <h2 className="text-lg font-semibold text-fg">{item.title}</h2>
+              </div>
               <p className="mt-2 text-sm leading-relaxed text-muted">{item.body}</p>
             </div>
           ))}

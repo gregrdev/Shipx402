@@ -178,10 +178,8 @@ function LearnPage() {
                   i === 0 && "border-t-0",
                 )}
               >
-                <h3 className="flex items-center gap-3 text-base font-semibold text-fg sm:text-lg">
-                  <span className="step-num">
-                    {step.id}
-                  </span>
+                <h3 className="flex flex-row items-center gap-3 text-base font-semibold text-fg sm:text-lg">
+                  <span className="step-num">{step.id}</span>
                   {step.title}
                 </h3>
                 <div className="mt-1.5 space-y-1.5 pl-[calc(2.5rem+0.75rem)]">
@@ -298,7 +296,7 @@ function LearnPage() {
               </Link>
             </Button>
             <Button asChild variant="secondary" size="lg">
-              <Link to="/guides/what-is-x402">Start: What is x402?</Link>
+              <Link to="/guides/what-is-x402">Start: What Is x402?</Link>
             </Button>
           </div>
         </section>

@@ -119,7 +119,7 @@ function GuidePage() {
             <Link to="/ship">Generate x402 middleware</Link>
           </Button>
           <Button asChild variant="secondary">
-            <Link to="/guides/what-is-x402">What is x402?</Link>
+            <Link to="/guides/what-is-x402">What Is x402?</Link>
           </Button>
           <Button asChild variant="outline">
             <Link to="/guides/ship-x402-api-solana">Build on Solana</Link>

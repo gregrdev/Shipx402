@@ -14,7 +14,7 @@ export const Route = createFileRoute("/guides/what-is-x402")({
         breadcrumbJsonLd([
           { name: "Home", path: "/" },
           { name: "Guides", path: "/learn" },
-          { name: "What is x402", path: "/guides/what-is-x402" },
+          { name: "What Is x402", path: "/guides/what-is-x402" },
         ]),
       ],
     }),
@@ -25,7 +25,7 @@ function GuidePage() {
     <SiteChrome activePath="/guides/what-is-x402">
       <Prose>
         <p className="text-sm text-subtle">Guide · Plain English · 2026</p>
-        <h1>What is x402?</h1>
+        <h1>{SEO_PAGES.whatIsX402.h1}</h1>
         <p>
           <strong>x402 is a simple idea:</strong> a website or API can charge a small
           payment before it gives you the data.

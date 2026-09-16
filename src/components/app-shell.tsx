@@ -20,7 +20,7 @@ export function AppShell() {
   return (
     <div className="min-h-dvh bg-bg text-fg">
       <CreatedWithGrokBanner />
-      <header className="border-b border-border/70 bg-bg/80 backdrop-blur-md rgb-hairline">
+      <header className="border-b border-border/70 bg-bg/80 backdrop-blur-md">
         <div className="mx-auto flex h-16 max-w-5xl items-center justify-between gap-3 px-4 sm:px-6">
           <Link to="/" className="no-underline">
             <BrandMark showDomain size="md" />
@@ -47,12 +47,12 @@ export function AppShell() {
       </main>
 
       <footer className="border-t border-border/50 py-7">
-        <div className="mx-auto max-w-5xl space-y-2 px-4 text-center text-sm text-subtle sm:px-6">
+        <div className="mx-auto max-w-5xl space-y-2 px-4 text-center text-sm text-muted sm:px-6">
           <p>
             Ship x402 wallet app — keys generated and signed only on your device. Practice
             on Devnet before real funds.
           </p>
-          <p className="text-xs leading-relaxed">{BRAND.independence}</p>
+          <p className="text-xs leading-relaxed text-fg/90">{BRAND.independence}</p>
           <p className="flex flex-wrap justify-center gap-3 text-xs">
             <Link to="/" className="text-muted hover:text-fg">
               {BRAND.domain}

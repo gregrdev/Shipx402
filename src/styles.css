@@ -75,12 +75,7 @@
     margin: 0;
     min-height: 100dvh;
     background-color: var(--color-bg);
-    background-image:
-      linear-gradient(112deg, color-mix(in oklab, var(--color-rgb-r) 11%, transparent) 0%, transparent 26%),
-      linear-gradient(248deg, color-mix(in oklab, var(--color-rgb-g) 10%, transparent) 6%, transparent 34%),
-      linear-gradient(180deg, color-mix(in oklab, var(--color-rgb-b) 12%, transparent) 0%, transparent 38%),
-      radial-gradient(ellipse 80% 50% at 50% -12%, color-mix(in oklab, var(--color-rgb-b) 14%, transparent), transparent 58%),
-      linear-gradient(180deg, #151820 0%, #12151b 42%, #14171e 100%);
+    background-image: linear-gradient(180deg, #151820 0%, #12151b 55%, #11141a 100%);
     color: var(--color-fg);
     font-family: var(--font-sans);
     font-size: 1.0625rem;
