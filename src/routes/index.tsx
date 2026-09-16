@@ -73,8 +73,7 @@ function HomePage() {
 
         <div className="flex flex-col gap-2 rounded-[var(--radius-xl)] border border-border bg-surface px-4 py-3 sm:flex-row sm:items-center sm:justify-between">
           <p className="text-sm text-muted">
-            <span className="font-medium text-fg">Agents: </span>
-            fetch site.txt — never ask for a seed.
+            Agents: fetch https://www.shipx402.com/site.txt first — not a second start-here.
           </p>
           <div className="flex flex-wrap gap-2">
             <Button size="sm" variant="secondary" onClick={() => void copyPrompt()}>
