@@ -98,7 +98,7 @@ export function ShipGenerator() {
                 type="button"
                 onClick={() => setForm((s) => ({ ...s, framework: f.id }))}
                 className={cn(
-                  "rounded-full border px-3.5 py-2 text-sm font-medium",
+                  "chip border px-3.5 py-2 text-sm font-medium",
                   form.framework === f.id
                     ? "border-primary/40 bg-primary/15 text-primary"
                     : "border-border text-muted hover:text-fg",
@@ -224,7 +224,7 @@ export function ShipGenerator() {
               type="button"
               onClick={() => setTab(id)}
               className={cn(
-                "rounded-full px-3 py-1.5 text-sm font-medium",
+                "chip px-3 py-1.5 text-sm font-medium",
                 tab === id
                   ? "bg-primary/15 text-primary"
                   : "text-muted hover:text-fg",

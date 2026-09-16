@@ -130,7 +130,7 @@ export function Welcome() {
       <div className="relative overflow-hidden rounded-[var(--radius-2xl)] border border-border hearth-panel hearth-glow">
         <div className="pointer-events-none absolute inset-0 scan-grid opacity-70" />
         <div className="relative space-y-5 p-6 sm:p-8">
-          <div className="inline-flex items-center gap-2 rounded-full border border-primary/25 bg-bg/50 px-3.5 py-1.5 text-sm font-medium text-muted backdrop-blur-sm">
+          <div className="chip inline-flex items-center gap-2 border border-primary/25 bg-bg/50 px-3.5 py-1.5 text-sm font-medium text-muted backdrop-blur-sm">
             <span className="relative flex size-2">
               <span className="absolute inline-flex size-full animate-pulse-glow rounded-full bg-primary opacity-60" />
               <span className="relative inline-flex size-2 rounded-full bg-primary" />
@@ -304,7 +304,7 @@ export function Welcome() {
                 type="button"
                 onClick={() => go(i)}
                 className={cn(
-                  "inline-flex items-center gap-2 rounded-full border px-3.5 py-2 text-sm font-medium transition-colors",
+                  "chip inline-flex items-center gap-2 border px-3.5 py-2 text-sm font-medium transition-colors",
                   active
                     ? "border-primary/40 bg-primary/15 text-primary"
                     : "border-border bg-surface text-muted hover:border-border-strong hover:text-fg",
@@ -346,7 +346,7 @@ export function Welcome() {
                   <ol className="space-y-2">
                     {X402_TUTORIAL_STEPS.map((step) => (
                       <li key={step.id} className="flex gap-3 text-sm sm:text-base">
-                        <span className="flex size-6 shrink-0 items-center justify-center rounded-full bg-surface-2 font-mono text-xs text-primary">
+                        <span className="chip flex size-6 shrink-0 items-center justify-center bg-surface-2 font-mono text-xs text-primary">
                           {step.id}
                         </span>
                         <span>

@@ -73,7 +73,7 @@ function LearnPage() {
             <a
               key={j.href}
               href={j.href}
-              className="rounded-full border border-border bg-surface px-3.5 py-2 text-sm font-medium text-muted no-underline transition-colors hover:border-primary/40 hover:text-fg"
+              className="chip border border-border bg-surface px-3.5 py-2 text-sm font-medium text-muted no-underline transition-colors hover:border-primary/40 hover:text-fg"
             >
               {j.label}
             </a>
@@ -109,7 +109,7 @@ function LearnPage() {
                 <div className="flex flex-wrap items-center gap-3 border-b border-border/60 bg-bg/40 px-5 py-4 sm:px-6">
                   <span
                     className={cn(
-                      "inline-flex items-center gap-2 rounded-full border px-3 py-1 text-xs font-semibold uppercase tracking-wide",
+                      "chip inline-flex items-center gap-2 border px-3 py-1 text-xs font-semibold uppercase tracking-wide",
                       level === "beginner" &&
                         "border-learn/30 bg-learn-bg text-learn",
                       level === "intermediate" &&
@@ -144,7 +144,7 @@ function LearnPage() {
           <div className="border-b border-border/60 bg-primary/5 px-5 py-5 sm:px-8 sm:py-6">
             <div className="flex flex-wrap items-start justify-between gap-4">
               <div className="space-y-2">
-                <div className="inline-flex items-center gap-2 rounded-full border border-primary/30 bg-bg/50 px-2.5 py-0.5 text-xs font-medium text-primary">
+                <div className="chip inline-flex items-center gap-2 border border-primary/30 bg-bg/50 px-2.5 py-0.5 text-xs font-medium text-primary">
                   <FlaskConical className="size-3.5" />
                   Core idea · v2 lab
                 </div>
@@ -178,7 +178,7 @@ function LearnPage() {
                   i === 0 && "border-t-0",
                 )}
               >
-                <span className="flex size-9 shrink-0 items-center justify-center rounded-full bg-primary/15 font-mono text-sm font-semibold text-primary">
+                <span className="chip flex size-9 shrink-0 items-center justify-center bg-primary/15 font-mono text-sm font-semibold text-primary">
                   {step.id}
                 </span>
                 <div className="min-w-0 space-y-1.5">
@@ -308,7 +308,7 @@ function LearnPage() {
 function LearningPathLink({ item, idx }: { item: LearningItem; idx: number }) {
   const inner = (
     <>
-      <span className="flex size-8 shrink-0 items-center justify-center rounded-full bg-surface-2 font-mono text-xs font-semibold text-primary">
+      <span className="chip flex size-8 shrink-0 items-center justify-center bg-surface-2 font-mono text-xs font-semibold text-primary">
         {idx + 1}
       </span>
       <span className="min-w-0 flex-1">

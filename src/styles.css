@@ -2,39 +2,43 @@
 @import "tw-animate-css";
 
 @theme {
-  /* Cyber-hearth: deep charcoal with warm ember undertones + cool teal signal */
-  --color-bg: #0c0a09;
-  --color-surface: #161311;
-  --color-surface-2: #1f1a17;
-  --color-fg: #f5f0e8;
-  --color-muted: #b5a99a;
-  --color-subtle: #7a7168;
-  --color-border: #2e2823;
-  --color-border-strong: #4a4038;
-  --color-primary: #2dd4bf;
-  --color-primary-fg: #042f2e;
-  --color-primary-dim: #0f766e;
+  /* Lifted charcoal / slate — not pure black. Off-white text, not harsh white. */
+  --color-bg: #1a1d24;
+  --color-surface: #232832;
+  --color-surface-2: #2c323e;
+  --color-fg: #e4e8f0;
+  --color-muted: #a8b0be;
+  --color-subtle: #7c8494;
+  --color-border: #3a4250;
+  --color-border-strong: #555e70;
+  --color-primary: #3ee0c8;
+  --color-primary-fg: #062824;
+  --color-primary-dim: #1a9f90;
   --color-ember: #e8a06a;
   --color-ember-dim: #c47a45;
   --color-danger: #f87171;
-  --color-danger-bg: #2a1215;
+  --color-danger-bg: #3a1c22;
   --color-warn: #f0b45a;
-  --color-warn-bg: #2a1c0c;
+  --color-warn-bg: #332414;
   --color-success: #5ee9a0;
-  --color-success-bg: #0f2418;
-  --color-learn: #5ec8f0;
-  --color-learn-bg: #0c1820;
+  --color-success-bg: #163024;
+  --color-learn: #6ec8f5;
+  --color-learn-bg: #162230;
   --color-real: #e8a06a;
-  --color-real-bg: #22160c;
-  /* Links on dark UI — warm cream, not teal-on-teal */
-  --color-link: #f0e6d8;
-  --color-link-hover: #ffffff;
+  --color-real-bg: #2c2218;
+  --color-link: #dce3ee;
+  --color-link-hover: #f2f5fa;
+  /* Delicate RGB glow accents (low-opacity only) */
+  --color-rgb-r: #ff6b9a;
+  --color-rgb-g: #3ee8b0;
+  --color-rgb-b: #5b9dff;
 
-  --radius-sm: 0.5rem;
-  --radius-md: 0.75rem;
-  --radius-lg: 1rem;
-  --radius-xl: 1.25rem;
-  --radius-2xl: 1.5rem;
+  /* Near-rect / small radius — chips, cards, panels (~4–8px) */
+  --radius-sm: 0.25rem;
+  --radius-md: 0.375rem;
+  --radius-lg: 0.5rem;
+  --radius-xl: 0.5rem;
+  --radius-2xl: 0.5rem;
 
   --font-sans: "DM Sans", "Segoe UI", system-ui, -apple-system, sans-serif;
   --font-mono: "JetBrains Mono", ui-monospace, "SF Mono", Menlo, Consolas, monospace;
@@ -72,10 +76,11 @@
     min-height: 100dvh;
     background-color: var(--color-bg);
     background-image:
-      radial-gradient(ellipse 90% 55% at 50% -10%, rgba(45, 212, 191, 0.1), transparent 55%),
-      radial-gradient(ellipse 60% 40% at 100% 100%, rgba(232, 160, 106, 0.08), transparent 50%),
-      radial-gradient(ellipse 50% 35% at 0% 80%, rgba(15, 118, 110, 0.07), transparent 45%),
-      linear-gradient(180deg, #0e0c0a 0%, #0c0a09 40%, #100d0b 100%);
+      linear-gradient(112deg, color-mix(in oklab, var(--color-rgb-r) 11%, transparent) 0%, transparent 26%),
+      linear-gradient(248deg, color-mix(in oklab, var(--color-rgb-g) 10%, transparent) 6%, transparent 34%),
+      linear-gradient(180deg, color-mix(in oklab, var(--color-rgb-b) 12%, transparent) 0%, transparent 38%),
+      radial-gradient(ellipse 80% 50% at 50% -12%, color-mix(in oklab, var(--color-rgb-b) 14%, transparent), transparent 58%),
+      linear-gradient(180deg, #1d2129 0%, #1a1d24 42%, #1c2028 100%);
     color: var(--color-fg);
     font-family: var(--font-sans);
     font-size: 1.0625rem;
@@ -91,6 +96,9 @@
   :focus-visible {
     outline: 2px solid var(--color-primary);
     outline-offset: 2px;
+    box-shadow:
+      0 0 0 3px color-mix(in oklab, var(--color-rgb-b) 28%, transparent),
+      0 0 18px -4px color-mix(in oklab, var(--color-rgb-g) 32%, transparent);
   }
 
   /* Screen-reader only utility for skip links */
@@ -142,60 +150,72 @@
     text-decoration-color: var(--color-primary);
   }
 
+  /* Chips / nav pills share the small radius (not pills) */
+  .chip {
+    border-radius: var(--radius-sm);
+  }
+
+  /* Thin RGB hairline — headers, panels */
+  .rgb-hairline {
+    box-shadow:
+      0 1px 0 color-mix(in oklab, var(--color-rgb-b) 35%, transparent),
+      0 0 18px -10px color-mix(in oklab, var(--color-rgb-g) 40%, transparent);
+  }
+
   .hearth-glow {
     box-shadow:
-      0 0 0 1px color-mix(in oklab, var(--color-primary) 22%, transparent),
-      0 0 28px -8px color-mix(in oklab, var(--color-primary) 35%, transparent),
-      0 0 48px -16px color-mix(in oklab, var(--color-ember) 18%, transparent),
-      0 12px 40px -20px rgba(0, 0, 0, 0.55);
+      0 0 0 1px color-mix(in oklab, var(--color-rgb-b) 28%, transparent),
+      0 0 22px -10px color-mix(in oklab, var(--color-rgb-g) 38%, transparent),
+      0 0 36px -14px color-mix(in oklab, var(--color-rgb-r) 22%, transparent),
+      0 10px 36px -22px rgba(8, 10, 16, 0.45);
   }
 
   .hearth-panel {
     background:
       linear-gradient(
         160deg,
-        color-mix(in oklab, var(--color-surface) 92%, var(--color-primary) 8%) 0%,
-        var(--color-surface) 45%,
-        color-mix(in oklab, var(--color-surface) 94%, var(--color-ember) 6%) 100%
+        color-mix(in oklab, var(--color-surface) 90%, var(--color-rgb-b) 10%) 0%,
+        var(--color-surface) 48%,
+        color-mix(in oklab, var(--color-surface) 92%, var(--color-rgb-g) 8%) 100%
       );
   }
 
-  /* Modern edge: dual neon corner accents on cards */
+  /* Delicate RGB corner ticks — not neon bars */
   .cyber-edge {
     position: relative;
     box-shadow:
-      0 0 0 1px color-mix(in oklab, var(--color-primary) 18%, transparent),
-      inset 0 1px 0 color-mix(in oklab, var(--color-primary) 12%, transparent);
+      0 0 0 1px color-mix(in oklab, var(--color-rgb-b) 22%, transparent),
+      inset 0 1px 0 color-mix(in oklab, var(--color-rgb-g) 14%, transparent);
   }
   .cyber-edge::before,
   .cyber-edge::after {
     content: "";
     position: absolute;
-    width: 12px;
-    height: 12px;
+    width: 11px;
+    height: 11px;
     pointer-events: none;
   }
   .cyber-edge::before {
     top: 0;
     left: 0;
-    border-top: 2px solid color-mix(in oklab, var(--color-primary) 70%, transparent);
-    border-left: 2px solid color-mix(in oklab, var(--color-primary) 70%, transparent);
+    border-top: 1.5px solid color-mix(in oklab, var(--color-rgb-g) 65%, transparent);
+    border-left: 1.5px solid color-mix(in oklab, var(--color-rgb-b) 70%, transparent);
     border-top-left-radius: inherit;
   }
   .cyber-edge::after {
     bottom: 0;
     right: 0;
-    border-bottom: 2px solid color-mix(in oklab, var(--color-ember) 65%, transparent);
-    border-right: 2px solid color-mix(in oklab, var(--color-ember) 65%, transparent);
+    border-bottom: 1.5px solid color-mix(in oklab, var(--color-rgb-r) 55%, transparent);
+    border-right: 1.5px solid color-mix(in oklab, var(--color-rgb-b) 50%, transparent);
     border-bottom-right-radius: inherit;
   }
 
   .scan-grid {
     background-image:
-      linear-gradient(color-mix(in oklab, var(--color-primary) 7%, transparent) 1px, transparent 1px),
-      linear-gradient(90deg, color-mix(in oklab, var(--color-ember) 6%, transparent) 1px, transparent 1px);
+      linear-gradient(color-mix(in oklab, var(--color-rgb-b) 8%, transparent) 1px, transparent 1px),
+      linear-gradient(90deg, color-mix(in oklab, var(--color-rgb-g) 6%, transparent) 1px, transparent 1px);
     background-size: 28px 28px;
-    mask-image: linear-gradient(180deg, rgba(0, 0, 0, 0.55), transparent 90%);
+    mask-image: linear-gradient(180deg, rgba(0, 0, 0, 0.4), transparent 90%);
   }
 
   .animate-fade-up {

@@ -24,7 +24,7 @@ export const BRAND = {
   dualAudience: "You and your agent learn x402 together",
   /** Agent-search line — /agents H1, machine surfaces */
   agentsLearn: "Where agents learn x402 on Solana",
-  themeColor: "#0c0a09",
+  themeColor: "#1a1d24",
   twitter: "@shipx402",
   independence:
     "Ship x402 is an independent educational project, not affiliated with the x402 Foundation, Coinbase, or the Solana Foundation. Not financial advice.",

@@ -40,7 +40,7 @@ export function SiteChrome({
         </div>
       </div>
 
-      <header className="sticky top-0 z-40 border-b border-border/70 bg-bg/85 backdrop-blur-md">
+      <header className="sticky top-0 z-40 border-b border-border/70 bg-bg/85 backdrop-blur-md rgb-hairline">
         <div className="mx-auto flex max-w-6xl flex-wrap items-center justify-between gap-3 px-4 py-3.5 sm:px-6">
           <Link to="/" className="no-underline" aria-label="Ship x402 home">
             <BrandMark showDomain size="md" />
@@ -59,7 +59,7 @@ export function SiteChrome({
                   key={link.href}
                   to={link.href}
                   className={cn(
-                    "rounded-full px-3 py-2 text-sm font-medium no-underline transition-colors",
+                    "chip px-3 py-2 text-sm font-medium no-underline transition-colors",
                     active
                       ? "bg-primary/15 text-primary"
                       : "text-muted hover:bg-surface-2 hover:text-fg",
@@ -72,7 +72,7 @@ export function SiteChrome({
             })}
             <Link
               to="/app"
-              className="ml-1 rounded-full bg-primary px-3.5 py-2 text-sm font-semibold text-primary-fg no-underline shadow-[0_0_20px_-6px_var(--color-primary)] hover:bg-primary/90"
+              className="chip ml-1 bg-primary px-3.5 py-2 text-sm font-semibold text-primary-fg no-underline shadow-[0_0_18px_-8px_color-mix(in_oklab,var(--color-rgb-g)_55%,transparent)] hover:bg-primary/90"
             >
               Open app
             </Link>

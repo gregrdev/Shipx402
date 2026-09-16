@@ -21,7 +21,7 @@ export function LearnPanel() {
             "Closing the tab locks the session — that is normal and safer.",
           ].map((step, i) => (
             <li key={step} className="flex gap-3">
-              <span className="flex size-7 shrink-0 items-center justify-center rounded-full bg-surface-2 text-sm font-semibold text-fg">
+              <span className="chip flex size-7 shrink-0 items-center justify-center bg-surface-2 text-sm font-semibold text-fg">
                 {i + 1}
               </span>
               <span>{step}</span>
@@ -47,7 +47,7 @@ export function LearnPanel() {
             "Balances update. The signature is your receipt.",
           ].map((step, i) => (
             <li key={step} className="flex gap-3">
-              <span className="flex size-7 shrink-0 items-center justify-center rounded-full bg-surface-2 text-sm font-semibold text-fg">
+              <span className="chip flex size-7 shrink-0 items-center justify-center bg-surface-2 text-sm font-semibold text-fg">
                 {i + 1}
               </span>
               <span>{step}</span>

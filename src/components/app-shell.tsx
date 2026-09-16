@@ -20,7 +20,7 @@ export function AppShell() {
   return (
     <div className="min-h-dvh bg-bg text-fg">
       <CreatedWithGrokBanner />
-      <header className="border-b border-border/70 bg-bg/80 backdrop-blur-md">
+      <header className="border-b border-border/70 bg-bg/80 backdrop-blur-md rgb-hairline">
         <div className="mx-auto flex h-16 max-w-5xl items-center justify-between gap-3 px-4 sm:px-6">
           <Link to="/" className="no-underline">
             <BrandMark showDomain size="md" />

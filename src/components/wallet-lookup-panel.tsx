@@ -162,7 +162,7 @@ export function WalletLookupPanel({
               type="button"
               onClick={() => setNetwork(n.id)}
               className={cn(
-                "rounded-full border px-3 py-1.5 text-sm font-medium transition-colors",
+                "chip border px-3 py-1.5 text-sm font-medium transition-colors",
                 network === n.id
                   ? "border-primary/40 bg-primary/15 text-primary"
                   : "border-border bg-bg text-muted hover:border-border-strong hover:text-fg",
@@ -344,7 +344,7 @@ export function WalletLookupPanel({
                       <div className="min-w-0 flex items-start gap-3">
                         <span
                           className={cn(
-                            "mt-0.5 flex size-8 shrink-0 items-center justify-center rounded-full border",
+                            "mt-0.5 flex size-8 shrink-0 items-center justify-center rounded-[var(--radius-sm)] border",
                             tx.status === "failed"
                               ? "border-danger/30 bg-danger-bg text-danger"
                               : positive === true
@@ -409,7 +409,7 @@ export function WalletLookupPanel({
                           href={tx.explorerUrl}
                           target="_blank"
                           rel="noreferrer"
-                          className="inline-flex size-9 items-center justify-center rounded-full border border-border text-muted hover:border-primary/40 hover:text-fg"
+                          className="inline-flex size-9 items-center justify-center rounded-[var(--radius-sm)] border border-border text-muted hover:border-primary/40 hover:text-fg"
                           aria-label="Open transaction"
                         >
                           <ExternalLink className="size-3.5" />

@@ -169,7 +169,7 @@ function ToolsPage() {
               <a
                 key={j.href}
                 href={j.href}
-                className="rounded-full border border-border bg-surface px-3 py-1.5 text-sm text-muted no-underline hover:border-primary/40 hover:text-fg"
+                className="chip border border-border bg-surface px-3 py-1.5 text-sm text-muted no-underline hover:border-primary/40 hover:text-fg"
               >
                 {j.label}
               </a>

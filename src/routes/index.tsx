@@ -83,7 +83,7 @@ function HomePage() {
         <section className="relative overflow-hidden rounded-[var(--radius-2xl)] border border-border hearth-panel hearth-glow">
           <div className="pointer-events-none absolute inset-0 scan-grid opacity-50" />
           <div className="relative space-y-6 p-6 sm:p-10 lg:p-12">
-            <p className="inline-flex items-center gap-2 rounded-full border border-primary/30 bg-bg/60 px-3 py-1 font-mono text-xs uppercase tracking-[0.12em] text-primary">
+            <p className="chip inline-flex items-center gap-2 border border-primary/30 bg-bg/60 px-3 py-1 font-mono text-xs uppercase tracking-[0.12em] text-primary">
               {BRAND.domain} · humans + agents
             </p>
             <h1 className="max-w-3xl text-balance text-3xl font-semibold tracking-tight text-fg sm:text-5xl sm:leading-[1.1]">
