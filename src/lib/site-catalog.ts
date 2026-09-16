@@ -61,7 +61,7 @@ export const TOOLS: CatalogItem[] = [
     kind: "tool",
     path: "/app",
     name: "Practice wallet",
-    gist: "Browser-only Solana wallet: create, backup, send/receive, x402 lab (Devnet first).",
+    gist: "Keys never leave your device · never paste into chat/agents. Browser-only Devnet practice wallet.",
   },
   {
     kind: "tool",

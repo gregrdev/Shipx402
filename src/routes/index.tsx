@@ -119,6 +119,9 @@ function HomePage() {
               </a>
             </Button>
           </div>
+          <p className="text-sm text-muted">
+            Devnet · practice network · free test money
+          </p>
         </div>
 
         <section

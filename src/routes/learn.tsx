@@ -57,7 +57,8 @@ function LearnPage() {
           <p className="text-lg leading-relaxed text-muted">
             One path from first concepts to agent-safe production, matching the
             official docs.x402.org flow: what x402 is → first wallet → payment loop →
-            V2 headers / CAIP-2 → facilitators → ship a paid route.
+            V2 headers / CAIP-2 → facilitators (verify/settle 402; ≠ RPC ≠ paywall) →
+            ship a paid route.
           </p>
           <ContinueChip />
         </header>
@@ -198,7 +199,9 @@ function LearnPage() {
                   V2 puts the price in{" "}
                   <code className="text-fg">PAYMENT-REQUIRED</code>, the retry in{" "}
                   <code className="text-fg">PAYMENT-SIGNATURE</code>, and settlement
-                  in <code className="text-fg">PAYMENT-RESPONSE</code>. Five steps.
+                  in <code className="text-fg">PAYMENT-RESPONSE</code>. Five steps. A
+                  facilitator verifies and settles 402 payments (not the RPC, not the
+                  paywall).
                 </p>
               </div>
               <Button asChild>

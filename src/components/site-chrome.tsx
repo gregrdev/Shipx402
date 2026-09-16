@@ -111,6 +111,12 @@ export function SiteChrome({
             <p className="max-w-xs text-sm leading-relaxed text-muted">
               {BRAND.closer}
             </p>
+            <a
+              href="https://www.shipx402.com/guides/first-solana-wallet"
+              className="chip inline-flex w-fit border border-border bg-bg px-2.5 py-1 text-xs font-medium text-muted no-underline hover:text-fg"
+            >
+              Devnet · practice network · free test money
+            </a>
           </div>
           <div>
             <div className="mb-2 text-xs font-semibold uppercase tracking-wider text-subtle">

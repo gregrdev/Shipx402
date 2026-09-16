@@ -61,7 +61,10 @@ function GuidePage() {
           Create a Solana wallet. Put only the <strong>public address</strong> on your
           server. Never put a private key in your API.
         </p>
-        <p>Practice on <strong>devnet</strong> first. Devnet money is fake on purpose.</p>
+        <p>
+          Practice on <strong>devnet</strong> first. Devnet is the practice network with
+          free test money — no real funds.
+        </p>
         <ul>
           <li>
             Devnet network ID:{" "}
